@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @CrossOrigin("http://localhost:4200")
 @RestController()
-@RequestMapping("dto")
+@RequestMapping("books")
 public class BookController {
 
     private Logger logger = LoggerFactory.getLogger(BookController.class);
