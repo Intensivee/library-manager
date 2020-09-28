@@ -1,0 +1,32 @@
+<div class="wrapper">
+
+  <div class="fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+      <a class="navbar-brand" href="#">Nasza Biblioteka</a>
+
+      <!-- search form -->
+
+      <!-- login/logout settings/register -->
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active">Login</a>
+          <a class="nav-link active">Register</a>
+          <!-- <a class="nav-link active">Logout</a>
+                        <a class="nav-link active">Settings</a> -->
+        </div>
+      </div>
+
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+  </div>
+  
+  <app-aside-menu></app-aside-menu>
+
+  <router-outlet></router-outlet>
+
+
+</div>

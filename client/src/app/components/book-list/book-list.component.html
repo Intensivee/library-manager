@@ -1,0 +1,20 @@
+<div class="container-fluid main">
+  <div class="row" *ngFor="let book of books">
+    <div class="book-container">
+
+      <a routerLink="">
+        <h3>{{book.title}}</h3>
+        <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
+      </a>
+
+      <a routerLink="" class="author">{{book.authorName}}</a>
+
+      
+      <p maxlength="10">
+        {{book.description | slice:0:200}}..
+        <a routerLink="">Czytaj dalej</a>
+      </p>
+      <hr class="solid">
+    </div>
+  </div>
+</div>

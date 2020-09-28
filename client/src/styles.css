@@ -1,0 +1,88 @@
+
+body {
+    position: relative;
+    background-color: rgb(195, 192, 183);
+    width: 100vw;
+    height: 100%;
+}
+
+aside {
+    position: relative;
+    width: 17%;
+    height: 100vw;
+    top: 55px;
+    position: fixed;
+    background-color: #333;
+}
+
+aside ul {
+    padding: 0;
+    margin-left: 20%;
+    font-size: 20px;
+    list-style: none;
+}
+
+aside ul a {
+
+    color: lightslategray;
+}
+
+
+aside h4 {
+    margin: 10% 0% 5% 5%;
+    color: white;
+}
+
+.main {
+    position: relative;
+    margin: 10px 0 0 10px;
+    top: 130px;
+}
+
+.book-container {
+    position: relative;
+    left: 22%;
+    width:70%;
+    margin-bottom: 1%;
+}
+
+.book-container img {
+    width: 8%;
+}
+
+.book-container h3 {
+    position: absolute;
+    top: 10%;
+    left: 12%;
+}
+
+.book-container a {
+    color: black;
+    transition: color .3s;
+}
+
+.book-container a:hover {
+    color: royalblue;
+}
+
+.author {
+    position: absolute;
+    top: 30%;
+    left: 13%;
+}
+
+.book-container p {
+    position: absolute;
+    overflow: hidden;
+    top: 36%;
+    left: 30%;
+    width: 50%;
+}
+
+hr.solid {
+    width: 100%;
+    bottom: 0px;
+    margin-top: 2%;
+    border-top: 1px solid black;
+}
+
