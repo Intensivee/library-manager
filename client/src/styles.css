@@ -42,21 +42,22 @@ aside h4 {
   position: relative;
   left: 22%;
   width: 70%;
-  margin-bottom: 1%;
+  margin: 1% 0;
 }
 
 .book-container img {
-  width: 8%;
+  width: 7%;
 }
 
 .book-container h3 {
   position: absolute;
   top: 10%;
-  left: 12%;
+  left: 11%;
 }
 
 .book-container a {
   color: black;
+  font-weight: bold;
   transition: color .3s;
 }
 
@@ -87,9 +88,9 @@ hr.solid {
 
 
 .books-listed {
-  position: relative;
+  position: absolute;
   left: 70%;
-  bottom: 45px;
+  top: 0;
   font-size: 20px;
   font-weight: 700;
 }
