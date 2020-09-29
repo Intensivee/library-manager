@@ -1,6 +1,7 @@
 package com.example.server.controller;
 
 import com.example.server.dtos.BookProjection;
+import com.example.server.exception.BookNotFoundException;
 import com.example.server.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,12 +36,10 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookDto(@PathVariable("id") Long id) {
 
-        Link link = linkTo(BookController.class).slash(id).withSelfRel();
-        Optional<BookProjection> book = bookRepository.getDtoBookById(id);
-        if (book.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        EntityModel<?> entityModel = EntityModel.of(book, link);
+        Optional<BookProjection> book = Optional
+                .ofNullable(bookRepository.getDtoBookById(id).orElseThrow(() -> new BookNotFoundException(id)));
+
+        EntityModel<?> entityModel = EntityModel.of(book, linkTo(BookController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
     }
 
@@ -54,7 +52,7 @@ public class BookController {
                 .collect(Collectors.toList());
 
         if(books.isEmpty()){
-            return ResponseEntity.notFound().build();
+            throw new BookNotFoundException();
         }
 
         // wrapping to collection with href link
@@ -67,7 +65,7 @@ public class BookController {
         Page<BookProjection> booksPaged = bookRepository.getDtoBooksPaged(pageable);
 
         if (booksPaged.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new BookNotFoundException();
         }
 
 //  TODO : adding hateos deletes pageable details from json..
