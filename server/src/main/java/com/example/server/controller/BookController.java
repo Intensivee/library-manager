@@ -1,6 +1,6 @@
 package com.example.server.controller;
 
-import com.example.server.dtos.BookProjection;
+import com.example.server.dtos.BookDto;
 import com.example.server.exception.BookNotFoundException;
 import com.example.server.repository.BookRepository;
 import org.slf4j.Logger;
@@ -36,8 +36,8 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getBookDto(@PathVariable("id") Long id) {
 
-        Optional<BookProjection> book = Optional
-                .ofNullable(bookRepository.getDtoBookById(id).orElseThrow(() -> new BookNotFoundException(id)));
+        Optional<BookDto> book = Optional
+                .ofNullable(bookRepository.getBookById(id).orElseThrow(() -> new BookNotFoundException(id)));
 
         EntityModel<?> entityModel = EntityModel.of(book, linkTo(BookController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
@@ -47,7 +47,7 @@ public class BookController {
     public ResponseEntity<?> getBooksDto() {
 
         // adding href link to each element
-        List<EntityModel<?>> books =  bookRepository.getDtoBooks().stream()
+        List<EntityModel<?>> books =  bookRepository.getBooks().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
@@ -62,9 +62,9 @@ public class BookController {
 
     @GetMapping(value = "/paged")
     public ResponseEntity<?> getBooksDtoPaged(Pageable pageable) {
-        Page<BookProjection> booksPaged = bookRepository.getDtoBooksPaged(pageable);
+        Page<BookDto> books = bookRepository.getBooksPaged(pageable);
 
-        if (booksPaged.isEmpty()) {
+        if (books.isEmpty()) {
             throw new BookNotFoundException();
         }
 
@@ -75,7 +75,16 @@ public class BookController {
 //        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books);
 //                .add(linkTo(methodOn(BookController.class).getBooksDtoPaged(pageable)).withSelfRel());
 
-        return ResponseEntity.ok(booksPaged);
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping(value = "/search/findByCategoryId/{id}")
+    public ResponseEntity<?> getBooksPagedByCategoryId(@PathVariable("id") Long id, Pageable pageable){
+        Page<BookDto> books = bookRepository.getBooksByCategory(id, pageable);
+        if(books.isEmpty()){
+            throw new BookNotFoundException();
+        }
+        return ResponseEntity.ok(books);
     }
 
 }

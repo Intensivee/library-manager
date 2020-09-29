@@ -1,12 +1,12 @@
 body {
   position: relative;
   background-color: rgb(195, 192, 183);
+  overflow-x: hidden;
   width: 100vw;
   height: 100%;
 }
 
 aside {
-  position: relative;
   width: 17%;
   height: 100vw;
   top: 55px;
@@ -28,7 +28,7 @@ aside ul a {
 
 
 aside h4 {
-  margin: 10% 0% 5% 5%;
+  margin: 10% 0 5% 5%;
   color: white;
 }
 
@@ -81,7 +81,7 @@ aside h4 {
 
 hr.solid {
   width: 100%;
-  bottom: 0px;
+  bottom: 0;
   margin-top: 2%;
   border-top: 1px solid black;
 }
