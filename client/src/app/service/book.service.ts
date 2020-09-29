@@ -11,10 +11,35 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBooks(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(`${API_URL}/dto`);
+  getBooks(): Observable<UnwrapResponse> {
+    return this.httpClient.get<UnwrapResponse>(`${API_URL}/books`);
+  }
+
+  getBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
+    const url = `${API_URL}/books/paged?page=${page}&size=${pageSize}`;
+    return this.httpClient.get<UnwrapPagedResponse>(url);
+  }
+
+  getBooksPaginatedByCategoryId(page: number,
+                                pageSize: number,
+                                categoryId: number): Observable<UnwrapPagedResponse> {
+    const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
+    return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 }
 
+interface UnwrapResponse {
+  _embedded: {
+    tupleBackedMaps: Book[];
+  };
+}
+
+interface UnwrapPagedResponse {
+  content: Book[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}
 
 

@@ -1,4 +1,13 @@
 <div class="container-fluid main">
+<div class="books-listed">
+  <span>ilość książek na stronie: </span>
+  <select  (change)="updatePageSize($event.target.value)">
+    <option selected="true">5</option>
+    <option>10</option>
+    <option>15</option>
+    <option>2</option>
+  </select>
+</div>
   <div class="row" *ngFor="let book of books">
     <div class="book-container">
 
@@ -10,11 +19,20 @@
       <a routerLink="" class="author">{{book.authorName}}</a>
 
       
-      <p maxlength="10">
+      <p>
         {{book.description | slice:0:200}}..
         <a routerLink="">Czytaj dalej</a>
       </p>
       <hr class="solid">
     </div>
   </div>
+
+  <ngb-pagination [(page)]="pageNumber"
+                  [(pageSize)]="pageSize"
+                  [(collectionSize)]="totalElements"
+                  [maxSize]="3"
+                  (pageChange)="getBooks()"
+                  class="d-flex justify-content-end pagination">
+  </ngb-pagination>
+
 </div>

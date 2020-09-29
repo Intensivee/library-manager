@@ -1,88 +1,103 @@
-
 body {
-    position: relative;
-    background-color: rgb(195, 192, 183);
-    width: 100vw;
-    height: 100%;
+  position: relative;
+  background-color: rgb(195, 192, 183);
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100%;
 }
 
 aside {
-    position: relative;
-    width: 17%;
-    height: 100vw;
-    top: 55px;
-    position: fixed;
-    background-color: #333;
+  width: 17%;
+  height: 100vw;
+  top: 55px;
+  position: fixed;
+  background-color: #333;
+  z-index: 1;
 }
 
 aside ul {
-    padding: 0;
-    margin-left: 20%;
-    font-size: 20px;
-    list-style: none;
+  padding: 0;
+  margin: 5px 0 2px 20%;
+  font-size: 20px;
+  list-style: none;
 }
 
 aside ul a {
 
-    color: lightslategray;
+  color: lightslategray;
 }
 
 
 aside h4 {
-    margin: 10% 0% 5% 5%;
-    color: white;
+  margin: 10% 0 5% 5%;
+  color: white;
 }
 
 .main {
-    position: relative;
-    margin: 10px 0 0 10px;
-    top: 130px;
+  position: relative;
+  margin: 10px 0 0 10px;
+  top: 130px;
 }
 
 .book-container {
-    position: relative;
-    left: 22%;
-    width:70%;
-    margin-bottom: 1%;
+  position: relative;
+  left: 22%;
+  width: 70%;
+  margin: 1% 0;
 }
 
 .book-container img {
-    width: 8%;
+  width: 7%;
 }
 
 .book-container h3 {
-    position: absolute;
-    top: 10%;
-    left: 12%;
+  position: absolute;
+  top: 10%;
+  left: 11%;
 }
 
 .book-container a {
-    color: black;
-    transition: color .3s;
+  color: black;
+  font-weight: bold;
+  transition: color .3s;
 }
 
 .book-container a:hover {
-    color: royalblue;
+  color: royalblue;
 }
 
 .author {
-    position: absolute;
-    top: 30%;
-    left: 13%;
+  position: absolute;
+  top: 30%;
+  left: 13%;
 }
 
 .book-container p {
-    position: absolute;
-    overflow: hidden;
-    top: 36%;
-    left: 30%;
-    width: 50%;
+  position: absolute;
+  overflow: hidden;
+  top: 36%;
+  left: 30%;
+  width: 50%;
 }
 
 hr.solid {
-    width: 100%;
-    bottom: 0px;
-    margin-top: 2%;
-    border-top: 1px solid black;
+  width: 100%;
+  bottom: 0;
+  margin-top: 2%;
+  border-top: 1px solid black;
 }
 
+
+.books-listed {
+  position: absolute;
+  left: 70%;
+  top: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pagination {
+  position: relative;
+  margin: 30px 0;
+  right: 10%
+}
