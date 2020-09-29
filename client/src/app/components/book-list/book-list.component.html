@@ -19,7 +19,7 @@
       <a routerLink="" class="author">{{book.authorName}}</a>
 
       
-      <p maxlength="10">
+      <p>
         {{book.description | slice:0:200}}..
         <a routerLink="">Czytaj dalej</a>
       </p>
@@ -31,7 +31,7 @@
                   [(pageSize)]="pageSize"
                   [(collectionSize)]="totalElements"
                   [maxSize]="3"
-                  (pageChange)="getBooksPaginated()"
+                  (pageChange)="getBooks()"
                   class="d-flex justify-content-end pagination">
   </ngb-pagination>
 

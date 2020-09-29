@@ -12,11 +12,12 @@ aside {
   top: 55px;
   position: fixed;
   background-color: #333;
+  z-index: 1;
 }
 
 aside ul {
   padding: 0;
-  margin-left: 20%;
+  margin: 5px 0 2px 20%;
   font-size: 20px;
   list-style: none;
 }

@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs';
 import { BookService } from './../../service/book.service';
 import { Book } from './../../models/book';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book-list',
@@ -11,31 +11,34 @@ import { Component, OnInit } from '@angular/core';
 export class BookListComponent implements OnInit {
 
   books: Book[];
+  currentCategoryId: number;
 
   pageNumber = 1;
   pageSize = 5;
   totalElements: number;
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getBooksPaginated();
+    this.route.paramMap.subscribe( () => this.getBooks());
   }
 
-  getBooks() {
-    this.bookService.getBooks().subscribe(
-      data => {
-        this.books = data._embedded.tupleBackedMaps;
-        console.log(data);
+  getBooks(): void {
+    if (this.route.snapshot.paramMap.has('id')){
+      const categoryId = +this.route.snapshot.paramMap.get('id');
+      if (categoryId !== this.currentCategoryId){
+        this.pageNumber = 1;
       }
-    );
-  }
+      this.currentCategoryId = categoryId;
+      this.bookService.getBooksPaginatedByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
+      .subscribe(this.processResoult());
+    } else {
 
-  // Spring enumerate pages from 0, while angular from 1
-  getBooksPaginated(): void {
-    console.log("xd");
+    // Spring enumerate pages from 0, while angular from 1
     this.bookService.getBooksPaginated(this.pageNumber - 1, this.pageSize)
       .subscribe(this.processResoult());
+    }
   }
 
   processResoult() {
@@ -47,11 +50,9 @@ export class BookListComponent implements OnInit {
     };
   }
 
-
   updatePageSize(pageSize: number) {
     this.pageSize = pageSize;
     this.pageNumber = 1;
-    this.getBooksPaginated();
+    this.getBooks();
   }
-
 }

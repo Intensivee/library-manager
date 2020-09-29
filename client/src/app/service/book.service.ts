@@ -19,6 +19,13 @@ export class BookService {
     const url = `${API_URL}/books/paged?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
+
+  getBooksPaginatedByCategoryId(page: number,
+                                pageSize: number,
+                                categoryId: number): Observable<UnwrapPagedResponse> {
+    const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
+    return this.httpClient.get<UnwrapPagedResponse>(url);
+  }
 }
 
 interface UnwrapResponse {
