@@ -1,5 +1,4 @@
-<div class="container-fluid main">
-<div class="books-listed">
+<div class="pagination-up">
   <span>ilość książek na stronie: </span>
   <select  (change)="updatePageSize($event.target.value)">
     <option selected="true">5</option>
@@ -8,22 +7,23 @@
     <option>2</option>
   </select>
 </div>
-  <div class="row" *ngFor="let book of books">
-    <div class="book-container">
+  <div *ngFor="let book of books">
+    <div class="list-container">
 
       <a routerLink="">
         <h3>{{book.title}}</h3>
         <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
       </a>
 
-      <a routerLink="" class="author">{{book.authorName}}</a>
+      <a routerLink="" class="author">{{book.authorName}}</a>   
 
-      
       <p>
         {{book.description | slice:0:200}}..
         <a routerLink="">Czytaj dalej</a>
       </p>
+
       <hr class="solid">
+    
     </div>
   </div>
 
@@ -32,7 +32,5 @@
                   [(collectionSize)]="totalElements"
                   [maxSize]="3"
                   (pageChange)="getBooks()"
-                  class="d-flex justify-content-end pagination">
+                  class="pagination-down">
   </ngb-pagination>
-
-</div>

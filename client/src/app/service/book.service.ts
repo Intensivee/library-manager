@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../app.constants';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,16 @@ export class BookService {
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getBooksPaginatedByCategoryId(page: number,
-                                pageSize: number,
-                                categoryId: number): Observable<UnwrapPagedResponse> {
+  getBooksByCategoryId(page: number,
+                       pageSize: number,
+                       categoryId: number): Observable<UnwrapPagedResponse> {
     const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
+  }
+
+  getBooksByTitle(title: string): Observable<UnwrapResponse> {
+    const url = `${API_URL}/books/search/findByTitle/${title}`;
+    return this.httpClient.get<UnwrapResponse>(url);
   }
 }
 

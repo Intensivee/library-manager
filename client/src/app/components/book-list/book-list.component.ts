@@ -31,7 +31,7 @@ export class BookListComponent implements OnInit {
         this.pageNumber = 1;
       }
       this.currentCategoryId = categoryId;
-      this.bookService.getBooksPaginatedByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
+      this.bookService.getBooksByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
       .subscribe(this.processResoult());
     } else {
 
@@ -50,7 +50,7 @@ export class BookListComponent implements OnInit {
     };
   }
 
-  updatePageSize(pageSize: number) {
+  updatePageSize(pageSize: number): void {
     this.pageSize = pageSize;
     this.pageNumber = 1;
     this.getBooks();

@@ -24,6 +24,12 @@ public class Author {
     @Column(name = "birth_date")
     private Date birthDate;
 
+    @Column(name = "memoir")
+    private String memoir;
+
+    @Column(name = "url")
+    private String imageUrl;
+
     @OneToMany(mappedBy = "author")
     @JsonBackReference
     private Set<Book> books;
@@ -69,5 +75,21 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    public String getMemoir() {
+        return memoir;
+    }
+
+    public void setMemoir(String memoir) {
+        this.memoir = memoir;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

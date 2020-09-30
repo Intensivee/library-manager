@@ -1,13 +1,16 @@
 body {
-  position: relative;
-  background-color: rgb(195, 192, 183);
   overflow-x: hidden;
-  width: 100vw;
-  height: 100%;
+  background-color: rgb(195, 192, 183);
+}
+
+.wrapper {
+  position: relative;
+  top: 46px;
+  left: 300px;
 }
 
 aside {
-  width: 17%;
+  width: 300px;
   height: 100vw;
   top: 55px;
   position: fixed;
@@ -23,81 +26,91 @@ aside ul {
 }
 
 aside ul a {
-
   color: lightslategray;
 }
-
 
 aside h4 {
   margin: 10% 0 5% 5%;
   color: white;
 }
 
-.main {
+.list-container {
   position: relative;
-  margin: 10px 0 0 10px;
-  top: 130px;
-}
-
-.book-container {
-  position: relative;
-  left: 22%;
+  top: 90px;
+  left: 5%;
   width: 70%;
-  margin: 1% 0;
 }
 
-.book-container img {
+.list-container img {
   width: 7%;
 }
 
-.book-container h3 {
-  position: absolute;
-  top: 10%;
-  left: 11%;
+.list-container h3 {
+  position: relative;
+  top: 42px;
+  left: 120px;
 }
 
-.book-container a {
+.list-container .author {
+  position: relative;
+  padding: 2px;
+  left: 50px;
+}
+
+.list-container a {
   color: black;
   font-weight: bold;
   transition: color .3s;
 }
 
-.book-container a:hover {
+.list-container a:hover {
   color: royalblue;
 }
 
-.author {
-  position: absolute;
-  top: 30%;
-  left: 13%;
-}
-
-.book-container p {
+.list-container p {
   position: absolute;
   overflow: hidden;
-  top: 36%;
-  left: 30%;
+  left: 350px;
+  top: 80px;
   width: 50%;
 }
 
+.list-container .date {
+  position: absolute;
+  width: 100vw;
+  left: 90px;
+  top: 20px;
+  font-weight: 700;
+}
+
 hr.solid {
+  position: relative;
   width: 100%;
   bottom: 0;
   margin-top: 2%;
   border-top: 1px solid black;
 }
 
-
-.books-listed {
+.pagination-up{
   position: absolute;
-  left: 70%;
-  top: 0;
+  top: 55px;
+  left: 50%;
   font-size: 20px;
   font-weight: 700;
 }
 
-.pagination {
+.pagination-down {
   position: relative;
-  margin: 30px 0;
-  right: 10%
+  margin-bottom: 40px;
+  top: 120px;
+  left: 52%;
+}
+
+.search-buttons {
+  position: absolute;
+  left: 32%;
+  margin: 40px;
+}
+.search-buttons button {
+  margin: 0 5px 0 5px;
 }

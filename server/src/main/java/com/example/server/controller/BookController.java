@@ -34,8 +34,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookDto(@PathVariable("id") Long id) {
-
+    public ResponseEntity<EntityModel<?>> getBookDto(@PathVariable("id") Long id) {
         Optional<BookDto> book = Optional
                 .ofNullable(bookRepository.getBookById(id).orElseThrow(() -> new BookNotFoundException(id)));
 
@@ -50,18 +49,16 @@ public class BookController {
         List<EntityModel<?>> books =  bookRepository.getBooks().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
-
         if(books.isEmpty()){
             throw new BookNotFoundException();
         }
-
         // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
         return ResponseEntity.ok(collection);
     }
 
     @GetMapping(value = "/paged")
-    public ResponseEntity<?> getBooksDtoPaged(Pageable pageable) {
+    public ResponseEntity<Page<BookDto> > getBooksDtoPaged(Pageable pageable) {
         Page<BookDto> books = bookRepository.getBooksPaged(pageable);
 
         if (books.isEmpty()) {
@@ -79,12 +76,25 @@ public class BookController {
     }
 
     @GetMapping(value = "/search/findByCategoryId/{id}")
-    public ResponseEntity<?> getBooksPagedByCategoryId(@PathVariable("id") Long id, Pageable pageable){
+    public ResponseEntity<Page<BookDto> > getBooksPagedByCategoryId(@PathVariable("id") Long id, Pageable pageable){
         Page<BookDto> books = bookRepository.getBooksByCategory(id, pageable);
         if(books.isEmpty()){
             throw new BookNotFoundException();
         }
         return ResponseEntity.ok(books);
+    }
+
+    @GetMapping(value = "/search/findByTitle/{title}")
+    public ResponseEntity<CollectionModel<EntityModel<?>>> getBooksPagedByCategoryId(@PathVariable("title") String title){
+
+        List<EntityModel<?>> books = bookRepository.getBooksByTitle(title).stream()
+                .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getTitle()).withSelfRel()))
+                .collect(Collectors.toList());
+        if(books.isEmpty()){
+            throw new BookNotFoundException(title);
+        }
+        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
+        return ResponseEntity.ok(collection);
     }
 
 }
