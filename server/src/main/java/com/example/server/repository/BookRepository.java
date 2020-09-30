@@ -29,6 +29,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "NATURAL JOIN " +
             "author a WHERE b.book_id = ?1";
 
+    String BOOK_BY_TITLE_QUERY = "SELECT b.book_id as id, b.title as title, b.description as description, " +
+            "b.image_url as imageUrl, a.author_id as authorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
+            "FROM book b " +
+            "NATURAL JOIN " +
+            "author a WHERE b.title LIKE %?1%";
+
     String BOOKS_BY_CATEGORY_QUERY = "SELECT b.book_id as Id, b.title as Title, b.description as Description, " +
             "b.image_url as imageUrl, a.author_id as AuthorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
             "FROM book b " +
@@ -52,4 +58,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = BOOKS_BY_CATEGORY_QUERY, countQuery = "SELECT COUNT(*) FROM book_category WHERE category_id = ?1", nativeQuery = true)
     Page<BookDto> getBooksByCategory(Long id, Pageable pageable);
 
+
+    @RestResource(exported = false)
+    @Query(value = BOOK_BY_TITLE_QUERY, countQuery = "SELECT COUNT(*) FROM book WHERE book.title LIKE ?1", nativeQuery = true)
+    Page<BookDto> getBooksByTitle(String title, Pageable pageable);
 }

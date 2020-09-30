@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookDto(@PathVariable("id") Long id) {
+    public ResponseEntity<EntityModel<?>> getBookDto(@PathVariable("id") Long id) {
 
         Optional<BookDto> book = Optional
                 .ofNullable(bookRepository.getBookById(id).orElseThrow(() -> new BookNotFoundException(id)));
@@ -61,7 +61,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/paged")
-    public ResponseEntity<?> getBooksDtoPaged(Pageable pageable) {
+    public ResponseEntity<Page<BookDto> > getBooksDtoPaged(Pageable pageable) {
         Page<BookDto> books = bookRepository.getBooksPaged(pageable);
 
         if (books.isEmpty()) {
@@ -79,10 +79,19 @@ public class BookController {
     }
 
     @GetMapping(value = "/search/findByCategoryId/{id}")
-    public ResponseEntity<?> getBooksPagedByCategoryId(@PathVariable("id") Long id, Pageable pageable){
+    public ResponseEntity<Page<BookDto> > getBooksPagedByCategoryId(@PathVariable("id") Long id, Pageable pageable){
         Page<BookDto> books = bookRepository.getBooksByCategory(id, pageable);
         if(books.isEmpty()){
             throw new BookNotFoundException();
+        }
+        return ResponseEntity.ok(books);
+    }
+
+    @GetMapping(value = "/search/findByTitle/{title}")
+    public ResponseEntity<Page<BookDto>> getBooksPagedByCategoryId(@PathVariable("title") String title, Pageable pageable){
+        Page<BookDto> books = bookRepository.getBooksByTitle(title, pageable);
+        if(books.isEmpty()){
+            throw new BookNotFoundException(title);
         }
         return ResponseEntity.ok(books);
     }

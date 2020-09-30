@@ -101,3 +101,16 @@ hr.solid {
   margin: 30px 0;
   right: 10%
 }
+
+.outlet {
+  position: relative;
+  left: 22%;
+  top: 100px;
+  z-index: 1;
+}
+
+.search-buttons button {
+  position: relative;
+  left: 27%;
+  margin: 5px;
+}
