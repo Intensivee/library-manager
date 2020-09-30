@@ -9,6 +9,7 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SearchComponent } from './components/search/search.component';
+import { BookDetailsComponent } from './components/book-details/book-details.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SearchComponent } from './components/search/search.component';
     AsideMenuComponent,
     BookListComponent,
     NavBarComponent,
-    SearchComponent
+    SearchComponent,
+    BookDetailsComponent
   ],
   imports: [
     BrowserModule,
