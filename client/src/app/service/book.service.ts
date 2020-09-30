@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../app.constants';
 import { Observable } from 'rxjs';
-import { Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +13,10 @@ export class BookService {
 
   getBooks(): Observable<UnwrapResponse> {
     return this.httpClient.get<UnwrapResponse>(`${API_URL}/books`);
+  }
+
+  getBook(id: number): Observable<Book> {
+    return this.httpClient.get<Book>(`${API_URL}/books/${id}`);
   }
 
   getBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {

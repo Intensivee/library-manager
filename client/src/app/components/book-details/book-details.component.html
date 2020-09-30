@@ -1,0 +1,41 @@
+
+<div class="return">
+    <button routerLink="" type="button" class="btn btn-outline-secondary"><i class="fas fa-caret-left"></i> Do listy książek</button>
+</div>
+
+<div class="book-details">
+
+    <h2>{{book.title}}</h2>
+    <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="img-responsive">
+
+    <a routerLink="" class="author">{{book.authorName}}</a>   
+
+    <p>{{book.description}}</p>
+
+    <hr class="solid">
+
+</div>
+
+
+<div class="copies">
+
+    <h3>Egzemplarze:</h3>
+
+    <table class="table table-sm table-responsive">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Numer</th>
+            <th scope="col">Status</th>
+            <th scope="col">Data wypożyczenia</th>
+            <th scope="col">Data zwrotu</th>
+            <th scope="col">Akcja</th>
+          </tr>
+        </thead>
+        <tbody class="tbody-dark">
+          <tr>
+
+          </tr>
+        </tbody>
+      </table>
+
+</div>
