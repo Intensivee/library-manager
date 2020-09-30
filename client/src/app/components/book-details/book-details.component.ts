@@ -11,7 +11,7 @@ import { Book } from 'src/app/models/book';
 export class BookDetailsComponent implements OnInit {
 
   book: Book;
-  copies: Copy[];
+  // copies: Copy[];
 
   constructor(private bookService: BookService,
               private route: ActivatedRoute) { }
