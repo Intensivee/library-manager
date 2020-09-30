@@ -17,9 +17,6 @@ export class SearchComponent implements OnInit {
   authors: Author[];
   currentKey: string;
 
-  pageNumber = 1;
-  pageSize = 5;
-  totalElements: number;
 
   constructor(private bookService: BookService,
               private authorService: AuthorService,
@@ -30,52 +27,23 @@ export class SearchComponent implements OnInit {
   }
 
   buttonPress(searchForBooks: boolean): void {
-    console.log(searchForBooks);
     this.searchForBooks = searchForBooks;
-    this.pageNumber = 1;
     this.search();
   }
 
   search(): void {
     if (this.route.snapshot.paramMap.has('key')) {
-      const key = this.route.snapshot.paramMap.get('key');
-      if (key !== this.currentKey) {
-        this.pageNumber = 1;
-      }
-      this.currentKey = key;
+      this.currentKey = this.route.snapshot.paramMap.get('key');
       if (this.searchForBooks) {
-        this.bookService.getBooksByTitle(this.pageNumber - 1, this.pageSize, this.currentKey)
-          .subscribe(this.processBookResoult());
+        this.bookService.getBooksByTitle(this.currentKey)
+          .subscribe(data => this.books = data._embedded.tupleBackedMaps);
       } else {
-        this.authorService.getAuthorsByName(this.pageNumber - 1, this.pageSize, this.currentKey)
-        .subscribe(this.processAuthorResoult);
+        this.authorService.getAuthorsByName(this.currentKey)
+          .subscribe(data => {
+            this.authors = data._embedded.authors;
+          });
       }
     }
-  }
-
-
-  processBookResoult() {
-    return data => {
-      this.books = data.content;
-      this.pageNumber = data.number + 1;
-      this.pageSize = data.size;
-      this.totalElements = data.totalElements;
-    };
-  }
-
-  processAuthorResoult() {
-    return data => {
-      this.authors = data._embeded.authors;
-      this.pageNumber = data._embeded.page.number;
-      this.pageSize = data._embeded.page.size;
-      this.totalElements = data._embeded.page.totalElements;
-    };
-  }
-
-  updatePageSize(pageSize: number) {
-    this.pageSize = pageSize;
-    this.pageNumber = 1;
-    this.search();
   }
 
 }

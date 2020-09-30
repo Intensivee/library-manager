@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { API_URL } from './../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -11,15 +12,21 @@ export class AuthorService {
   constructor(private http: HttpClient) { }
 
 
-  getAuthorsByName(page: number, size: number, name: string) {
+  getAuthorsByName(name: string): Observable<UnwrapAuthors> {
     const url = `${API_URL}/authors/search/findByName?name=${name}`;
-    return this.http.get<UnwrapPagedAuthors>(url);
+    return this.http.get<UnwrapAuthors>(url);
   }
 
 }
 
+interface UnwrapAuthors {
+  _embedded: {
+    authors: Author[];
+  };
+}
+
 interface UnwrapPagedAuthors {
-  _embeded: {
+  _embedded: {
     authors: Author[];
     page: {
       size: number;
@@ -27,5 +34,5 @@ interface UnwrapPagedAuthors {
       totalPages: number;
       number: number;
     }
-  }
+  };
 }

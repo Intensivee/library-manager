@@ -1,23 +1,14 @@
-<div class="outlet search-buttons">
-
-  <button (click)="buttonPress(true)" type="button" class="btn btn-secondary btn-lg">Książki</button>
-  <button (click)="buttonPress(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
-
-</div>
 
 
-<div class="container-fluid main">
-  <div class="books-listed">
-    <span>ilość elementów na stronie: </span>
-    <select (change)="updatePageSize($event.target.value)">
-      <option selected="true">5</option>
-      <option>10</option>
-      <option>15</option>
-      <option>2</option>
-    </select>
+<div *ngIf="searchForBooks">
+
+  <div  class="search-buttons">
+    <button (click)="buttonPress(true)" type="button" class="btn btn-secondary active btn-lg">Książki</button>
+    <button (click)="buttonPress(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
   </div>
-  <div class="row" *ngFor="let book of books">
-    <div class="book-container">
+  
+  <div *ngFor="let book of books">
+    <div class="list-container">
 
       <a routerLink="">
         <h3>{{book.title}}</h3>
@@ -34,8 +25,33 @@
     </div>
   </div>
 
-  <ngb-pagination [(page)]="pageNumber" [(pageSize)]="pageSize" [(collectionSize)]="totalElements" [maxSize]="3"
-    (pageChange)="search()" class="d-flex justify-content-end pagination">
-  </ngb-pagination>
+</div>
+
+<div *ngIf="!searchForBooks">
+
+  <div  class="search-buttons">
+    <button (click)="buttonPress(true)" type="button" class="btn btn-secondary  btn-lg">Książki</button>
+    <button (click)="buttonPress(false)" type="button" class="btn btn-secondary active btn-lg">Autorzy</button>
+  </div>
+
+  <div class="list-container" *ngFor="let author of authors">
+
+    <a routerLink="">
+      <h3>{{author.firstName}} {{author.lastName}}</h3>
+      <img src="{{author.imageUrl}}" alt="zdjęcie {{author.firstName}}" class="img-responsive">
+    </a>
+
+    <div class="date">
+      <p class="author">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
+    </div>
+
+    <p>
+      {{author.memoir | slice:0:200}}..
+      <a routerLink="">Sprawdź</a>
+    </p>
+
+
+    <hr class="solid">
+  </div>
 
 </div>

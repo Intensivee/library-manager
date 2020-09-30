@@ -28,9 +28,9 @@ export class BookService {
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getBooksByTitle(page: number, pageSize: number, title: string): Observable<UnwrapPagedResponse> {
-    const url = `${API_URL}/books/search/findByTitle/${title}?page=${page}&size=${pageSize}`;
-    return this.httpClient.get<UnwrapPagedResponse>(url);
+  getBooksByTitle(title: string): Observable<UnwrapResponse> {
+    const url = `${API_URL}/books/search/findByTitle/${title}`;
+    return this.httpClient.get<UnwrapResponse>(url);
   }
 }
 
