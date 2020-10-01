@@ -21,21 +21,43 @@
 
     <h3>Egzemplarze:</h3>
 
-    <table class="table table-sm table-responsive">
+<div *ngIf="copies.length>0" class="table-responsive">
+
+    <table class="table table-sm table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Numer</th>
-            <th scope="col">Status</th>
-            <th scope="col">Data wypożyczenia</th>
-            <th scope="col">Data zwrotu</th>
-            <th scope="col">Akcja</th>
+            <th class="th-sm" scope="col">Numer</th>
+            <th class="th-sm" scope="col">Status</th>
+            <th class="th-sm" scope="col">Stron</th>
+            <th class="th-sm" scope="col">Data wypożyczenia</th>
+            <th class="th-sm" scope="col">Data zwrotu</th>
+            <th class="th-sm" scope="col">Akcja</th>
           </tr>
         </thead>
-        <tbody class="tbody-dark">
-          <tr>
+        <tbody  class="tbody-dark">
+          <tr *ngFor="let copy of copies">
+            <th>{{copy.id}}</th>
 
+            <th class="center text-success" *ngIf="!copy.borrowed">Dostępna</th>
+            <th class="center text-danger" *ngIf="copy.borrowed">Wypożyczona</th>
+
+            <th class="center">{{copy.pages}}</th>
+
+            <th class="center" *ngIf="copy.borrowDate">{{copy.borrowDate | date:'dd-MM-yyyy'}}</th>
+            <th class="center" *ngIf="!copy.borrowDate">----------------------</th>
+            
+            <th class="center" *ngIf="copy.returnDate">{{copy.returnDate | date:'dd-MM-yyyy'}}</th>
+            <th class="center" *ngIf="!copy.returnDate">----------------------</th>
+              
+            <th class="center text-info" *ngIf="!copy.borrowed"><a routerLink="" >Zamow</a></th>
+            <th class="center" *ngIf="copy.borrowed">-------</th>
           </tr>
         </tbody>
       </table>
+    </div>
 
+</div>
+
+<div *ngIf="copies.length==0" class="copies">
+      <h5>Brak egzemplarzy, skontaktuj się z nami po więcej informacji.</h5>
 </div>

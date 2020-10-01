@@ -1,4 +1,6 @@
-import { BookService } from './../../service/book.service';
+import { CopyService } from '../../service/copy.service';
+import { Copy } from '../../models/copy';
+import { BookService } from '../../service/book.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/models/book';
@@ -10,24 +12,25 @@ import { Book } from 'src/app/models/book';
 })
 export class BookDetailsComponent implements OnInit {
 
-  book: Book;
-  // copies: Copy[];
+  book: Book = new Book();
+  copies: Copy[];
 
   constructor(private bookService: BookService,
+              private copyService: CopyService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe( () => this.getBookDetails())
+    this.route.paramMap.subscribe( () => this.getBookDetails());
   }
 
   getBookDetails(): void{
     if (this.route.snapshot.paramMap.has('id')){
       const id = +this.route.snapshot.paramMap.get('id');
-      this.bookService.getBook(id).subscribe(data => {
-        this.book = data;
-        console.log(this.book);
-        });
-  }
+      this.bookService.getBook(id).subscribe(data => this.book = data);
+      this.copyService.getCopiesByBookId(id).subscribe(data => {
+        this.copies = data._embedded.copies;
+      });
+    }
   }
 
 }
