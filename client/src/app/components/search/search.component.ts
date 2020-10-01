@@ -1,8 +1,8 @@
-import { AuthorService } from './../../service/author.service';
+import { AuthorService } from '../../service/author.service';
 import { ActivatedRoute } from '@angular/router';
-import { BookService } from './../../service/book.service';
+import { BookService } from '../../service/book-dto.service';
 import { Component, OnInit } from '@angular/core';
-import { Book } from 'src/app/models/book';
+import { BookDto } from 'src/app/models/book-dto';
 import { Author } from 'src/app/models/author';
 
 @Component({
@@ -13,7 +13,7 @@ import { Author } from 'src/app/models/author';
 export class SearchComponent implements OnInit {
 
   searchForBooks = true;
-  books: Book[];
+  books: BookDto[];
   authors: Author[];
   currentKey: string;
 
@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
     if (this.route.snapshot.paramMap.has('key')) {
       this.currentKey = this.route.snapshot.paramMap.get('key');
       if (this.searchForBooks) {
-        this.bookService.getBooksByTitle(this.currentKey)
+        this.bookService.getDtoBooksByTitle(this.currentKey)
           .subscribe(data => this.books = data._embedded.tupleBackedMaps);
       } else {
         this.authorService.getAuthorsByName(this.currentKey)

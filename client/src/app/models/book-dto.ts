@@ -1,8 +1,8 @@
-import { Category } from 'src/app/models/category';
-export class Book {
+export class BookDto {
     public id: number;
     public title: string;
     public description: string;
     public imageUrl: string;
-    public categories: Category[];
+    public authorId: number;
+    public authorName: string;
 }

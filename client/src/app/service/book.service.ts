@@ -1,54 +1,27 @@
-import { Book } from './../models/book';
+import { Observable } from 'rxjs';
+import { API_URL } from '../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { API_URL } from '../app.constants';
-import { Observable } from 'rxjs';
+import { Book } from '../models/book';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getBooks(): Observable<UnwrapResponse> {
-    return this.httpClient.get<UnwrapResponse>(`${API_URL}/books`);
+  getBooksByAuthorId(id: number): Observable<Book[]> {
+    const url = `${API_URL}/books/search/findByAuthorId?id=${id}`;
+    return this.http.get<UnwrapResponse>(url).pipe(
+      map(response => response._embedded.books));
   }
 
-  getBook(id: number): Observable<Book> {
-    return this.httpClient.get<Book>(`${API_URL}/books/${id}`);
-  }
-
-  getBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
-    const url = `${API_URL}/books/paged?page=${page}&size=${pageSize}`;
-    return this.httpClient.get<UnwrapPagedResponse>(url);
-  }
-
-  getBooksByCategoryId(page: number,
-                       pageSize: number,
-                       categoryId: number): Observable<UnwrapPagedResponse> {
-    const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
-    return this.httpClient.get<UnwrapPagedResponse>(url);
-  }
-
-  getBooksByTitle(title: string): Observable<UnwrapResponse> {
-    const url = `${API_URL}/books/search/findByTitle/${title}`;
-    return this.httpClient.get<UnwrapResponse>(url);
-  }
 }
 
 interface UnwrapResponse {
   _embedded: {
-    tupleBackedMaps: Book[];
+    books: Book[];
   };
 }
-
-interface UnwrapPagedResponse {
-  content: Book[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-}
-
-

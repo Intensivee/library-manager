@@ -1,9 +1,9 @@
 import { CopyService } from '../../service/copy.service';
 import { Copy } from '../../models/copy';
-import { BookService } from '../../service/book.service';
+import { BookService } from '../../service/book-dto.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Book } from 'src/app/models/book';
+import { BookDto } from 'src/app/models/book-dto';
 
 @Component({
   selector: 'app-book-details',
@@ -12,7 +12,7 @@ import { Book } from 'src/app/models/book';
 })
 export class BookDetailsComponent implements OnInit {
 
-  book: Book = new Book();
+  book: BookDto = new BookDto();
   copies: Copy[];
 
   constructor(private bookService: BookService,
@@ -26,7 +26,7 @@ export class BookDetailsComponent implements OnInit {
   getBookDetails(): void{
     if (this.route.snapshot.paramMap.has('id')){
       const id = +this.route.snapshot.paramMap.get('id');
-      this.bookService.getBook(id).subscribe(data => this.book = data);
+      this.bookService.getDtoBook(id).subscribe(data => this.book = data);
       this.copyService.getCopiesByBookId(id).subscribe(data => {
         this.copies = data._embedded.copies;
       });
