@@ -1,5 +1,5 @@
-import { BookService } from './../../service/book.service';
-import { Book } from './../../models/book';
+import { BookService } from '../../service/book-dto.service';
+import { BookDto } from '../../models/book-dto';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BookListComponent implements OnInit {
 
-  books: Book[];
+  books: BookDto[];
   currentCategoryId: number;
 
   pageNumber = 1;
@@ -31,12 +31,12 @@ export class BookListComponent implements OnInit {
         this.pageNumber = 1;
       }
       this.currentCategoryId = categoryId;
-      this.bookService.getBooksByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
+      this.bookService.getDtoBooksByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
       .subscribe(this.processResoult());
     } else {
 
     // Spring enumerate pages from 0, while angular from 1
-    this.bookService.getBooksPaginated(this.pageNumber - 1, this.pageSize)
+    this.bookService.getDtoBooksPaginated(this.pageNumber - 1, this.pageSize)
       .subscribe(this.processResoult());
     }
   }

@@ -1,0 +1,7 @@
+.list-container .date {
+    position: absolute;
+    width: 100vw;
+    left: 90px;
+    top: 20px;
+    font-weight: 700;
+  }

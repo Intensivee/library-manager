@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SearchComponent } from './components/search/search.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
+import { AuthorDetailsComponent } from './components/author-details/author-details.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BookDetailsComponent } from './components/book-details/book-details.com
     BookListComponent,
     NavBarComponent,
     SearchComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    AuthorDetailsComponent
   ],
   imports: [
     BrowserModule,

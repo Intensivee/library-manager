@@ -15,7 +15,7 @@
         <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
       </a>
 
-      <a routerLink="" class="author">{{book.authorName}}</a>   
+      <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>   
 
       <p>
         {{book.description | slice:0:200}}..

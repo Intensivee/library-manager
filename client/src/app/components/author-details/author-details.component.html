@@ -1,0 +1,41 @@
+
+<div class="return">
+    <button routerLink="" type="button" class="btn btn-outline-secondary"><i class="fas fa-caret-left"></i> Do listy książek</button>
+</div>
+  
+<div class="detail-view">
+
+    <h2>{{author.firstName}} {{author.lastName}}</h2>
+    <img src="{{author.imageUrl}}" alt="zdj {{author.lastName}}" class="img-responsive">
+
+    <p class="date">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
+
+    <p class="memoir">{{author.memoir}}</p>
+
+    <hr class="solid">
+
+</div>
+
+<h4 class="books-header">Książki Autora:</h4>
+
+<div class="xd">
+
+    <div *ngFor="let book of books">
+        <div class="list-container">
+            
+            <a routerLink="/book/{{book.id}}">
+                <h3>{{book.title}}</h3>
+                <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
+            </a>
+            
+            <p>
+                {{book.description | slice:0:200}}..
+                <a routerLink="/book/{{book.id}}">Czytaj dalej</a>
+            </p>
+            
+            <hr class="solid-bk">
+            
+        </div>
+    </div>
+</div>
+    

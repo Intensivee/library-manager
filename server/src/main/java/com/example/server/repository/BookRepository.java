@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -41,23 +43,27 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "NATURAL JOIN book_category as bc " +
             "WHERE bc.category_id = ?1";
 
-//    @RestResource(exported = false)
+    List<Book> findByAuthorId(@Param("id") Long id);
+
+    @RestResource(exported = false)
     @Query(value = BOOK_BY_ID_QUERY, nativeQuery = true)
     Optional<BookDto> getBookById(Long id);
 
-//    @RestResource(exported = false)
+    @RestResource(exported = false)
     @Query(value = BOOKS_QUERY, nativeQuery = true)
     List<BookDto> getBooks();
 
-//    @RestResource(exported = false)
+    @RestResource(exported = false)
     @Query(value = BOOKS_QUERY, countQuery = "SELECT COUNT(*) FROM book", nativeQuery = true)
     Page<BookDto> getBooksPaged(Pageable pageable);
 
-//    @RestResource(exported = false)
+    @RestResource(exported = false)
     @Query(value = BOOKS_BY_CATEGORY_QUERY, countQuery = "SELECT COUNT(*) FROM book_category WHERE category_id = ?1", nativeQuery = true)
     Page<BookDto> getBooksByCategory(Long id, Pageable pageable);
 
-//    @RestResource(exported = false)
+    @RestResource(exported = false)
     @Query(value = BOOK_BY_TITLE_QUERY, nativeQuery = true)
     List<BookDto> getBooksByTitle(String title);
+
+
 }
