@@ -1,0 +1,42 @@
+.solid {
+    position: relative;
+    width: 60%;
+    right: 420px;
+    bottom: 330px;
+}
+
+.date {
+    position: relative;
+    left: 250px;
+    bottom: 230px;
+    font-weight: 700;
+  }
+
+.memoir {
+    position: relative;
+    width: 40%;
+    left: 300px;
+    bottom: 350px;
+}
+
+.books-header {
+    position: relative;
+    bottom: 300px;
+    left: 150px;
+}
+
+.xd {
+    position: relative;
+    bottom: 400px;
+    left: 150px;
+}
+
+.list-container p {
+    left: 140px;
+  }
+
+.solid-bk {
+    position: relative;
+    width: 70%;
+    right: 300px;
+}

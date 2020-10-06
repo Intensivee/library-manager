@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { API_URL } from './../app.constants';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +16,11 @@ export class AuthorService {
   getAuthorsByName(name: string): Observable<UnwrapAuthors> {
     const url = `${API_URL}/authors/search/findByName?name=${name}`;
     return this.http.get<UnwrapAuthors>(url);
+  }
+
+  getAuthorById(id: number): Observable<Author> {
+    const url = `${API_URL}/authors/${id}`;
+    return this.http.get<Author>(url);
   }
 
 }

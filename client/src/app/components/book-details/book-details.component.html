@@ -3,12 +3,12 @@
     <button routerLink="" type="button" class="btn btn-outline-secondary"><i class="fas fa-caret-left"></i> Do listy książek</button>
 </div>
 
-<div class="book-details">
+<div class="detail-view">
 
     <h2>{{book.title}}</h2>
     <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="img-responsive">
 
-    <a routerLink="" class="author">{{book.authorName}}</a>   
+    <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>   
 
     <p>{{book.description}}</p>
 
