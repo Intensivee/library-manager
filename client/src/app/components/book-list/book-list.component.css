@@ -1,0 +1,17 @@
+.categories li{
+    display: inline;
+    position: relative;
+    left: 80px;
+    bottom: 100px;
+    list-style: none;
+}
+
+.categories li a {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.list-container a {
+    top: 20px;
+}

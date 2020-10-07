@@ -5,3 +5,21 @@
     top: 20px;
     font-weight: 700;
   }
+
+  .list-container .author {
+    top: 18px;
+  }
+
+  .categories li{
+    display: inline;
+    position: relative;
+    left: 80px;
+    bottom: 100px;
+    list-style: none;
+}
+
+.categories li a {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px;
+}

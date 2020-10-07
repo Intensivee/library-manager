@@ -1,12 +1,10 @@
-
-
 <div *ngIf="searchForBooks">
 
-  <div  class="search-buttons">
+  <div class="search-buttons">
     <button (click)="buttonPress(true)" type="button" class="btn btn-secondary active btn-lg">Książki</button>
     <button (click)="buttonPress(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
   </div>
-  
+
   <div *ngFor="let book of books">
     <div class="list-container">
 
@@ -17,10 +15,17 @@
 
       <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
 
-      <p>
+      <ul class="categories">
+        <li><a routerLink="/book/{{book.id}}">Horror</a></li>
+        <li><a routerLink="/book/{{book.id}}">Komedia</a></li>
+        <li><a routerLink="/book/{{book.id}}">Fantastyka</a></li>
+      </ul>
+
+      <p class="description">
         {{book.description | slice:0:200}}..
         <a routerLink="/book/{{book.id}}">Czytaj dalej</a>
       </p>
+
       <hr class="solid">
     </div>
   </div>
@@ -29,7 +34,7 @@
 
 <div *ngIf="!searchForBooks">
 
-  <div  class="search-buttons">
+  <div class="search-buttons">
     <button (click)="buttonPress(true)" type="button" class="btn btn-secondary  btn-lg">Książki</button>
     <button (click)="buttonPress(false)" type="button" class="btn btn-secondary active btn-lg">Autorzy</button>
   </div>

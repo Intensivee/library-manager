@@ -25,7 +25,7 @@
     left: 150px;
 }
 
-.xd {
+.author-books {
     position: relative;
     bottom: 400px;
     left: 150px;
@@ -39,4 +39,13 @@
     position: relative;
     width: 70%;
     right: 300px;
+    top: 15px;
+}
+
+.categories {
+    font-weight: bold;
+}
+
+.description {
+    top: 110px;
 }

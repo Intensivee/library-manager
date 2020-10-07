@@ -18,7 +18,7 @@
 
 <h4 class="books-header">Książki Autora:</h4>
 
-<div class="xd">
+<div class="author-books">
 
     <div *ngFor="let book of books">
         <div class="list-container">
@@ -27,11 +27,16 @@
                 <h3>{{book.title}}</h3>
                 <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
             </a>
+
+            <p class="categories">
+                Horror, Akcja, Komedia
+            </p>
             
-            <p>
+            <p class="description">
                 {{book.description | slice:0:200}}..
                 <a routerLink="/book/{{book.id}}">Czytaj dalej</a>
             </p>
+
             
             <hr class="solid-bk">
             

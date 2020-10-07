@@ -1,3 +1,5 @@
+import { Category } from './category';
+
 export class BookDto {
     public id: number;
     public title: string;
@@ -5,4 +7,5 @@ export class BookDto {
     public imageUrl: string;
     public authorId: number;
     public authorName: string;
+    public categories: Category[];
 }

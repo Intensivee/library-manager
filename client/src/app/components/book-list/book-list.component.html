@@ -17,7 +17,13 @@
 
       <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>   
 
-      <p>
+      <ul class="categories">
+        <li><a routerLink="/book/{{book.id}}">Horror</a></li>
+        <li><a routerLink="/book/{{book.id}}">Komedia</a></li>
+        <li><a routerLink="/book/{{book.id}}">Fantastyka</a></li>
+      </ul>
+
+      <p class="description">
         {{book.description | slice:0:200}}..
         <a routerLink="/book/{{book.id}}">Czytaj dalej</a>
       </p>
