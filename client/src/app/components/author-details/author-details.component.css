@@ -42,8 +42,23 @@
     top: 15px;
 }
 
-.categories {
-    font-weight: bold;
+.list-container ul {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.categories li{
+    position: relative;
+    left: 30px;
+    bottom: 15px;
+    list-style: none;
+}
+
+ul.categories li a {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 5px;
 }
 
 .description {

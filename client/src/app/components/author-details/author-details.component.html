@@ -28,9 +28,9 @@
                 <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
             </a>
 
-            <p class="categories">
-                Horror, Akcja, Komedia
-            </p>
+            <ul class="categories" *ngFor="let category of book.categories">
+                <li><a routerLink="/books/{{category.id}}">{{category.categoryName}}</a></li>
+            </ul>
             
             <p class="description">
                 {{book.description | slice:0:200}}..
