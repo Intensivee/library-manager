@@ -1,43 +1,68 @@
-import { CategoryService } from './category.service';
-import { forkJoin, Observable } from 'rxjs';
-import { API_URL } from '../app.constants';
+import { Book } from '../models/book';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Book } from '../models/book';
-import { map, mergeMap } from 'rxjs/operators';
+import { API_URL } from '../app.constants';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  constructor(private http: HttpClient,
-              private categoryService: CategoryService) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getBooksByAuthorId(id: number): Observable<Book[]> {
-    const url = `${API_URL}/books/search/findByAuthorId?id=${id}`;
-    return this.http.get<UnwrapResponse>(url).pipe(
-      map(response => response._embedded.books)).pipe(
-        mergeMap( books => {
-          return forkJoin(
-            books.map(book => {
-              return this.categoryService.getCategoriesByBookId(book.id)
-              .pipe(
-                map(categories => {
-                  book.categories = categories;
-                  return book;
-                })
-              );
-            })
-          );
-        })
-      );
+  getDtoBooks(): Observable<UnwrapResponse> {
+    return this.httpClient.get<UnwrapResponse>(`${API_URL}/dtoBooks`);
   }
 
+  getDtoBook(id: number): Observable<Book> {
+    return this.httpClient.get<Book>(`${API_URL}/dtoBooks/${id}`);
+  }
+
+  getDtoBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
+    const url = `${API_URL}/dtoBooks/paged?page=${page}&size=${pageSize}`;
+    return this.httpClient.get<UnwrapPagedResponse>(url);
+  }
+
+  getDtoBooksByCategoryId(page: number,
+                          pageSize: number,
+                          categoryId: number): Observable<UnwrapPagedResponse> {
+    const url = `${API_URL}/dtoBooks/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
+    return this.httpClient.get<UnwrapPagedResponse>(url);
+  }
+
+  getDtoBooksByTitle(title: string): Observable<Book[]> {
+    const url = `${API_URL}/dtoBooks/search/findByTitle/${title}`;
+    return this.httpClient.get<UnwrapResponse>(url).pipe(
+      map(response => response._embedded.bookDtoes)
+    );
+  }
+
+  getDtoBooksByAuthorId(id: number): Observable<Book[]> {
+    const url = `${API_URL}/dtoBooks/search/findByAuthorId/${id}`;
+    return this.httpClient.get<UnwrapResponse>(url).pipe(
+      map(response => response._embedded.bookDtoes)
+    );
+  }
 }
 
 interface UnwrapResponse {
   _embedded: {
-    books: Book[];
+    bookDtoes: Book[];
   };
 }
+
+interface UnwrapPagedResponse {
+  _embedded: {
+    bookDtoes: Book[];
+  };
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
+}
+
+

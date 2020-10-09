@@ -15,11 +15,11 @@
 
       <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
 
-      <ul class="categories">
-        <li><a routerLink="/book/{{book.id}}">Horror</a></li>
-        <li><a routerLink="/book/{{book.id}}">Komedia</a></li>
-        <li><a routerLink="/book/{{book.id}}">Fantastyka</a></li>
-      </ul>
+      <div class="categories">
+        <ul *ngFor="let category of book.categories">
+          <li><a routerLink="/books/{{category.id}}">{{category.name}}</a></li>
+        </ul>
+      </div>
 
       <p class="description">
         {{book.description | slice:0:200}}..

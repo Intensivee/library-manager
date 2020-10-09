@@ -1,8 +1,10 @@
-.categories li{
-    display: inline;
+.list-container ul {
     position: relative;
-    left: 80px;
-    bottom: 100px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    left: 120px;
+    bottom: 95px;
     list-style: none;
 }
 
@@ -15,3 +17,4 @@
 .list-container a {
     top: 20px;
 }
+

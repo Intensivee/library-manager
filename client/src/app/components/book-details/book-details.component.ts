@@ -1,9 +1,9 @@
 import { CopyService } from '../../service/copy.service';
 import { Copy } from '../../models/copy';
-import { BookService } from '../../service/book-dto.service';
+import { BookService } from '../../service/book.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { BookDto } from 'src/app/models/book-dto';
+import { Book } from 'src/app/models/book';
 
 @Component({
   selector: 'app-book-details',
@@ -12,7 +12,7 @@ import { BookDto } from 'src/app/models/book-dto';
 })
 export class BookDetailsComponent implements OnInit {
 
-  book: BookDto = new BookDto();
+  book: Book = new Book();
   copies: Copy[];
 
   constructor(private bookService: BookService,
