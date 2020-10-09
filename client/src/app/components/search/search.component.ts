@@ -1,8 +1,8 @@
 import { AuthorService } from '../../service/author.service';
 import { ActivatedRoute } from '@angular/router';
-import { BookService } from '../../service/book-dto.service';
+import { BookService } from '../../service/book.service';
 import { Component, OnInit } from '@angular/core';
-import { BookDto } from 'src/app/models/book-dto';
+import { Book } from 'src/app/models/book';
 import { Author } from 'src/app/models/author';
 
 @Component({
@@ -13,7 +13,7 @@ import { Author } from 'src/app/models/author';
 export class SearchComponent implements OnInit {
 
   searchForBooks = true;
-  books: BookDto[];
+  books: Book[];
   authors: Author[];
   currentKey: string;
 

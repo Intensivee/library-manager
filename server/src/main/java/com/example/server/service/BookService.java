@@ -66,6 +66,14 @@ public class BookService {
         return projections.stream().map(this::mapProjectionToDto).collect(Collectors.toList());
     }
 
+    public List<BookDto> getBooksDtoByAuthorId(Long id) {
+        List<BookProjection> projections = bookRepository.getProjectionsByAuthorId(id);
+        if(projections.isEmpty()){
+            throw new BookNotFoundException();
+        }
+        return projections.stream().map(this::mapProjectionToDto).collect(Collectors.toList());
+    }
+
     public BookDto mapProjectionToDto(BookProjection projection){
         return new BookDto(projection,categoryService.findCategoryDtosByBookId(projection.getId()));
     }

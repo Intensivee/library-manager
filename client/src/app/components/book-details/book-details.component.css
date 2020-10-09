@@ -1,8 +1,24 @@
-
 .solid {
-    position: relative;
-    width: 60%;
-    right: 420px;
-    bottom: 150px;
+  position: relative;
+  width: 60%;
+  right: 420px;
+  bottom: 150px;
 }
 
+
+
+.detail-view ul {
+  position: relative;
+  left: 250px;
+  bottom: 180px;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+ul.categories li a {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 5px;
+  color: black;
+}

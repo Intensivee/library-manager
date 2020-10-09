@@ -65,5 +65,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = BOOK_BY_TITLE_QUERY, nativeQuery = true)
     List<BookProjection> getProjectionsByTitle(String title);
 
+    @RestResource(exported = false)
+    @Query(value = "SELECT b.book_id as id, b.title as title, b.description as description," +
+            " b.image_url as imageUrl, a.author_id as authorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
+            "FROM book b " +
+            "NATURAL JOIN " +
+            "author a WHERE a.author_id = ?1", nativeQuery = true)
+    List<BookProjection> getProjectionsByAuthorId(Long id);
+
 
 }

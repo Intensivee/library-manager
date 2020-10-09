@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @CrossOrigin("http://localhost:4200")
@@ -75,6 +76,18 @@ public class BookController {
                 .collect(Collectors.toList());
 
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
+        return ResponseEntity.ok(collection);
+    }
+
+    @GetMapping(value = "/search/findByAuthorId/{id}")
+    public ResponseEntity<?> getBooksByAuthorId(@PathVariable("id") long id){
+        List<EntityModel<?>> books =  bookService.getBooksDtoByAuthorId(id).stream()
+                .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
+                .collect(Collectors.toList());
+
+        // wrapping to collection with href link
+        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(
+                linkTo(methodOn(BookController.class).getBooksByAuthorId(id)).withSelfRel());
         return ResponseEntity.ok(collection);
     }
 

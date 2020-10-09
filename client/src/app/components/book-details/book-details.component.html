@@ -8,7 +8,11 @@
     <h2>{{book.title}}</h2>
     <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="img-responsive">
 
-    <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>   
+    <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
+    
+    <ul class="categories" *ngFor="let category of book.categories">
+      <li><a routerLink="/books/{{category.id}}">{{category.name}}</a></li>
+    </ul>
 
     <p>{{book.description}}</p>
 

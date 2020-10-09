@@ -1,5 +1,5 @@
-import { BookService } from '../../service/book-dto.service';
-import { BookDto } from '../../models/book-dto';
+import { BookService } from '../../service/book.service';
+import { Book } from '../../models/book';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BookListComponent implements OnInit {
 
-  books: BookDto[];
+  books: Book[];
   currentCategoryId: number;
 
   pageNumber = 1;
