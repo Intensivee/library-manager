@@ -10,11 +10,13 @@
     top: 18px;
   }
 
-  .categories li{
-    display: inline;
+  .list-container ul {
     position: relative;
-    left: 80px;
-    bottom: 100px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    left: 120px;
+    bottom: 95px;
     list-style: none;
 }
 
@@ -22,4 +24,8 @@
     font-size: 14px;
     font-weight: 600;
     margin: 5px;
+}
+
+.list-container a {
+    top: 20px;
 }

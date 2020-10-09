@@ -36,17 +36,17 @@ export class BookListComponent implements OnInit {
     } else {
 
     // Spring enumerate pages from 0, while angular from 1
-    this.bookService.getDtoBooksPaginated(this.pageNumber - 1, this.pageSize)
-      .subscribe(this.processResoult());
+      this.bookService.getDtoBooksPaginated(this.pageNumber - 1, this.pageSize)
+        .subscribe(this.processResoult());
     }
   }
 
   processResoult() {
     return data => {
-      this.books = data.content;
-      this.pageNumber = data.number + 1;
-      this.pageSize = data.size;
-      this.totalElements = data.totalElements;
+      this.books = data._embedded.bookDtoes;
+      this.pageNumber = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
     };
   }
 

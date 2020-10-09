@@ -36,7 +36,10 @@ export class SearchComponent implements OnInit {
       this.currentKey = this.route.snapshot.paramMap.get('key');
       if (this.searchForBooks) {
         this.bookService.getDtoBooksByTitle(this.currentKey)
-          .subscribe(data => this.books = data._embedded.tupleBackedMaps);
+          .subscribe(data => {
+            this.books = data;
+            console.log(data);
+          });
       } else {
         this.authorService.getAuthorsByName(this.currentKey)
           .subscribe(data => {

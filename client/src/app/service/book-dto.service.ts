@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../app.constants';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,24 +32,30 @@ export class BookService {
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getDtoBooksByTitle(title: string): Observable<UnwrapResponse> {
+  getDtoBooksByTitle(title: string): Observable<BookDto[]> {
     const url = `${API_URL}/dtoBooks/search/findByTitle/${title}`;
-    return this.httpClient.get<UnwrapResponse>(url);
+    return this.httpClient.get<UnwrapResponse>(url).pipe(
+      map(response => response._embedded.bookDtoes)
+    );
   }
 }
 
 interface UnwrapResponse {
   _embedded: {
-    tupleBackedMaps: BookDto[];
+    bookDtoes: BookDto[];
   };
 }
 
 interface UnwrapPagedResponse {
-  content: BookDto[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
+  _embedded: {
+    bookDtoes: BookDto[];
+  };
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
 }
 
 
