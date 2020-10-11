@@ -1,0 +1,9 @@
+.main-window {
+    position: relative;
+    top: 60px;
+    left: 75px;
+}
+
+.user-list {
+    position: relative;
+}
