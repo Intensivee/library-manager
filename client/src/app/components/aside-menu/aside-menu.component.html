@@ -1,4 +1,14 @@
-<aside>    
+<aside>  
+    <h4>Panel Administratora:</h4>
+
+    <h4>Panel pracownika:</h4>
+    <ul>
+        <li><a routerLink="">Baza użytkowników</a></li>
+        <li><a routerLink="">Baza Książkek</a></li>
+        <li><a routerLink="">Zaległe kopie</a></li>
+        <li><a routerLink="">Popularni autorzy</a></li>
+    </ul>
+
     <h4>Kategorie:</h4>
     <ul *ngFor="let category of categories">
         <li><a routerLink="books/{{category.id}}">{{category.categoryName}}</a></li>
