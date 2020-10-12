@@ -1,5 +1,7 @@
 package com.example.server.dtos;
 
+import com.example.server.entity.User;
+
 import java.util.List;
 
 public class UserDto implements UserProjection {
@@ -11,6 +13,9 @@ public class UserDto implements UserProjection {
     private String email;
     private int role;
     private List<CopyDto> copies;
+
+    public UserDto() {
+    }
 
     public UserDto(Long id, String username, String firstName, String lastName, String email, int role, List<CopyDto> copies) {
         this.id = id;
@@ -29,6 +34,15 @@ public class UserDto implements UserProjection {
         this.lastName = projection.getLastName();
         this.email = projection.getEmail();
         this.role = projection.getRole();
+        this.copies = copies;
+    }
+    public UserDto(User user, List<CopyDto> copies) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.role = user.getRole();
         this.copies = copies;
     }
 

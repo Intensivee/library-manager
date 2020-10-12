@@ -1,7 +1,7 @@
 package com.example.server.entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -31,7 +31,7 @@ public class User {
     private int role;
 
     @OneToMany(mappedBy = "user")
-    private Set<Copy> copies;
+    private List<Copy> copies;
 
     public User() {
     }
@@ -92,11 +92,11 @@ public class User {
         this.role = role;
     }
 
-    public Set<Copy> getCopies() {
+    public List<Copy> getCopies() {
         return copies;
     }
 
-    public void setCopies(Set<Copy> copies) {
+    public void setCopies(List<Copy> copies) {
         this.copies = copies;
     }
 }

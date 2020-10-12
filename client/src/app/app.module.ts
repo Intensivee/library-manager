@@ -12,6 +12,18 @@ import { SearchComponent } from './components/search/search.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { AuthorDetailsComponent } from './components/author-details/author-details.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
+
+const MAT_MODULES = [
+  MatTableModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSortModule
+];
 
 @NgModule({
   declarations: [
@@ -28,7 +40,9 @@ import { UserListComponent } from './components/user-list/user-list.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MAT_MODULES
   ],
   providers: [],
   bootstrap: [AppComponent]

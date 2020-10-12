@@ -1,9 +1,10 @@
 import { Copy } from './copy';
 
 export class User {
-    username: string;
+    id: number;
     firstName: string;
     lastName: string;
+    username: string;
     email: string;
     role: number;
     copies: Copy[];

@@ -13,7 +13,7 @@ import { Book } from 'src/app/models/book';
 export class BookDetailsComponent implements OnInit {
 
   book: Book = new Book();
-  copies: Copy[];
+  copies: Copy[] = [];
 
   constructor(private bookService: BookService,
               private copyService: CopyService,
