@@ -1,10 +1,8 @@
 package com.example.server.dtos;
 
-import com.example.server.entity.User;
-
 import java.util.List;
 
-public class UserDto implements UserProjection {
+public class UserDto {
 
     private Long id;
     private String username;
@@ -27,26 +25,6 @@ public class UserDto implements UserProjection {
         this.copies = copies;
     }
 
-    public UserDto(UserProjection projection, List<CopyDto> copies) {
-        this.id = projection.getId();
-        this.username = projection.getUsername();
-        this.firstName = projection.getFirstName();
-        this.lastName = projection.getLastName();
-        this.email = projection.getEmail();
-        this.role = projection.getRole();
-        this.copies = copies;
-    }
-    public UserDto(User user, List<CopyDto> copies) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.role = user.getRole();
-        this.copies = copies;
-    }
-
-    @Override
     public Long getId() {
         return id;
     }
@@ -55,7 +33,6 @@ public class UserDto implements UserProjection {
         this.id = id;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
@@ -64,7 +41,6 @@ public class UserDto implements UserProjection {
         this.username = username;
     }
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -73,7 +49,6 @@ public class UserDto implements UserProjection {
         this.firstName = firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
@@ -82,7 +57,6 @@ public class UserDto implements UserProjection {
         this.lastName = lastName;
     }
 
-    @Override
     public String getEmail() {
         return email;
     }
@@ -91,7 +65,6 @@ public class UserDto implements UserProjection {
         this.email = email;
     }
 
-    @Override
     public int getRole() {
         return role;
     }

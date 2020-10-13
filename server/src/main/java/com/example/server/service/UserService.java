@@ -1,9 +1,9 @@
 package com.example.server.service;
 
 import com.example.server.dtos.UserDto;
-import com.example.server.dtos.UserProjection;
 import com.example.server.entity.User;
 import com.example.server.exception.UserNotFoundException;
+import com.example.server.mapper.UserMapper;
 import com.example.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,58 +11,51 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final CopyService copyService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, CopyService copyService) {
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.copyService = copyService;
+        this.userMapper = userMapper;
     }
 
-    public Page<UserDto> getUserProjectionsPaginated(Pageable pageable) {
-        Page<UserProjection> projections = this.userRepository.getUsersPaginated(pageable);
+    public Page<UserDto> getUsers(Pageable pageable) {
+        Page<User> projections = this.userRepository.findAll(pageable);
         if(projections.isEmpty()){
             throw new UserNotFoundException();
         }
-        return projections.map(this::mapProjectionToDto);
+        return projections.map(this.userMapper::userToDto);
     }
 
-    public List<UserDto> getUsersProjections() {
-        List<UserProjection> projections = this.userRepository.getUsers();
+    public List<UserDto> getUsers() {
+        List<User> projections = this.userRepository.findAll();
         if(projections.isEmpty()){
             throw new UserNotFoundException();
         }
-        return projections.stream().map(this::mapProjectionToDto).collect(Collectors.toList());
+        return this.userMapper.usersToDto(projections);
     }
 
-    public UserDto getUserDtoById(Long id){
-        UserProjection projection = this.userRepository.getUserById(id)
+    public UserDto getUserById(Long id){
+        User user = this.userRepository.getUserById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
-        return this.mapProjectionToDto(projection);
+        return this.userMapper.userToDto(user);
     }
 
     public UserDto updateUser(UserDto userDto){
-        User userToUpdate = this.userRepository.getOne(userDto.getId());
+        User userToUpdate = this.userRepository.getUserById(userDto.getId())
+                .orElseThrow(() -> new UserNotFoundException(userDto.getId()));
         userToUpdate.setFirstName(userDto.getFirstName());
         userToUpdate.setLastName(userDto.getLastName());
         userToUpdate.setUsername(userDto.getUsername());
         userToUpdate.setEmail(userDto.getEmail());
         userToUpdate.setRole(userDto.getRole());
-        return this.mapModelToDto(this.userRepository.save(userToUpdate));
+        return this.userMapper.userToDto(this.userRepository.save(userToUpdate));
     }
 
-    public UserDto mapProjectionToDto(UserProjection projection){
-        return new UserDto(projection, copyService.getCopiesByUserId(projection.getId()));
-    }
-
-    public UserDto mapModelToDto(User user){
-        return new UserDto(user, copyService.getCopiesByUserId(user.getId()));
-    }
 
 }

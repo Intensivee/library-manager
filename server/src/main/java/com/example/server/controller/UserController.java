@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<EntityModel<?>> getBookDto(@PathVariable("id") Long id) {
         logger.info("get");
-        UserDto user = this.userService.getUserDtoById(id);
+        UserDto user = this.userService.getUserById(id);
         EntityModel<?> entityModel = EntityModel.of(user, linkTo(UserController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
     }
@@ -48,13 +48,13 @@ public class UserController {
 
     @GetMapping("/paged")
     public ResponseEntity<?> getUsersDtoPaginated(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
-        Page<UserDto> page = this.userService.getUserProjectionsPaginated(pageable);
+        Page<UserDto> page = this.userService.getUsers(pageable);
         return ResponseEntity.ok(assembler.toModel(page));
     }
 
     @GetMapping
     public ResponseEntity<?> getUsersDto(){
-        List<EntityModel<?>> users =  this.userService.getUsersProjections().stream()
+        List<EntityModel<?>> users =  this.userService.getUsers().stream()
                 .map(user -> EntityModel.of(user, linkTo(BookController.class).slash(user.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
