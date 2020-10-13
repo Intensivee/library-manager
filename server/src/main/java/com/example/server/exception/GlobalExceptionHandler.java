@@ -13,7 +13,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(BookNotFoundException.class)
+    @ExceptionHandler({BookNotFoundException.class, CategoryNotFoundException.class, UserNotFoundException.class})
     public ResponseEntity<?> bookNotFoundHandler(BookNotFoundException e){
 
         Map<String, Object> body = new LinkedHashMap<>();

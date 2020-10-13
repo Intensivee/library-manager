@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,8 +55,7 @@ public class BookController {
     @GetMapping(value = "/paged")
     public ResponseEntity<?> getBooksDtoPaged(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
         Page<BookDto> books = bookService.getBooksDtoPaged(pageable);
-        PagedModel<EntityModel<BookDto>> pageModel = assembler.toModel(books);
-        return ResponseEntity.ok(pageModel);
+        return ResponseEntity.ok(assembler.toModel(books));
     }
 
     @GetMapping(value = "/search/findByCategoryId/{id}")

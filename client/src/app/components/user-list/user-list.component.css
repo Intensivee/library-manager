@@ -1,0 +1,23 @@
+.main-window {
+    position: relative;
+    top: 60px;
+    left: 100px;
+}
+
+.user-list {
+    position: relative;
+}
+
+table {
+    width: 70%;
+  }
+  
+.mat-form-field {
+  font-size: 14px;
+  width: 70%;
+}
+
+.btn {
+  margin: 5px;
+}
+  
