@@ -1,12 +1,10 @@
 package com.example.server.dtos;
 
-public class CategoryDto implements CategoryProjection {
+public class CategoryDto {
     private Long id;
     private String name;
 
-    public CategoryDto(CategoryProjection projection){
-        this.id = projection.getId();
-        this.name = projection.getName();
+    public CategoryDto() {
     }
 
     public CategoryDto(Long id, String name) {
@@ -14,7 +12,6 @@ public class CategoryDto implements CategoryProjection {
         this.name = name;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
@@ -23,7 +20,6 @@ public class CategoryDto implements CategoryProjection {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }

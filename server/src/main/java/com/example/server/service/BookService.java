@@ -75,6 +75,6 @@ public class BookService {
     }
 
     public BookDto mapProjectionToDto(BookProjection projection){
-        return new BookDto(projection,categoryService.findCategoryDtosByBookId(projection.getId()));
+        return new BookDto(projection,categoryService.getCategoriesByBookId(projection.getId()));
     }
 }

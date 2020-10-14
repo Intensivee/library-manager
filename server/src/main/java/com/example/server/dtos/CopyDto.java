@@ -17,14 +17,6 @@ public class CopyDto {
         this.returnDate = returnDate;
     }
 
-    public CopyDto(CopyProjection projection) {
-        this.id = projection.getId();
-        this.pages = projection.getPages();
-        this.borrowed = projection.getBorrowed();
-        this.borrowDate = projection.getBorrowDate();
-        this.returnDate = projection.getReturnDate();
-    }
-
     public Long getId() {
         return id;
     }
