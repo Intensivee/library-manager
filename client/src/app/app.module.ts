@@ -17,6 +17,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -34,7 +35,8 @@ const MAT_MODULES = [
     SearchComponent,
     BookDetailsComponent,
     AuthorDetailsComponent,
-    UserListComponent
+    UserListComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
