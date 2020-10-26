@@ -1,80 +1,73 @@
 package com.example.server.service;
 
 import com.example.server.dtos.BookDto;
-import com.example.server.dtos.BookProjection;
+import com.example.server.entity.Book;
 import com.example.server.exception.BookNotFoundException;
+import com.example.server.mapper.BookMapper;
 import com.example.server.repository.BookRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final CategoryService categoryService;
-    private Logger logger = LoggerFactory.getLogger(BookService.class);
+    private final BookMapper bookMapper;
 
     @Autowired
-    public BookService(BookRepository bookRepository, CategoryService categoryService) {
+    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
-        this.categoryService = categoryService;
+        this.bookMapper = bookMapper;
     }
 
-    public BookDto getBookDtoById(long id){
-        BookProjection projection = bookRepository.getProjectionById(id)
+    public BookDto getById(long id){
+        Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
-        return this.mapProjectionToDto(projection);
+        return this.bookMapper.bookToDto(book);
     }
 
-    public List<BookDto> getBooksDto(){
-        List<BookProjection> projections = bookRepository.getProjections();
-        if(projections.isEmpty()){
+    public List<BookDto> getAll(){
+        List<Book> books = bookRepository.findAll();
+        if(books.isEmpty()){
             throw new BookNotFoundException();
         }
-        return projections.stream().map(this::mapProjectionToDto).collect(Collectors.toList());
+        return this.bookMapper.booksToDto(books);
     }
 
-    public Page<BookDto> getBooksDtoPaged(Pageable pageable) {
-        Page<BookProjection> projections = bookRepository.getProjectionsPaged(pageable);
-        if(projections.isEmpty()){
+    public Page<BookDto> getAll(Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(pageable);
+        if(books.isEmpty()){
             throw new BookNotFoundException();
         }
         // build-in Page.map method
-        return projections.map(this::mapProjectionToDto);
+        return books.map(bookMapper::bookToDto);
     }
 
-    public Page<BookDto> getBooksDtoByCategory(Long id, Pageable pageable){
-        Page<BookProjection> projections = bookRepository.getProjectionsByCategory(id, pageable);
-        if(projections.isEmpty()){
+    public Page<BookDto> getByCategory(Long id, Pageable pageable){
+        Page<Book> books = bookRepository.findByCategoriesId(id, pageable);
+        if(books.isEmpty()){
             throw new BookNotFoundException();
         }
-        return projections.map(this::mapProjectionToDto);
+        return books.map(bookMapper::bookToDto);
     }
 
-    public List<BookDto> getBooksDtoByTitle(String title){
-        List<BookProjection> projections = bookRepository.getProjectionsByTitle(title);
-        if(projections.isEmpty()){
+    public List<BookDto> getByTitle(String title){
+        List<Book> books = bookRepository.findFirst10ByTitleContaining(title);
+        if(books.isEmpty()){
             throw new BookNotFoundException(title);
         }
-        return projections.stream().map(this::mapProjectionToDto).collect(Collectors.toList());
+        return this.bookMapper.booksToDto(books);
     }
 
-    public List<BookDto> getBooksDtoByAuthorId(Long id) {
-        List<BookProjection> projections = bookRepository.getProjectionsByAuthorId(id);
-        if(projections.isEmpty()){
+    public List<BookDto> getByAuthorId(Long id) {
+        List<Book> books = bookRepository.findByAuthorId(id);
+        if(books.isEmpty()){
             throw new BookNotFoundException();
         }
-        return projections.stream().map(this::mapProjectionToDto).collect(Collectors.toList());
-    }
-
-    public BookDto mapProjectionToDto(BookProjection projection){
-        return new BookDto(projection,categoryService.getCategoriesByBookId(projection.getId()));
+        return this.bookMapper.booksToDto(books);
     }
 }

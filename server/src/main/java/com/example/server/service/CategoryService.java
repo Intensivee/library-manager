@@ -22,8 +22,8 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    public List<CategoryDto> getCategoriesByBookId(long id){
-        List<Category> categories = this.categoryRepository.getCategoriesByBookId(id);
+    public List<CategoryDto> getByBookId(long id){
+        List<Category> categories = this.categoryRepository.findByBookId(id);
         if(categories.isEmpty()){
             throw new CategoryNotFoundException(id);
         }

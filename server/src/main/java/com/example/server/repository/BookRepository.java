@@ -1,11 +1,9 @@
 package com.example.server.repository;
 
-import com.example.server.dtos.BookProjection;
 import com.example.server.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
@@ -18,60 +16,21 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    String BOOKS_QUERY = "SELECT b.book_id as id, b.title as title, b.description as description," +
-            " b.image_url as imageUrl, a.author_id as authorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
-            "FROM book b " +
-            "NATURAL JOIN " +
-            "author a";
+    @RestResource(exported = false)
+    Optional<Book> findById(Long id);
 
-    String BOOK_BY_ID_QUERY = "SELECT b.book_id as id, b.title as title, b.description as description, " +
-            "b.image_url as imageUrl, a.author_id as authorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
-            "FROM book b " +
-            "NATURAL JOIN " +
-            "author a WHERE b.book_id = ?1";
+    @RestResource(exported = false)
+    List<Book> findAll();
 
-    String BOOK_BY_TITLE_QUERY = "SELECT b.book_id as id, b.title as title, b.description as description, " +
-            "b.image_url as imageUrl, a.author_id as authorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
-            "FROM book b " +
-            "NATURAL JOIN " +
-            "author a WHERE b.title LIKE %?1% LIMIT 10";
+    @RestResource(exported = false)
+    Page<Book> findAll(Pageable pageable);
 
-    String BOOKS_BY_CATEGORY_QUERY = "SELECT b.book_id as Id, b.title as Title, b.description as Description, " +
-            "b.image_url as imageUrl, a.author_id as AuthorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
-            "FROM book b " +
-            "NATURAL JOIN author a " +
-            "NATURAL JOIN book_category as bc " +
-            "WHERE bc.category_id = ?1";
+    @RestResource(exported = false)
+    Page<Book> findByCategoriesId(Long id, Pageable pageable);
 
+    @RestResource(exported = false)
+    List<Book> findFirst10ByTitleContaining(String title);
+
+    @RestResource(exported = false)
     List<Book> findByAuthorId(@Param("id") Long id);
-
-    @RestResource(exported = false)
-    @Query(value = BOOK_BY_ID_QUERY, nativeQuery = true)
-    Optional<BookProjection> getProjectionById(Long id);
-
-    @RestResource(exported = false)
-    @Query(value = BOOKS_QUERY, nativeQuery = true)
-    List<BookProjection> getProjections();
-
-    @RestResource(exported = false)
-    @Query(value = BOOKS_QUERY, countQuery = "SELECT COUNT(*) FROM book", nativeQuery = true)
-    Page<BookProjection> getProjectionsPaged(Pageable pageable);
-
-    @RestResource(exported = false)
-    @Query(value = BOOKS_BY_CATEGORY_QUERY, countQuery = "SELECT COUNT(*) FROM book_category WHERE category_id = ?1", nativeQuery = true)
-    Page<BookProjection> getProjectionsByCategory(Long id, Pageable pageable);
-
-    @RestResource(exported = false)
-    @Query(value = BOOK_BY_TITLE_QUERY, nativeQuery = true)
-    List<BookProjection> getProjectionsByTitle(String title);
-
-    @RestResource(exported = false)
-    @Query(value = "SELECT b.book_id as id, b.title as title, b.description as description," +
-            " b.image_url as imageUrl, a.author_id as authorId, CONCAT(a.first_name,' ',a.last_name) as authorName " +
-            "FROM book b " +
-            "NATURAL JOIN " +
-            "author a WHERE a.author_id = ?1", nativeQuery = true)
-    List<BookProjection> getProjectionsByAuthorId(Long id);
-
-
 }

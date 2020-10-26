@@ -13,6 +13,7 @@ import java.util.List;
 @RepositoryRestResource
 public interface CopyRepository extends JpaRepository<Copy, Long> {
 
+    @RestResource(exported = false)
     List<Copy> findByBookId(@Param("id") Long id);
 
     @RestResource(exported = false)

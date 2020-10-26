@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @RestResource(exported = false)
-    Optional<User> getUserById(Long id);
+    Optional<User> findById(Long id);
 }

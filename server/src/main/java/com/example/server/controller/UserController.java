@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -32,9 +32,9 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EntityModel<?>> getBookDto(@PathVariable("id") Long id) {
+    public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
         logger.info("get");
-        UserDto user = this.userService.getUserById(id);
+        UserDto user = this.userService.getById(id);
         EntityModel<?> entityModel = EntityModel.of(user, linkTo(UserController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
     }
@@ -47,14 +47,14 @@ public class UserController {
     }
 
     @GetMapping("/paged")
-    public ResponseEntity<?> getUsersDtoPaginated(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
-        Page<UserDto> page = this.userService.getUsers(pageable);
+    public ResponseEntity<?> getAll(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
+        Page<UserDto> page = this.userService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(page));
     }
 
     @GetMapping
-    public ResponseEntity<?> getUsersDto(){
-        List<EntityModel<?>> users =  this.userService.getUsers().stream()
+    public ResponseEntity<?> getAll(){
+        List<EntityModel<?>> users =  this.userService.getAll().stream()
                 .map(user -> EntityModel.of(user, linkTo(BookController.class).slash(user.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
@@ -62,7 +62,4 @@ public class UserController {
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(users).add(linkTo(UserController.class).withSelfRel());
         return ResponseEntity.ok(collection);
     }
-
-
-
 }

@@ -1,7 +1,7 @@
 package com.example.server.entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -20,7 +20,7 @@ public class Category {
             joinColumns = { @JoinColumn(name = "category_id") },
             inverseJoinColumns = { @JoinColumn(name = "book_id") }
     )
-    private Set<Book> books;
+    private List<Book> books;
 
     public Category() {
     }
@@ -41,11 +41,11 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public Set<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Set<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 }

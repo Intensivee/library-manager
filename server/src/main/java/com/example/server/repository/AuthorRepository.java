@@ -16,4 +16,5 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     @Query(value = "SELECT a.author_id, a.first_name, a.last_name, a.birth_date, a.memoir, a.url from author a " +
             "WHERE a.first_name LIKE %?1% or a.last_name LIKE %?1% LIMIT 5", nativeQuery = true)
     List<Author> findByName(@Param("name") String name);
+
 }

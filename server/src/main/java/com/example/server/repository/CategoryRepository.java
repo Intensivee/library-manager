@@ -16,6 +16,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "SELECT b.categories FROM Book b WHERE b.id = ?1")
     @RestResource(exported = false)
-    List<Category> getCategoriesByBookId(@Param("id") Long id);
+    List<Category> findByBookId(@Param("id") Long id);
 }
 

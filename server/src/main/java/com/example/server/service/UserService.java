@@ -24,15 +24,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public Page<UserDto> getUsers(Pageable pageable) {
-        Page<User> projections = this.userRepository.findAll(pageable);
-        if(projections.isEmpty()){
-            throw new UserNotFoundException();
-        }
-        return projections.map(this.userMapper::userToDto);
-    }
-
-    public List<UserDto> getUsers() {
+    public List<UserDto> getAll() {
         List<User> projections = this.userRepository.findAll();
         if(projections.isEmpty()){
             throw new UserNotFoundException();
@@ -40,14 +32,22 @@ public class UserService {
         return this.userMapper.usersToDto(projections);
     }
 
-    public UserDto getUserById(Long id){
-        User user = this.userRepository.getUserById(id)
+    public Page<UserDto> getAll(Pageable pageable) {
+        Page<User> projections = this.userRepository.findAll(pageable);
+        if(projections.isEmpty()){
+            throw new UserNotFoundException();
+        }
+        return projections.map(this.userMapper::userToDto);
+    }
+
+    public UserDto getById(Long id){
+        User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         return this.userMapper.userToDto(user);
     }
 
     public UserDto updateUser(UserDto userDto){
-        User userToUpdate = this.userRepository.getUserById(userDto.getId())
+        User userToUpdate = this.userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new UserNotFoundException(userDto.getId()));
         userToUpdate.setFirstName(userDto.getFirstName());
         userToUpdate.setLastName(userDto.getLastName());

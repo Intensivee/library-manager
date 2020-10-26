@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @CrossOrigin("http://localhost:4200")
 @RestController()
-@RequestMapping("dtoBooks")
+@RequestMapping("books")
 public class BookController {
 
     private final Logger logger = LoggerFactory.getLogger(BookController.class);
@@ -34,16 +34,16 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<?>> getBookDto(@PathVariable("id") Long id) {
-        BookDto book = bookService.getBookDtoById(id);
+    public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
+        BookDto book = bookService.getById(id);
         EntityModel<?> entityModel = EntityModel.of(book, linkTo(BookController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
     }
 
     @GetMapping()
-    public ResponseEntity<?> getBooksDto() {
+    public ResponseEntity<?> getAll() {
         // adding href link to each element
-        List<EntityModel<?>> books =  bookService.getBooksDto().stream()
+        List<EntityModel<?>> books =  bookService.getAll().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
@@ -53,23 +53,23 @@ public class BookController {
     }
 
     @GetMapping(value = "/paged")
-    public ResponseEntity<?> getBooksDtoPaged(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
-        Page<BookDto> books = bookService.getBooksDtoPaged(pageable);
+    public ResponseEntity<?> getAll(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
+        Page<BookDto> books = bookService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(books));
     }
 
     @GetMapping(value = "/search/findByCategoryId/{id}")
-    public ResponseEntity<?> getBooksPagedByCategoryId(@PathVariable("id") Long id,
-                                                       Pageable pageable,
-                                                       PagedResourcesAssembler<BookDto> assembler){
-        Page<BookDto> books = bookService.getBooksDtoByCategory(id, pageable);
+    public ResponseEntity<?> getByCategoryId(@PathVariable("id") Long id,
+                                             Pageable pageable,
+                                             PagedResourcesAssembler<BookDto> assembler){
+        Page<BookDto> books = bookService.getByCategory(id, pageable);
         return ResponseEntity.ok(assembler.toModel(books));
     }
 
     @GetMapping(value = "/search/findByTitle/{title}")
-    public ResponseEntity<CollectionModel<EntityModel<?>>> getBooksPagedByCategoryId(@PathVariable("title") String title){
+    public ResponseEntity<CollectionModel<EntityModel<?>>> getByTitle(@PathVariable("title") String title){
 
-        List<EntityModel<?>> books = bookService.getBooksDtoByTitle(title).stream()
+        List<EntityModel<?>> books = bookService.getByTitle(title).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
@@ -78,14 +78,14 @@ public class BookController {
     }
 
     @GetMapping(value = "/search/findByAuthorId/{id}")
-    public ResponseEntity<?> getBooksByAuthorId(@PathVariable("id") long id){
-        List<EntityModel<?>> books =  bookService.getBooksDtoByAuthorId(id).stream()
+    public ResponseEntity<?> getByAuthorId(@PathVariable("id") long id){
+        List<EntityModel<?>> books =  bookService.getByAuthorId(id).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
         // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(
-                linkTo(methodOn(BookController.class).getBooksByAuthorId(id)).withSelfRel());
+                linkTo(methodOn(BookController.class).getByAuthorId(id)).withSelfRel());
         return ResponseEntity.ok(collection);
     }
 

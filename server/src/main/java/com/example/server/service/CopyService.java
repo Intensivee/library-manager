@@ -21,7 +21,12 @@ public class CopyService {
         this.copyMapper = copyMapper;
     }
 
-    public List<CopyDto> getCopiesByUserId(Long id){
+    public List<CopyDto> getAllByBookId(Long id){
+        List<Copy> copies = this.copyRepository.findByBookId(id);
+        return this.copyMapper.copiesToDto(copies);
+    }
+
+    public List<CopyDto> getAllByUserId(Long id){
         List<Copy> copies = this.copyRepository.findByUserId(id);
         return this.copyMapper.copiesToDto(copies);
     }

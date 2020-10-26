@@ -43,7 +43,7 @@ export class SearchComponent implements OnInit {
       } else {
         this.authorService.getAuthorsByName(this.currentKey)
           .subscribe(data => {
-            this.authors = data._embedded.authors;
+            this.authors = data;
           });
       }
     }
