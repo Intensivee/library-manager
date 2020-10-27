@@ -1,4 +1,8 @@
+import { UserService } from '../../service/user.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-user-details',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor() { }
+  user: User = new User();
+
+
+  constructor(private route: ActivatedRoute,
+              private userService: UserService) { }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(() => this.getUser());
+  }
+
+  getUser(): void {
+    if (this.route.snapshot.paramMap.has('id')){
+      const id = +this.route.snapshot.paramMap.get('id');
+      this.userService.getUser(id).subscribe(data => this.user = data);
+    }
+  }
+
+  dayDifference(value: Date): number {
+    const currentDate = new Date();
+    const returnDate = new Date(value);
+    const difference = returnDate.getTime() - currentDate.getTime();
+    return Math.ceil( difference / (1000 * 3600 * 24));
   }
 
 }
+

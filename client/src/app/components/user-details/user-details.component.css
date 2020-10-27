@@ -1,0 +1,34 @@
+.user-copies {
+    position: relative;
+    top: 100px;
+    left: 140px;
+  }
+
+.user-copies p {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.user-details{
+  position: relative;
+  top: 80px;
+  left: 100px;   
+ }
+
+.name {
+    font-weight: 700;
+    font-size: 30px;
+  }
+
+.other p{
+    position: relative;
+    left: 30px;
+    margin: 4px;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.solid {
+    width: 57%;
+    right: 450px;
+}

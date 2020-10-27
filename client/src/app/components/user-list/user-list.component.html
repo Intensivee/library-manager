@@ -48,7 +48,8 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell  *matHeaderCellDef > akcje </th>
           <td mat-cell *matCellDef="let user" > 
-            <button type="button" class="btn btn-sm btn-info" routerLink="#">Szczegóły</button>
+            <a routerLink="/users/{{user.id}}"><button type="button" class="btn btn-sm btn-info" 
+            >Szczegóły</button></a>
             <button type="button" class="btn btn-sm btn-success" *ngIf="user.role == 0" (click)="activateUser(user)">Aktywuj</button>
             <button type="button" class="btn btn-sm btn-secondary" *ngIf="user.role == 1" (click)="deActivateUser(user)">Dezaktywuj</button>
           </td>

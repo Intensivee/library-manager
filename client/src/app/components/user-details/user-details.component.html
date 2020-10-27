@@ -1,1 +1,70 @@
-<p>user-details works!</p>
+<div class="return">
+    <button routerLink="/users" type="button" class="btn btn-outline-secondary"><i class="fas fa-caret-left"></i> Do listy użytkowników</button>
+</div>
+
+
+<div class="user-details">
+
+    <p class="name">{{user.firstName}} {{user.lastName}}</p>
+    <div class="other">
+        <p><strong>Login: </strong> {{user.username}}</p>
+        <p><strong>Email: </strong> {{user.email}}</p>
+        <p *ngIf="user.role == 0"><strong>Typ użytkownika: </strong> Nowe konto</p>
+        <p *ngIf="user.role == 1"><strong>Typ użytkownika:</strong> Sprawdzony</p>
+        <p *ngIf="user.role == 2"><strong>Typ użytkownika: </strong> Pracownik</p>
+        <p *ngIf="user.role == 3"><strong>Typ użytkownika: </strong> Administrator</p>
+        <p><strong>Wypożyczone książki: </strong> {{user.copies.length}}</p>
+    </div>
+    <hr class="solid">
+
+</div>
+
+
+
+
+<div class="user-copies">
+
+    <p>Wypożyczone książki:</p>
+
+<div *ngIf="user.copies.length>0" class="table-responsive">
+
+    <table class="table table-sm table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th class="th-sm" scope="col">Numer</th>
+            <th class="th-sm" scope="col">Status</th>
+            <th class="th-sm" scope="col">Stron</th>
+            <th class="th-sm" scope="col">Data wypożyczenia</th>
+            <th class="th-sm" scope="col">Data zwrotu</th>
+            <th class="th-sm" scope="col">Akcja</th>
+          </tr>
+        </thead>
+        <tbody  class="tbody-dark">
+          <tr *ngFor="let copy of user.copies">
+            <th>{{copy.id}}</th>
+
+            <th class="center text-success" *ngIf="dayDifference(copy.returnDate)>0">
+            {{dayDifference(copy.returnDate)}} dni do terminu</th>
+            <th class="center text-warning" *ngIf="dayDifference(copy.returnDate)==0">Zwrot dziś</th>
+            <th class="center text-danger" *ngIf="dayDifference(copy.returnDate)<0">{{dayDifference(copy.returnDate) | absoluteValue}} dni po terminie</th>
+
+            <th class="center">{{copy.pages}}</th>
+
+            <th class="center" *ngIf="copy.borrowDate">{{copy.borrowDate | date:'dd-MM-yyyy'}}</th>
+            <th class="center" *ngIf="!copy.borrowDate">----------------------</th>
+            
+            <th class="center" *ngIf="copy.returnDate">{{copy.returnDate | date:'dd-MM-yyyy'}}</th>
+            <th class="center" *ngIf="!copy.returnDate">----------------------</th>
+              
+            <th class="center text-info" *ngIf="!copy.borrowed"><a routerLink="" >Zamow</a></th>
+            <th class="center" *ngIf="copy.borrowed">-------</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>
+
+<div *ngIf="user.copies.length==0" class="user-copies">
+      <h5>Ten użytkownik obecnie nie posiada żadnych wypożyczonych książek.</h5>
+</div>

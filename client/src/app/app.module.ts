@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { AbsoluteValuePipe } from './pipes/absolute-value.pipe';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -36,7 +37,8 @@ const MAT_MODULES = [
     BookDetailsComponent,
     AuthorDetailsComponent,
     UserListComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    AbsoluteValuePipe
   ],
   imports: [
     BrowserModule,

@@ -19,8 +19,11 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
-    console.log(`${API_URL}/users/${user.id}`);
     return this.httpClient.put<User>(`${API_URL}/users/${user.id}`, user);
+  }
+
+  getUser(id: number): Observable<User> {
+    return this.httpClient.get<User>(`${API_URL}/users/${id}`);
   }
 }
 
