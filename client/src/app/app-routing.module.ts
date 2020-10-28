@@ -8,8 +8,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'book/:id', component: BookDetailsComponent },
-  { path: 'books/:id', component: BookListComponent },
+  { path: 'books/:id', component: BookDetailsComponent },
+  { path: 'books/category/:id', component: BookListComponent },
   { path: 'books', component: BookListComponent },
   { path: 'users/:id', component: UserDetailsComponent},
   { path: 'users', component: UserListComponent},

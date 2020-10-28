@@ -12,36 +12,39 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getDtoBooks(): Observable<Book[]> {
+  getBooks(): Observable<Book[]> {
     return this.httpClient.get<UnwrapResponse>(`${API_URL}/books`).pipe(
       map(response => response._embedded.bookDtoes)
     );
   }
 
-  getDtoBook(id: number): Observable<Book> {
+  getBook(id: number): Observable<Book> {
     return this.httpClient.get<Book>(`${API_URL}/books/${id}`);
   }
 
-  getDtoBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
+  getBookByCopyId(id: number): Observable<Book> {
+    return this.httpClient.get<Book>(`${API_URL}/books/${id}`);
+  }
+  getBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
     const url = `${API_URL}/books/paged?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getDtoBooksByCategoryId(page: number,
+  getBooksByCategoryId(page: number,
                           pageSize: number,
                           categoryId: number): Observable<UnwrapPagedResponse> {
     const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getDtoBooksByTitle(title: string): Observable<Book[]> {
+  getBooksByTitle(title: string): Observable<Book[]> {
     const url = `${API_URL}/books/search/findByTitle/${title}`;
     return this.httpClient.get<UnwrapResponse>(url).pipe(
       map(response => response._embedded.bookDtoes)
     );
   }
 
-  getDtoBooksByAuthorId(id: number): Observable<Book[]> {
+  getBooksByAuthorId(id: number): Observable<Book[]> {
     const url = `${API_URL}/books/search/findByAuthorId/${id}`;
     return this.httpClient.get<UnwrapResponse>(url).pipe(
       map(response => response._embedded.bookDtoes)

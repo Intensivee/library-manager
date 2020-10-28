@@ -13,7 +13,7 @@ public class CategoryMapper {
     public CategoryDto categoryToDto(Category category){
         return new CategoryDto(
                 category.getId(),
-                category.getCategoryName()
+                category.getName()
         );
     }
 

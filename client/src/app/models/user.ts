@@ -7,5 +7,5 @@ export class User {
     username: string;
     email: string;
     role: number;
-    copies: Copy[];
+    copies: Copy[] = [];
 }

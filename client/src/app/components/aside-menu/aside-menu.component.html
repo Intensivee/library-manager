@@ -11,7 +11,7 @@
 
     <h4>Kategorie:</h4>
     <ul *ngFor="let category of categories">
-        <li><a routerLink="books/{{category.id}}">{{category.categoryName}}</a></li>
+        <li><a routerLink="books/category/{{category.id}}">{{category.name}}</a></li>
     </ul>
 
 </aside>

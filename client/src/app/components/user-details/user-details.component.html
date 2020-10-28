@@ -31,7 +31,8 @@
     <table class="table table-sm table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th class="th-sm" scope="col">Numer</th>
+            <th class="th-sm" scope="col">Nr. Kopii</th>
+            <th class="th-sm" scope="col">Tytuł książki</th>
             <th class="th-sm" scope="col">Status</th>
             <th class="th-sm" scope="col">Stron</th>
             <th class="th-sm" scope="col">Data wypożyczenia</th>
@@ -40,24 +41,23 @@
           </tr>
         </thead>
         <tbody  class="tbody-dark">
-          <tr *ngFor="let copy of user.copies">
-            <th>{{copy.id}}</th>
+          <tr *ngFor="let details of borrowDetails">
+            <th>{{details.copy.id}}</th>
+            <th><a class="book-title" routerLink="/books/{{details.book.id}}">{{details.book.title}}</a></th>
+            <th class="text-success" *ngIf="dayDifference(details.copy.returnDate)>0">
+            {{dayDifference(details.copy.returnDate)}} dni do terminu</th>
+            <th class="text-warning" *ngIf="dayDifference(details.copy.returnDate)==0">Zwrot dziś</th>
+            <th class="text-danger" *ngIf="dayDifference(details.copy.returnDate)<0">{{dayDifference(details.copy.returnDate) | absoluteValue}} dni po terminie</th>
 
-            <th class="center text-success" *ngIf="dayDifference(copy.returnDate)>0">
-            {{dayDifference(copy.returnDate)}} dni do terminu</th>
-            <th class="center text-warning" *ngIf="dayDifference(copy.returnDate)==0">Zwrot dziś</th>
-            <th class="center text-danger" *ngIf="dayDifference(copy.returnDate)<0">{{dayDifference(copy.returnDate) | absoluteValue}} dni po terminie</th>
+            <th>{{details.copy.pages}}</th>
 
-            <th class="center">{{copy.pages}}</th>
-
-            <th class="center" *ngIf="copy.borrowDate">{{copy.borrowDate | date:'dd-MM-yyyy'}}</th>
-            <th class="center" *ngIf="!copy.borrowDate">----------------------</th>
+            <th *ngIf="details.copy.borrowDate">{{details.copy.borrowDate | date:'dd-MM-yyyy'}}</th>
+            <th *ngIf="!details.copy.borrowDate">----------------------</th>
             
-            <th class="center" *ngIf="copy.returnDate">{{copy.returnDate | date:'dd-MM-yyyy'}}</th>
-            <th class="center" *ngIf="!copy.returnDate">----------------------</th>
+            <th *ngIf="details.copy.returnDate">{{details.copy.returnDate | date:'dd-MM-yyyy'}}</th>
+            <th *ngIf="!details.copy.returnDate">----------------------</th>
               
-            <th class="center text-info" *ngIf="!copy.borrowed"><a routerLink="" >Zamow</a></th>
-            <th class="center" *ngIf="copy.borrowed">-------</th>
+            <th class="center">-------</th>
           </tr>
         </tbody>
       </table>

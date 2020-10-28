@@ -28,7 +28,7 @@ export class AuthorDetailsComponent implements OnInit {
       const authorId = +this.route.snapshot.paramMap.get('id');
       this.authorService.getAuthorById(authorId).subscribe(author => this.author = author);
 
-      this.bookService.getDtoBooksByAuthorId(authorId).subscribe(books => {
+      this.bookService.getBooksByAuthorId(authorId).subscribe(books => {
         this.books = books;
       });
     }

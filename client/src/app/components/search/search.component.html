@@ -8,7 +8,7 @@
   <div *ngFor="let book of books">
     <div class="list-container">
 
-      <a routerLink="/book/{{book.id}}">
+      <a routerLink="/books/{{book.id}}">
         <h3>{{book.title}}</h3>
         <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
       </a>
@@ -17,13 +17,13 @@
 
       <div class="categories">
         <ul *ngFor="let category of book.categories">
-          <li><a routerLink="/books/{{category.id}}">{{category.name}}</a></li>
+          <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
         </ul>
       </div>
 
       <p class="description">
         {{book.description | slice:0:200}}..
-        <a routerLink="/book/{{book.id}}">Czytaj dalej</a>
+        <a routerLink="/books/{{book.id}}">Czytaj dalej</a>
       </p>
 
       <hr class="solid">

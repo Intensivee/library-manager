@@ -12,7 +12,7 @@ public class Category {
     private Long id;
 
     @Column(name = "category_name")
-    private String categoryName;
+    private String name;
 
     @ManyToMany
     @JoinTable(
@@ -33,12 +33,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String categoryName) {
+        this.name = categoryName;
     }
 
     public List<Book> getBooks() {

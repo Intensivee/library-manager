@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit {
     if (this.route.snapshot.paramMap.has('key')) {
       this.currentKey = this.route.snapshot.paramMap.get('key');
       if (this.searchForBooks) {
-        this.bookService.getDtoBooksByTitle(this.currentKey)
+        this.bookService.getBooksByTitle(this.currentKey)
           .subscribe(data => {
             this.books = data;
             console.log(data);
