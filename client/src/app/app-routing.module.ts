@@ -1,3 +1,4 @@
+import { OverdueCopiesComponent } from './components/overdue-copies/overdue-copies.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { AuthorDetailsComponent } from './components/author-details/author-details.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'books/:id', component: BookDetailsComponent },
   { path: 'books/category/:id', component: BookListComponent },
   { path: 'books', component: BookListComponent },
+  { path: 'copies', component: OverdueCopiesComponent },
   { path: 'users/:id', component: UserDetailsComponent},
   { path: 'users', component: UserListComponent},
   { path: 'author/:id', component: AuthorDetailsComponent},

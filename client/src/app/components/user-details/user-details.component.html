@@ -42,22 +42,22 @@
         </thead>
         <tbody  class="tbody-dark">
           <tr *ngFor="let details of borrowDetails">
-            <th>{{details.copy.id}}</th>
-            <th><a class="book-title" routerLink="/books/{{details.book.id}}">{{details.book.title}}</a></th>
-            <th class="text-success" *ngIf="dayDifference(details.copy.returnDate)>0">
-            {{dayDifference(details.copy.returnDate)}} dni do terminu</th>
-            <th class="text-warning" *ngIf="dayDifference(details.copy.returnDate)==0">Zwrot dziś</th>
-            <th class="text-danger" *ngIf="dayDifference(details.copy.returnDate)<0">{{dayDifference(details.copy.returnDate) | absoluteValue}} dni po terminie</th>
+            <td>{{details.copyId}}</td>
+            <td><a class="book-title" routerLink="/books/{{details.copyId}}">{{details.bookTitle}}</a></td>
+            <td class="text-success" *ngIf="dayDifference(details.returnDate)>0">
+            {{dayDifference(details.returnDate)}} dni do terminu</td>
+            <td class="text-warning" *ngIf="dayDifference(details.returnDate)==0">Zwrot dziś</td>
+            <td class="text-danger" *ngIf="dayDifference(details.returnDate)<0">{{dayDifference(details.returnDate) | absoluteValue}} dni po terminie</td>
 
-            <th>{{details.copy.pages}}</th>
+            <td>{{details.pages}}</td>
 
-            <th *ngIf="details.copy.borrowDate">{{details.copy.borrowDate | date:'dd-MM-yyyy'}}</th>
-            <th *ngIf="!details.copy.borrowDate">----------------------</th>
+            <td *ngIf="details.borrowDate">{{details.borrowDate | date:'dd-MM-yyyy'}}</td>
+            <td *ngIf="!details.borrowDate">----------------------</td>
             
-            <th *ngIf="details.copy.returnDate">{{details.copy.returnDate | date:'dd-MM-yyyy'}}</th>
-            <th *ngIf="!details.copy.returnDate">----------------------</th>
+            <td *ngIf="details.returnDate">{{details.returnDate | date:'dd-MM-yyyy'}}</td>
+            <td *ngIf="!details.returnDate">----------------------</td>
               
-            <th class="center">-------</th>
+            <td class="center">-------</td>
           </tr>
         </tbody>
       </table>

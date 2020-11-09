@@ -30,4 +30,9 @@ public class CopyService {
         List<Copy> copies = this.copyRepository.findByUserId(id);
         return this.copyMapper.copiesToDto(copies);
     }
+
+    public List<CopyDto> getBorrowedCopies(){
+        List<Copy> copies = copyRepository.findByBorrowedTrue();
+        return this.copyMapper.copiesToDto(copies);
+    }
 }

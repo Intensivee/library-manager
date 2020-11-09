@@ -46,6 +46,12 @@ public class UserService {
         return this.userMapper.userToDto(user);
     }
 
+    public UserDto getByCopyId(Long id){
+        User user = this.userRepository.findByCopiesId(id)
+                .orElseThrow(UserNotFoundException::new);
+        return this.userMapper.userToDto(user);
+    }
+
     public UserDto updateUser(UserDto userDto){
         User userToUpdate = this.userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new UserNotFoundException(userDto.getId()));

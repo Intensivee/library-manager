@@ -41,7 +41,6 @@ public class UserController {
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody UserDto user){
-        logger.info("put");
         UserDto userUpdated = this.userService.updateUser(user);
         return ResponseEntity.ok(userUpdated);
     }
@@ -61,5 +60,11 @@ public class UserController {
         // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(users).add(linkTo(UserController.class).withSelfRel());
         return ResponseEntity.ok(collection);
+    }
+
+    @GetMapping("/search/findByCopyId/{id}")
+    public ResponseEntity<?> findBYCopyId(@PathVariable("id") Long id){
+        UserDto user = this.userService.getByCopyId(id);
+        return ResponseEntity.ok(EntityModel.of(user, linkTo(UserController.class).slash(user.getId()).withSelfRel()));
     }
 }

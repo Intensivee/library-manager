@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @RestResource(exported = false)
     Optional<User> findById(Long id);
+
+    @RestResource(exported = false)
+    Optional<User> findByCopiesId(Long id);
 }

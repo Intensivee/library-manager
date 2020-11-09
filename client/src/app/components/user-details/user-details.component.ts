@@ -1,11 +1,10 @@
-import { BookService } from './../../service/book.service';
-import { Copy } from './../../models/copy';
+import { BorrowDetailsService } from '../../service/borrow-details.service';
+import { borrowDetails } from '../../models/borrow-details';
+import { BookService } from '../../service/book.service';
 import { UserService } from '../../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
-import { Book } from 'src/app/models/book';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-details',
@@ -20,7 +19,8 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
-              private bookService: BookService) { }
+              private bookService: BookService,
+              private borrowDetailsService: BorrowDetailsService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -35,19 +35,9 @@ export class UserDetailsComponent implements OnInit {
       this.userService.getUser(id)
       .subscribe(data => {
         this.user = data;
-        this.getBorrowDetails(this.user.copies);
+        this.borrowDetails = this.borrowDetailsService.getBorrowDetailsByCopies(this.user.copies);
       });
     }
-  }
-
-  getBorrowDetails(copies: Copy[]): void{
-    copies.forEach(copy => {
-      this.bookService.getBook(copy.id).subscribe(book => {
-        this.borrowDetails.push(new borrowDetails(copy, book));
-        this.borrowDetails.sort((n1, n2) => new Date(n1.copy.returnDate).getTime() - new Date(n2.copy.returnDate).getTime());
-        // TODO: ^ find more efficient way than sorting with each subscribe (.pipe(finallize(..)), .add(..) - doesnt work)
-      });
-    });
   }
 
   dayDifference(value: Date): number {
@@ -58,8 +48,3 @@ export class UserDetailsComponent implements OnInit {
   }
 
 }
-
-class borrowDetails {
-  constructor(public copy: Copy, public book: Book){}
-}
-

@@ -39,4 +39,13 @@ public class CopyController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
     }
+
+    @GetMapping("/search/findBorrowed")
+    public ResponseEntity<?> getBorrowedCopies(){
+        List<EntityModel<?>> copies = this.copyService.getBorrowedCopies().stream()
+                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(copy.getId()).withSelfRel()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
+    }
+
 }

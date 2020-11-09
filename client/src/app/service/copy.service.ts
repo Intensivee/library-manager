@@ -26,8 +26,14 @@ export class CopyService {
       map(data => data._embedded.copyDtoes)
     );
   }
-}
 
+  getBorrowedCopies(): Observable<Copy[]> {
+    const url = `${API_URL}/copies/search/findBorrowed`;
+    return this.http.get<UnwrapResponse>(url).pipe(
+      map(data => data._embedded.copyDtoes)
+    );
+  }
+}
 
 interface UnwrapResponse {
   _embedded: {

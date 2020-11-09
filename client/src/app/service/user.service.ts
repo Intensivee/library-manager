@@ -1,5 +1,5 @@
-import { map } from 'rxjs/operators';
 import { API_URL } from '../app.constants';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -24,6 +24,10 @@ export class UserService {
 
   getUser(id: number): Observable<User> {
     return this.httpClient.get<User>(`${API_URL}/users/${id}`);
+  }
+
+  getUserByCopyId(id: number): Observable<User> {
+    return this.httpClient.get<User>(`${API_URL}/users/search/findByCopyId/${id}`);
   }
 }
 
