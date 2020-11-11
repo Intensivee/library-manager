@@ -1,4 +1,3 @@
-
 .user-details-container{
   display: flex;
   width: 100%;
@@ -47,7 +46,7 @@
 }
 
 .table-title{
-  margin-right: 35%;
+  margin-right: 39%;
   font-size: 1.2em;
   font-weight: bold;
 }
@@ -60,6 +59,7 @@
 
 .table {
   margin: auto;
+  font-weight: bold;
 }
 
 .book-title{
