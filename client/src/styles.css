@@ -80,17 +80,6 @@ hr.solid {
   margin: 0 5px 0 5px;
 }
 
-.return {
-  position: relative;
-  top: 40px;
-  left: 45px;
-}
-
-.return button {
-  font-size: 18px;
-  font-weight: 700;
-}
-
 .copies {
   position: relative;
   left: 160px;
@@ -144,3 +133,8 @@ hr.solid {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* -------------------------------------- */
+
+
