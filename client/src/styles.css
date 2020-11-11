@@ -80,61 +80,19 @@ hr.solid {
   margin: 0 5px 0 5px;
 }
 
-.copies {
-  position: relative;
-  left: 160px;
-  bottom: 120px;
-}
-
-.table {
-  max-width: 50%;
-}
-
-.center {
-  text-align: center;
-}
-
-
-.detail-view {
-  position: relative;
-  top: 20px;
-  left: 160px;   
- }
- 
- .detail-view img {
-     width: 200px;
- }
- 
- .detail-view h2 {
-     position: relative;
-     left: 250px;
-     top: 50px;
-     font-weight: bold;
-     color: black;
- }
- 
- .detail-view .author {
-     position: relative;
-     bottom: 60px;
-     left: 50px;
-     font-size: 22px;
-     font-weight: bold;
-     color: black;
- }
- 
- .detail-view p {
-     position: relative;
-     bottom: 170px;
-     left: 420px;
-     width: 30%;
-     min-height: 150px;
-     font-size: 20px;
- }
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 /* -------------------------------------- */
 
+.return {
+  align-self: flex-start;
+  margin-top: 2em;
+  margin-left: 2em;
+}
 
+.return-btn {
+  font-size: 1em;
+  font-weight: bold;
+}

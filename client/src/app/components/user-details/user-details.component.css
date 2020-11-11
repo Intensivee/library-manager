@@ -7,17 +7,6 @@
   align-items: center;
 }
 
-.return {
-  align-self: flex-start;
-  margin-top: 2em;
-  margin-left: 2em;
-}
-
-.return-btn {
-  font-size: 1em;
-  font-weight: bold;
-}
-
 .user-details{
   display: flex;
   flex-direction: column;
@@ -41,19 +30,19 @@
  }
 
  .solid {
-  width: 50%;
+  width: 57%;
   margin-top: 0;
 }
 
 .table-title{
-  margin-right: 39%;
+  margin-right: 45%;
   font-size: 1.2em;
   font-weight: bold;
 }
 
 .user-copies {
   display: flex;
-  width:100%;
+  width:56%;
   align-self: center;
 }
 
