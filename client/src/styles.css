@@ -96,3 +96,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 1em;
   font-weight: bold;
 }
+
+.list {
+  list-style: none;
+}

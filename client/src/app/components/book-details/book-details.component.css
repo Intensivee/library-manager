@@ -15,8 +15,7 @@
  }
 
  .book-img {
-  height: auto;
-  min-width: 11vw;
+  width: 11vw;
   border: 1px solid #333;
   border-radius: .2em;
 }

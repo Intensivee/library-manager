@@ -1,120 +1,85 @@
-.solid {
-    position: relative;
+.author-details-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.detail-view {
+    display: flex;
     width: 60%;
-    right: 420px;
-    bottom: 330px;
+}
+
+.author-img {
+    width:11vw;
+    height: auto;
+    border: 1px solid #333;
+    border-radius: .2em;
+}
+
+.author-details {
+    margin-left: 2em;
 }
 
 .date {
-    position: relative;
-    left: 250px;
-    bottom: 230px;
-    font-weight: 700;
-  }
+    margin: 1em;
+    font-weight: bold;
+    font-size: 1em;
+}
 
 .memoir {
-    position: relative;
-    width: 40%;
-    left: 300px;
-    bottom: 350px;
+    width: 80%;
+    margin: 1em;
+    font-size: 1em;
+}
+
+.solid {
+    width: 70%;
 }
 
 .books-header {
-    position: relative;
-    bottom: 300px;
-    left: 150px;
+    width: 70%;
+    font-size: 1.6em;
 }
 
 .author-books {
-    position: relative;
-    bottom: 400px;
-    left: 150px;
-}
-
-.list-container p {
-    left: 140px;
-  }
-
-.solid-bk {
-    position: relative;
     width: 70%;
-    right: 300px;
-    top: 15px;
 }
 
-.list-container ul {
-    display: inline-block;
-    margin: 0px;
-    padding: 0px;
+.book-container {
+    display: flex;
+    margin: 2em;
 }
 
-ul.categories li{
-    position: relative;
-    left: 30px;
-    bottom: 15px;
-    list-style: none;
+
+.book-img {
+    width: 7vw;
+    border: 1px solid #333;
+    border-radius: .2em;
 }
 
-ul.categories li a {
-    font-size: 14px;
-    font-weight: 700;
-    margin: 5px;
+.book-details {
+    display: flex;
+    margin-left: 2em;
+    flex-direction: column;
+}
+
+.categories {
+    display: flex;
+    margin-left: 1em;
+    padding: 0;
+}
+
+.category-link, .book-link {
+    margin: 3px;
+    font-size: 1em;
+    font-weight: bold;
+    color: black;
 }
 
 .description {
-    top: 110px;
+    width: 50%;
+    margin-left: 1em;
 }
-
-
-/*  */
-
-.copies {
-    position: relative;
-    left: 160px;
-    bottom: 120px;
-  }
-  
-  .table {
-    max-width: 50%;
-  }
-  
-  .center {
-    text-align: center;
-  }
-  
-  
-  .detail-view {
-    position: relative;
-    top: 20px;
-    left: 160px;   
-   }
-   
-   .detail-view img {
-       width: 200px;
-   }
-   
-   .detail-view h2 {
-       position: relative;
-       left: 250px;
-       top: 50px;
-       font-weight: bold;
-       color: black;
-   }
-   
-   .detail-view .author {
-       position: relative;
-       bottom: 60px;
-       left: 50px;
-       font-size: 22px;
-       font-weight: bold;
-       color: black;
-   }
-   
-   .detail-view p {
-       position: relative;
-       bottom: 170px;
-       left: 420px;
-       width: 30%;
-       min-height: 150px;
-       font-size: 20px;
-   }

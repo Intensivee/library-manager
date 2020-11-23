@@ -6,8 +6,10 @@
   
   <div class="detail-view">
     
-    <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="img-responsive book-img">
-
+    <figure>
+      <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="book-img img-responsive">
+    </figure>
+      
     <div class="book-details">
       <h2 class="book-title">{{book.title}}</h2>
       <a routerLink="/author/{{book.authorId}}" class="author-name">{{book.authorName}}</a>
@@ -19,14 +21,11 @@
     <div class="description">
       <p >{{book.description}}</p>
     </div>
-
-
   </div>
+
   <hr class="solid">
   
-  
-  <div class="copies">
-    
+  <div class="copies">  
     <h3>Egzemplarze:</h3>
     
     <div *ngIf="copies.length>0" class="table-responsive">
@@ -63,7 +62,6 @@
         </tbody>
       </table>
     </div>
-    
   </div>
   
   <div *ngIf="copies.length==0" class="copies">
