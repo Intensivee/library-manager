@@ -36,6 +36,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: flex;
   flex-direction: column;
   margin: 1em 2em;
+  min-width: 40%;
   white-space: nowrap;
 }
 
@@ -70,9 +71,10 @@ font-size: 1.15em;
 }
 
 .description {
-overflow: hidden;
-margin-top: 2em;
-flex-grow: 1;
+  overflow: hidden;
+  margin-top: 2em;
+  width: 50%;
+  flex-grow: 1;
 }
 
 /* -------------------------------------- */

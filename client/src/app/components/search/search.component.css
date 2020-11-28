@@ -1,82 +1,62 @@
-.search-buttons {
-  position: absolute;
-  left: 32%;
-  margin: 40px;
+
+.search-container{
+  display: flex;
+  flex-direction: column;
 }
 
-.search-buttons button {
+.search-buttons {
+  align-self: center;
+  margin: 2em;
+}
+
+.btn {
   margin: 0 5px 0 5px;
 }
 
-.list-container .date {
-    position: absolute;
-    width: 100vw;
-    left: 80px;
-    top: 70px;
-    font-weight: 700;
-  }
 
-  .list-container .author {
-    top: 18px;
-  }
+/* Author's classes */
 
-  .list-container ul {
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    left: 120px;
-    bottom: 95px;
-    list-style: none;
-}
-
-.categories li a {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 5px;
-}
-
-.list-container a {
-    top: 20px;
-}
-
-.list-container {
-  position: relative;
-  top: 90px;
-  left: 5%;
+.author-list {
   width: 70%;
+  margin-left: 7em;
 }
 
-.list-container img {
-  width: 7%;
+.author-container {
+  display: flex;
+  width: 90%;
+  margin-top: 1em;
 }
 
-.list-container h3 {
-  position: relative;
-  top: 42px;
-  left: 120px;
+.author-details {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 2em;
+  min-width: 30%;
+  white-space: nowrap;
 }
 
-.list-container .author {
-  position: relative;
+.author-img {
+  width:6vw;
+  height: auto;
+  border: 1px solid #333;
+  border-radius: .2em;
+}
+
+.date {
   padding: 2px;
-  left: 50px;
+  margin-left: .3em;
+  font-size: 1.15em;
 }
 
-.list-container a {
+.memoir {
+  overflow: hidden;
+  margin-top: 2em;
+  width: 50%;
+  flex-grow: 1;
+}
+
+/* TODO: a paragraphs */
+a {
   color: black;
   font-weight: bold;
-  transition: color .3s;
-}
-
-.list-container a:hover {
-  color: royalblue;
-}
-
-.list-container p {
-  position: absolute;
-  overflow: hidden;
-  left: 350px;
-  top: 80px;
-  width: 50%;
 }

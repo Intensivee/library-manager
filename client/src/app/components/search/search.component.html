@@ -1,62 +1,69 @@
-<div *ngIf="searchForBooks">
+  <div *ngIf="searchForBooks" class="search-container">
+    
+    <div class="search-buttons">
+      <button (click)="buttonPress(true)" type="button" class="btn btn-secondary active btn-lg">Książki</button>
+      <button (click)="buttonPress(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
+    </div>
+    
+    <div class="book-list" *ngFor="let book of books">
+      <div class="book-container">
+        <img src="{{book.imageUrl}}" alt="book picture" class="book-img img-responsive">
+        
+        <div class="book-details">
 
-  <div class="search-buttons">
-    <button (click)="buttonPress(true)" type="button" class="btn btn-secondary active btn-lg">Książki</button>
-    <button (click)="buttonPress(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
-  </div>
-
-  <div *ngFor="let book of books">
-    <div class="list-container">
-
-      <a routerLink="/books/{{book.id}}">
-        <h3>{{book.title}}</h3>
-        <img src="{{book.imageUrl}}" alt="book picture" class="img-responsive">
-      </a>
-
-      <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
-
-      <div class="categories">
-        <ul *ngFor="let category of book.categories">
-          <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
-        </ul>
+          <a routerLink="/books/{{book.id}}">
+            <h3>{{book.title}}</h3>
+          </a>
+          
+          <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
+          
+          <div class="categories">
+            <ul *ngFor="let category of book.categories">
+              <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
+            </ul>
+          </div>
+        </div>
+          
+        <p class="description">
+          {{book.description | slice:0:200}}..
+          <a routerLink="/books/{{book.id}}">Czytaj dalej</a>
+        </p>
+        
       </div>
-
-      <p class="description">
-        {{book.description | slice:0:200}}..
-        <a routerLink="/books/{{book.id}}">Czytaj dalej</a>
-      </p>
-
       <hr class="solid">
     </div>
+    
   </div>
-
-</div>
-
-<div *ngIf="!searchForBooks">
-
-  <div class="search-buttons">
-    <button (click)="buttonPress(true)" type="button" class="btn btn-secondary  btn-lg">Książki</button>
-    <button (click)="buttonPress(false)" type="button" class="btn btn-secondary active btn-lg">Autorzy</button>
-  </div>
-
-  <div class="list-container" *ngFor="let author of authors">
-
-    <a routerLink="/author/{{author.id}}">
-      <h3>{{author.firstName}} {{author.lastName}}</h3>
-      <img src="{{author.imageUrl}}" alt="zdjęcie {{author.firstName}}" class="img-responsive">
-    </a>
-
-    <div class="date">
-      <p class="author">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
+  
+  <div *ngIf="!searchForBooks" class="search-container">
+    
+    <div class="search-buttons">
+      <button (click)="buttonPress(true)" type="button" class="btn btn-secondary  btn-lg">Książki</button>
+      <button (click)="buttonPress(false)" type="button" class="btn btn-secondary active btn-lg">Autorzy</button>
     </div>
+    
+    <div class="author-list" *ngFor="let author of authors">
+      <div class="author-container">
 
-    <p>
-      {{author.memoir | slice:0:200}}..
-      <a routerLink="/author/{{author.id}}">Sprawdź</a>
-    </p>
+        <img src="{{author.imageUrl}}" alt="zdjęcie {{author.firstName}}" class="author-img img-responsive">
+        
+        <div class="author-details">
+          <a routerLink="/author/{{author.id}}">
+            <h3>{{author.firstName}} {{author.lastName}}</h3>
+          </a>
+          
+          <p class="date">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
+        </div>
 
-
-    <hr class="solid">
+        <p class="memoir">
+          {{author.memoir | slice:0:200}}..
+          <a routerLink="/author/{{author.id}}">Sprawdź</a>
+        </p>
+        
+        
+      </div>
+        <hr class="solid">
+    </div>
+    
   </div>
-
-</div>
+  
