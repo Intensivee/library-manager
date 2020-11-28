@@ -1,3 +1,13 @@
+.search-buttons {
+  position: absolute;
+  left: 32%;
+  margin: 40px;
+}
+
+.search-buttons button {
+  margin: 0 5px 0 5px;
+}
+
 .list-container .date {
     position: absolute;
     width: 100vw;
@@ -28,4 +38,45 @@
 
 .list-container a {
     top: 20px;
+}
+
+.list-container {
+  position: relative;
+  top: 90px;
+  left: 5%;
+  width: 70%;
+}
+
+.list-container img {
+  width: 7%;
+}
+
+.list-container h3 {
+  position: relative;
+  top: 42px;
+  left: 120px;
+}
+
+.list-container .author {
+  position: relative;
+  padding: 2px;
+  left: 50px;
+}
+
+.list-container a {
+  color: black;
+  font-weight: bold;
+  transition: color .3s;
+}
+
+.list-container a:hover {
+  color: royalblue;
+}
+
+.list-container p {
+  position: absolute;
+  overflow: hidden;
+  left: 350px;
+  top: 80px;
+  width: 50%;
 }

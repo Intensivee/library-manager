@@ -7,48 +7,7 @@ body {
   background-color: rgb(218, 212, 201);
 }
 
-.list-container {
-  position: relative;
-  top: 90px;
-  left: 5%;
-  width: 70%;
-}
-
-.list-container img {
-  width: 7%;
-}
-
-.list-container h3 {
-  position: relative;
-  top: 42px;
-  left: 120px;
-}
-
-.list-container .author {
-  position: relative;
-  padding: 2px;
-  left: 50px;
-}
-
-.list-container a {
-  color: black;
-  font-weight: bold;
-  transition: color .3s;
-}
-
-.list-container a:hover {
-  color: royalblue;
-}
-
-.list-container p {
-  position: absolute;
-  overflow: hidden;
-  left: 350px;
-  top: 80px;
-  width: 50%;
-}
-
-hr.solid {
+.solid {
   position: relative;
   width: 100%;
   bottom: 0;
@@ -56,33 +15,65 @@ hr.solid {
   border-top: 1px solid black;
 }
 
-.pagination-up{
-  position: absolute;
-  top: 55px;
-  left: 50%;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.pagination-down {
-  position: relative;
-  margin-bottom: 40px;
-  top: 120px;
-  left: 52%;
-}
-
-.search-buttons {
-  position: absolute;
-  left: 32%;
-  margin: 40px;
-}
-.search-buttons button {
-  margin: 0 5px 0 5px;
-}
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
+/* -------------------book list + search component shared classes */
+
+.book-list {
+  width: 70%;
+  margin-left: 7em;
+}
+
+.book-container {
+  display: flex;
+  width: 90%;
+  margin-top: 1em;
+}
+
+.book-details {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 2em;
+  white-space: nowrap;
+}
+
+.book-img {
+  width:6vw;
+  height: auto;
+  border: 1px solid #333;
+  border-radius: .2em;
+}
+
+.author {
+padding: 2px;
+margin-left: .3em;
+font-size: 1.15em;
+}
+
+.categories {
+  margin-left: .4em;
+}
+
+.categories ul {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.categories li a {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 5px;
+}
+
+.description {
+overflow: hidden;
+margin-top: 2em;
+flex-grow: 1;
+}
 
 /* -------------------------------------- */
 
@@ -100,3 +91,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .list {
   list-style: none;
 }
+
+
