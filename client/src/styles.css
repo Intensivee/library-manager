@@ -1,81 +1,13 @@
 body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
   overflow-x: hidden;
   background-color: rgb(218, 212, 201);
 }
 
-.wrapper {
-  position: relative;
-  top: 46px;
-  left: 300px;
-}
-
-aside {
-  width: 300px;
-  height: 100vw;
-  top: 55px;
-  position: fixed;
-  background-color: #333;
-  z-index: 1;
-}
-
-aside ul {
-  padding: 0;
-  margin: 5px 0 2px 20%;
-  font-size: 20px;
-  list-style: none;
-}
-
-aside ul a {
-  color: lightslategray;
-}
-
-aside h4 {
-  margin: 10% 0 5% 5%;
-  color: white;
-}
-
-.list-container {
-  position: relative;
-  top: 90px;
-  left: 5%;
-  width: 70%;
-}
-
-.list-container img {
-  width: 7%;
-}
-
-.list-container h3 {
-  position: relative;
-  top: 42px;
-  left: 120px;
-}
-
-.list-container .author {
-  position: relative;
-  padding: 2px;
-  left: 50px;
-}
-
-.list-container a {
-  color: black;
-  font-weight: bold;
-  transition: color .3s;
-}
-
-.list-container a:hover {
-  color: royalblue;
-}
-
-.list-container p {
-  position: absolute;
-  overflow: hidden;
-  left: 350px;
-  top: 80px;
-  width: 50%;
-}
-
-hr.solid {
+.solid {
   position: relative;
   width: 100%;
   bottom: 0;
@@ -83,91 +15,83 @@ hr.solid {
   border-top: 1px solid black;
 }
 
-.pagination-up{
-  position: absolute;
-  top: 55px;
-  left: 50%;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.pagination-down {
-  position: relative;
-  margin-bottom: 40px;
-  top: 120px;
-  left: 52%;
-}
-
-.search-buttons {
-  position: absolute;
-  left: 32%;
-  margin: 40px;
-}
-.search-buttons button {
-  margin: 0 5px 0 5px;
-}
-
-.return {
-  position: relative;
-  top: 40px;
-  left: 45px;
-}
-
-.return button {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.copies {
-  position: relative;
-  left: 160px;
-  bottom: 120px;
-}
-
-.table {
-  max-width: 50%;
-}
-
-.center {
-  text-align: center;
-}
-
-
-.detail-view {
-  position: relative;
-  top: 20px;
-  left: 160px;   
- }
- 
- .detail-view img {
-     width: 200px;
- }
- 
- .detail-view h2 {
-     position: relative;
-     left: 250px;
-     top: 50px;
-     font-weight: bold;
-     color: black;
- }
- 
- .detail-view .author {
-     position: relative;
-     bottom: 60px;
-     left: 50px;
-     font-size: 22px;
-     font-weight: bold;
-     color: black;
- }
- 
- .detail-view p {
-     position: relative;
-     bottom: 170px;
-     left: 420px;
-     width: 30%;
-     min-height: 150px;
-     font-size: 20px;
- }
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* -------------------book list + search component shared classes */
+
+.book-list {
+  width: 70%;
+  margin-left: 7em;
+}
+
+.book-container {
+  display: flex;
+  width: 90%;
+  margin-top: 1em;
+}
+
+.book-details {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 2em;
+  min-width: 40%;
+  white-space: nowrap;
+}
+
+.book-img {
+  width:6vw;
+  height: auto;
+  border: 1px solid #333;
+  border-radius: .2em;
+}
+
+.author {
+padding: 2px;
+margin-left: .3em;
+font-size: 1.15em;
+}
+
+.categories {
+  margin-left: .4em;
+}
+
+.categories ul {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.categories li a {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 5px;
+}
+
+.description {
+  overflow: hidden;
+  margin-top: 2em;
+  width: 50%;
+  flex-grow: 1;
+}
+
+/* -------------------------------------- */
+
+.return {
+  align-self: flex-start;
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
+.return-btn {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.list {
+  list-style: none;
+}
+
+

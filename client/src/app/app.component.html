@@ -1,9 +1,21 @@
 
-  <app-nav-bar></app-nav-bar>
-  
-  <app-aside-menu></app-aside-menu>
+<div class="base-container">
 
-  <div class="wrapper">
-    <router-outlet></router-outlet>
-  </div>
+  <nav>
+    <app-nav-bar></app-nav-bar>
+  </nav>
+
+
+  <main>
+    <aside>
+      <app-aside-menu></app-aside-menu>
+    </aside>
+    
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+    
+
+</div>
 

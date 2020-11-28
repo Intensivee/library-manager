@@ -1,33 +1,36 @@
+<div class="book-details-container">
 
-<div class="return">
-    <button routerLink="" type="button" class="btn btn-outline-secondary"><i class="fas fa-caret-left"></i> Do listy książek</button>
-</div>
-
-<div class="detail-view">
-
-    <h2>{{book.title}}</h2>
-    <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="img-responsive">
-
-    <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
+  <div class="return">
+    <button routerLink="" type="button" class="return-btn btn btn-outline-secondary"><i class="fas fa-caret-left"></i> Do listy książek</button>
+  </div>
+  
+  <div class="detail-view">
     
-    <ul class="categories" *ngFor="let category of book.categories">
-      <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
-    </ul>
+    <figure>
+      <img src="{{book.imageUrl}}" alt="okładka {{book.title}}" class="book-img img-responsive">
+    </figure>
+      
+    <div class="book-details">
+      <h2 class="book-title">{{book.title}}</h2>
+      <a routerLink="/author/{{book.authorId}}" class="author-name">{{book.authorName}}</a>
+      <ul class="categories" *ngFor="let category of book.categories">
+        <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
+      </ul>
+    </div>
+    
+    <div class="description">
+      <p >{{book.description}}</p>
+    </div>
+  </div>
 
-    <p>{{book.description}}</p>
-
-    <hr class="solid">
-
-</div>
-
-
-<div class="copies">
-
+  <hr class="solid">
+  
+  <div class="copies">  
     <h3>Egzemplarze:</h3>
-
-<div *ngIf="copies.length>0" class="table-responsive">
-
-    <table class="table table-sm table-bordered">
+    
+    <div *ngIf="copies.length>0" class="table-responsive">
+      
+      <table class="table table-sm table-bordered">
         <thead class="thead-dark">
           <tr>
             <th class="th-sm" scope="col">Numer</th>
@@ -41,27 +44,28 @@
         <tbody  class="tbody-dark">
           <tr *ngFor="let copy of copies">
             <th>{{copy.id}}</th>
-
+            
             <th class="center text-success" *ngIf="!copy.borrowed">Dostępna</th>
             <th class="center text-danger" *ngIf="copy.borrowed">Wypożyczona</th>
-
+            
             <th class="center">{{copy.pages}}</th>
-
+            
             <th class="center" *ngIf="copy.borrowDate">{{copy.borrowDate | date:'dd-MM-yyyy'}}</th>
             <th class="center" *ngIf="!copy.borrowDate">----------------------</th>
             
             <th class="center" *ngIf="copy.returnDate">{{copy.returnDate | date:'dd-MM-yyyy'}}</th>
             <th class="center" *ngIf="!copy.returnDate">----------------------</th>
-              
+            
             <th class="center text-info" *ngIf="!copy.borrowed"><a routerLink="" >Zamow</a></th>
             <th class="center" *ngIf="copy.borrowed">-------</th>
           </tr>
         </tbody>
       </table>
     </div>
-
-</div>
-
-<div *ngIf="copies.length==0" class="copies">
-      <h5>Brak egzemplarzy, skontaktuj się z nami po więcej informacji.</h5>
+  </div>
+  
+  <div *ngIf="copies.length==0" class="copies">
+    <h5>Brak egzemplarzy, skontaktuj się z nami po więcej informacji.</h5>
+  </div>
+  
 </div>

@@ -1,31 +1,62 @@
-.list-container .date {
-    position: absolute;
-    width: 100vw;
-    left: 80px;
-    top: 70px;
-    font-weight: 700;
-  }
 
-  .list-container .author {
-    top: 18px;
-  }
-
-  .list-container ul {
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    left: 120px;
-    bottom: 95px;
-    list-style: none;
+.search-container{
+  display: flex;
+  flex-direction: column;
 }
 
-.categories li a {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 5px;
+.search-buttons {
+  align-self: center;
+  margin: 2em;
 }
 
-.list-container a {
-    top: 20px;
+.btn {
+  margin: 0 5px 0 5px;
+}
+
+
+/* Author's classes */
+
+.author-list {
+  width: 70%;
+  margin-left: 7em;
+}
+
+.author-container {
+  display: flex;
+  width: 90%;
+  margin-top: 1em;
+}
+
+.author-details {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 2em;
+  min-width: 30%;
+  white-space: nowrap;
+}
+
+.author-img {
+  width:6vw;
+  height: auto;
+  border: 1px solid #333;
+  border-radius: .2em;
+}
+
+.date {
+  padding: 2px;
+  margin-left: .3em;
+  font-size: 1.15em;
+}
+
+.memoir {
+  overflow: hidden;
+  margin-top: 2em;
+  width: 50%;
+  flex-grow: 1;
+}
+
+/* TODO: a paragraphs */
+a {
+  color: black;
+  font-weight: bold;
 }

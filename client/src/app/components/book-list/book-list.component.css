@@ -1,20 +1,24 @@
-.list-container ul {
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    left: 120px;
-    bottom: 95px;
-    list-style: none;
+.book-list-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.categories li a {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 5px;
-}
+.pagination-up {
+    align-self: flex-end;
+    margin: 2em 14vw 2em 0;
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+  
+  .pagination-down {
+    align-self: flex-end;
+    margin: 2em 14vw 2em 0;
+  }
 
-.list-container a {
-    top: 20px;
-}
 
+
+/* TODO: a paragraphs */
+  a {
+    color: black;
+    font-weight: bold;
+}

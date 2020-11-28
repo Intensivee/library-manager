@@ -1,3 +1,29 @@
+.copy-list-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+}
+
+.copy-list-container h4{
+align-self: flex-start;
+margin: 2em 0 1em 5em;
+}
+
 table {
-    width: 70%;
-  }
+  overflow: auto;
+  width: 70%;
+  margin-right: 10em;
+}
+
+.mat-form-field {
+width: 70%;
+margin-right: 10em;
+font-size: 1em;
+}
+
+.btn {
+margin: 5px;
+}

@@ -1,38 +1,60 @@
-.user-copies {
-    position: relative;
-    top: 100px;
-    left: 140px;
-  }
-
-.user-copies p {
-    font-size: 24px;
-    font-weight: 700;
+.user-details-container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .user-details{
-  position: relative;
-  top: 80px;
-  left: 100px;   
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  width: 57%;
  }
 
-.name {
-    font-weight: 700;
-    font-size: 30px;
-  }
+ .user-name {
+   font-weight: bold;
+   font-size: 1.6em;
+ }
 
-.other p{
-    position: relative;
-    left: 30px;
-    margin: 4px;
-    font-weight: 500;
-    font-size: 22px;
+ .user-info {
+   margin-left: 1em;
+ }
+ 
+ .user-info p{
+   margin-bottom: .1em;
+   font-weight: 500;
+   font-size: 1.1em;
+ }
+
+ .solid {
+  width: 57%;
+  margin-top: 0;
 }
 
-.solid {
-    width: 57%;
-    right: 450px;
+.table-title{
+  margin-right: 45%;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.user-copies {
+  display: flex;
+  width:56%;
+  align-self: center;
+}
+
+.table {
+  margin: auto;
+  font-weight: bold;
 }
 
 .book-title{
   color: black;
+}
+
+.copies-not-found {
+  margin: auto
 }
