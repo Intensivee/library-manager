@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +44,12 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody UserDto user){
         UserDto userUpdated = this.userService.updateUser(user);
         return ResponseEntity.ok(userUpdated);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id){
+        this.userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/paged")

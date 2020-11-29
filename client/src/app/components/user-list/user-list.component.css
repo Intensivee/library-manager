@@ -1,23 +1,23 @@
 .user-list-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
 }
 
-.user-list-container h4{
+.user-list-container h4 {
   align-self: flex-start;
   margin: 2em 0 1em 5em;
 }
 
 table {
-    overflow: auto;
-    width: 70%;
-    margin-right: 10em;
-  }
-  
+  overflow: auto;
+  width: 70%;
+  margin-right: 10em;
+}
+
 .mat-form-field {
   width: 70%;
   margin-right: 10em;
@@ -26,5 +26,22 @@ table {
 
 .btn {
   margin: 5px;
+  width: 6.2em;
 }
-  
+
+
+
+.btn-disabled:hover+.disabled-msg {
+  visibility: visible;
+}
+
+.disabled-msg {
+  position: absolute;
+  visibility: hidden;
+  box-sizing: border-box;
+  padding: .5em;
+  opacity: 1;
+  border-radius: .1em;
+  font-weight: bold;
+  background: rgb(190, 190, 190);
+}
