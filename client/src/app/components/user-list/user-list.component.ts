@@ -2,7 +2,7 @@ import { UNTRUSTED_USER_ROLE } from '../../app.constants';
 import { UserService } from '../../service/user.service';
 import { User } from 'src/app/models/user';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { TRUSTED_USER_ROLE } from 'src/app/app.constants';
 
@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
     this.getDataSource();
   }
 
-  getDataSource(): void{
+  getDataSource(): void {
     this.userService.getUsers().subscribe(data => {
       this.users = data;
       this.dataSource = new MatTableDataSource(this.users);
@@ -39,7 +39,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event): void{
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -55,11 +55,11 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
-    this.userService.deleteUser(user).subscribe();
-    var filtered = this.users.filter(function(currUser, index, arr){
-      return currUser.id !== user.id;
-      });
-    this.users = filtered;
-    this.dataSource = new MatTableDataSource(this.users);
+    this.userService.deleteUser(user).subscribe( () => this.getDataSource());
+    // var filtered = this.users.filter(function (currUser, index, arr) {
+    //   return currUser.id !== user.id;
+    // });
+    // this.users = filtered;
+    // this.dataSource = new MatTableDataSource(this.users);
   }
 }

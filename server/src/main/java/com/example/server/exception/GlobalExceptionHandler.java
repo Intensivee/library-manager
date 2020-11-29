@@ -13,14 +13,24 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({BookNotFoundException.class, CategoryNotFoundException.class,
+    @ExceptionHandler({ BookNotFoundException.class,
+                        CategoryNotFoundException.class,
                         UserNotFoundException.class})
-    public ResponseEntity<?> bookNotFoundHandler(BookNotFoundException e){
+    public final ResponseEntity<?> notFoundHandler(Exception e){
+        Map<String, Object> body = this.createBody(e);
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(UserOwnsCopiesDeleteException.class)
+    public final ResponseEntity<?> conflictHandler(Exception e){
+        Map<String, Object> body = this.createBody(e);
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    private Map<String, Object> createBody(Exception e){
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", e.toString());
-
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return body;
     }
 }
