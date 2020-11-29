@@ -5,6 +5,8 @@ import com.example.server.entity.User;
 import com.example.server.exception.UserNotFoundException;
 import com.example.server.mapper.UserMapper;
 import com.example.server.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper) {
@@ -64,4 +67,9 @@ public class UserService {
     }
 
 
+    public void deleteUser(Long id) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        logger.info("hej, dalej żyje ;///");
+//        this.userRepository.delete(user);
+    }
 }

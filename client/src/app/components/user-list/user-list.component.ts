@@ -20,6 +20,11 @@ export class UserListComponent implements OnInit {
   dataSource = new MatTableDataSource(this.users);
 
 
+  // popup window stuff
+  popoverTitle = 'Dialog usunięcia';
+  popoverMessage = 'Czy jesteś pewien że chcesz usunąć tego użytkownika?';
+  confirmClicked = false;
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -47,5 +52,14 @@ export class UserListComponent implements OnInit {
   deActivateUser(user: User): void {
     user.role = UNTRUSTED_USER_ROLE;
     this.userService.updateUser(user).subscribe(response => user = response);
+  }
+
+  deleteUser(user: User): void {
+    this.userService.deleteUser(user).subscribe();
+    var filtered = this.users.filter(function(currUser, index, arr){
+      return currUser.id !== user.id;
+      });
+    this.users = filtered;
+    this.dataSource = new MatTableDataSource(this.users);
   }
 }

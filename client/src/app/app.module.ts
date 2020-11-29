@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { AbsoluteValuePipe } from './pipes/absolute-value.pipe';
 import { OverdueCopiesComponent } from './components/overdue-copies/overdue-copies.component';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -48,6 +49,9 @@ const MAT_MODULES = [
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger'
+    }),
     MAT_MODULES
   ],
   providers: [],
