@@ -4,4 +4,6 @@ export class Copy {
     borrowed: boolean;
     borrowDate: Date;
     returnDate: Date;
+    userId: number;
+    bookId: number;
 }

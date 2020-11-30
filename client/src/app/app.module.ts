@@ -21,11 +21,15 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { AbsoluteValuePipe } from './pipes/absolute-value.pipe';
 import { OverdueCopiesComponent } from './components/overdue-copies/overdue-copies.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CopyComponent } from './components/copy/copy.component';
+import { FormsModule } from '@angular/forms';
 
 const MAT_MODULES = [
   MatTableModule,
   MatFormFieldModule,
   MatInputModule,
+  MatDialogModule,
   MatSortModule
 ];
 
@@ -41,7 +45,8 @@ const MAT_MODULES = [
     UserListComponent,
     UserDetailsComponent,
     AbsoluteValuePipe,
-    OverdueCopiesComponent
+    OverdueCopiesComponent,
+    CopyComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +54,7 @@ const MAT_MODULES = [
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
+    FormsModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
     }),

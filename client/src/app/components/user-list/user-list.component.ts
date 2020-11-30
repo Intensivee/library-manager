@@ -56,10 +56,5 @@ export class UserListComponent implements OnInit {
 
   deleteUser(user: User): void {
     this.userService.deleteUser(user).subscribe( () => this.getDataSource());
-    // var filtered = this.users.filter(function (currUser, index, arr) {
-    //   return currUser.id !== user.id;
-    // });
-    // this.users = filtered;
-    // this.dataSource = new MatTableDataSource(this.users);
   }
 }

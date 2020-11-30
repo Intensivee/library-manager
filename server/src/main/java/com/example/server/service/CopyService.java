@@ -2,6 +2,7 @@ package com.example.server.service;
 
 import com.example.server.dtos.CopyDto;
 import com.example.server.entity.Copy;
+import com.example.server.exception.ObjectCreateException;
 import com.example.server.mapper.CopyMapper;
 import com.example.server.repository.CopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,15 @@ public class CopyService {
     public List<CopyDto> getBorrowedCopies(){
         List<Copy> copies = copyRepository.findByBorrowedTrue();
         return this.copyMapper.copiesToDto(copies);
+    }
+
+    public Copy createCopy(CopyDto dtoCopy) {
+        if(dtoCopy.getId() != null){
+            throw new ObjectCreateException(dtoCopy.getId());
+        }
+        else if(dtoCopy.getBookId() == null || dtoCopy.getPages() == null || dtoCopy.getBorrowed() == null){
+            throw new ObjectCreateException();
+        }
+        return this.copyRepository.save(this.copyMapper.dtoToCopy(dtoCopy));
     }
 }

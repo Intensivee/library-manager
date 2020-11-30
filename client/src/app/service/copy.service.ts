@@ -1,6 +1,6 @@
 import { API_URL } from '../app.constants';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Copy } from '../models/copy';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -12,6 +12,13 @@ export class CopyService {
 
   constructor(private http: HttpClient) { }
 
+  createCopies(copy: Copy, quantity: number) {
+    const observables = [];
+    for (let i = 0; i < quantity; i++){
+      observables.push(this.http.post(`${API_URL}/copies`, copy));
+    }
+    return forkJoin(observables);
+  }
 
   getCopiesByBookId(id: number): Observable<Copy[]> {
     const url = `${API_URL}/copies/search/findByBookId/${id}`;

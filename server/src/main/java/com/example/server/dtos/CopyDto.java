@@ -4,17 +4,21 @@ import java.util.Date;
 
 public class CopyDto {
     private Long id;
-    private int pages;
-    private boolean borrowed;
+    private Integer pages;
+    private Boolean borrowed;
     private Date borrowDate;
     private Date returnDate;
+    private Long bookId;
+    private Long userId;
 
-    public CopyDto(Long id, int pages, boolean borrowed, Date borrowDate, Date returnDate) {
+    public CopyDto(Long id, int pages, boolean borrowed, Date borrowDate, Date returnDate, Long bookId, Long userId) {
         this.id = id;
         this.pages = pages;
         this.borrowed = borrowed;
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
+        this.bookId = bookId;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -25,19 +29,19 @@ public class CopyDto {
         this.id = id;
     }
 
-    public int getPages() {
+    public Integer getPages() {
         return pages;
     }
 
-    public void setPages(int pages) {
+    public void setPages(Integer pages) {
         this.pages = pages;
     }
 
-    public boolean isBorrowed() {
+    public Boolean getBorrowed() {
         return borrowed;
     }
 
-    public void setBorrowed(boolean borrowed) {
+    public void setBorrowed(Boolean borrowed) {
         this.borrowed = borrowed;
     }
 
@@ -55,5 +59,21 @@ public class CopyDto {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

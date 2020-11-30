@@ -1,12 +1,16 @@
 package com.example.server.controller;
 
+import com.example.server.dtos.CopyDto;
+import com.example.server.entity.Copy;
 import com.example.server.service.CopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +50,18 @@ public class CopyController {
                 .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(copy.getId()).withSelfRel()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createCopy(@RequestBody CopyDto copyDto){
+        Copy copy = this.copyService.createCopy(copyDto);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(copy.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
 }

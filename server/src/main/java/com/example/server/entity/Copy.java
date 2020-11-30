@@ -10,13 +10,13 @@ public class Copy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "copy_id")
-    private long id;
+    private Long id;
 
     @Column(name = "pages")
-    private int pages;
+    private Integer pages;
 
     @Column(name = "borrowed", columnDefinition = "TINYINT(1)")
-    private boolean borrowed;
+    private Boolean borrowed;
 
     @Column(name = "borrow_date")
     private Date borrowDate;
@@ -35,27 +35,37 @@ public class Copy {
     public Copy() {
     }
 
-    public long getId() {
+    public Copy(Long id, int pages, Boolean borrowed, Date borrowDate, Date returnDate, Book book, User user) {
+        this.id = id;
+        this.pages = pages;
+        this.borrowed = borrowed;
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+        this.book = book;
+        this.user = user;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getPages() {
+    public Integer getPages() {
         return pages;
     }
 
-    public void setPages(int pages) {
+    public void setPages(Integer pages) {
         this.pages = pages;
     }
 
-    public boolean isBorrowed() {
+    public Boolean getBorrowed() {
         return borrowed;
     }
 
-    public void setBorrowed(boolean borrowed) {
+    public void setBorrowed(Boolean borrowed) {
         this.borrowed = borrowed;
     }
 
@@ -75,13 +85,13 @@ public class Copy {
         this.returnDate = returnDate;
     }
 
-//    public Book getBook() {
-//        return book;
-//    }
-//
-//    public void setBook(Book book) {
-//        this.book = book;
-//    }
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
     public User getUser() {
         return user;
