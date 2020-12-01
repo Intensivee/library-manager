@@ -1,4 +1,4 @@
-import { API_URL } from '../app.constants';
+import { API_URL } from './../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { Copy } from '../models/copy';
@@ -14,10 +14,16 @@ export class CopyService {
 
   createCopies(copy: Copy, quantity: number) {
     const observables = [];
+    const url = `${API_URL}/copies`;
     for (let i = 0; i < quantity; i++){
-      observables.push(this.http.post(`${API_URL}/copies`, copy));
+      observables.push(this.http.post(url, copy));
     }
     return forkJoin(observables);
+  }
+
+  deleteCopy(id: number) {
+    const url = `${API_URL}/copies/${id}`;
+    return this.http.delete(url);
   }
 
   getCopiesByBookId(id: number): Observable<Copy[]> {

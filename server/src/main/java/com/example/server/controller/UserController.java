@@ -34,7 +34,6 @@ public class UserController {
 
     @GetMapping("{id}")
     public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
-        logger.info("get");
         UserDto user = this.userService.getById(id);
         EntityModel<?> entityModel = EntityModel.of(user, linkTo(UserController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);

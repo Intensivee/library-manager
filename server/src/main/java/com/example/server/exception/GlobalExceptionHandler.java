@@ -15,7 +15,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ BookNotFoundException.class,
                         CategoryNotFoundException.class,
-                        UserNotFoundException.class})
+                        UserNotFoundException.class,
+                        CopyNotFoundException.class})
     public final ResponseEntity<?> notFoundHandler(Exception e){
         Map<String, Object> body = this.createBody(e);
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);

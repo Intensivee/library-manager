@@ -6,6 +6,7 @@ import com.example.server.service.CopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -62,6 +63,12 @@ public class CopyController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCopy(@PathVariable("id") Long id){
+        this.copyService.deleteCopy(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

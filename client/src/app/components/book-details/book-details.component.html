@@ -34,11 +34,11 @@
         <thead class="thead-dark">
           <tr>
             <th class="th-sm" scope="col">Numer</th>
-            <th class="th-sm" scope="col">Status</th>
-            <th class="th-sm" scope="col">Stron</th>
-            <th class="th-sm" scope="col">Data wypożyczenia</th>
-            <th class="th-sm" scope="col">Data zwrotu</th>
-            <th class="th-sm" scope="col">Akcja</th>
+            <th class="th-sm center" scope="col">Status</th>
+            <th class="th-sm center" scope="col">Stron</th>
+            <th class="th-sm center" scope="col">Data wypożyczenia</th>
+            <th class="th-sm center" scope="col">Data zwrotu</th>
+            <th class="th-sm center" scope="col">Akcja</th>
           </tr>
         </thead>
         <tbody  class="tbody-dark">
@@ -56,8 +56,16 @@
             <th class="center" *ngIf="copy.returnDate">{{copy.returnDate | date:'dd-MM-yyyy'}}</th>
             <th class="center" *ngIf="!copy.returnDate">----------------------</th>
             
-            <th class="center text-info" *ngIf="!copy.borrowed"><a routerLink="" >Zamow</a></th>
-            <th class="center" *ngIf="copy.borrowed">-------</th>
+            <th class="center" >
+              <a class="action text-info" *ngIf="copy.borrowed" routerLink="/users/{{copy.userId}}" >Profil</a>
+              <a class="action text-info" *ngIf="!copy.borrowed" routerLink="" >Zamow</a>
+              <a class="action text-danger"
+              mwlConfirmationPopover
+              [popoverTitle]="popoverTitle"
+              [popoverMessage]="popoverMessage"
+              placement="left"
+              (confirm)="deleteCopy(copy)">Usuń</a>
+            </th>
           </tr>
         </tbody>
       </table>
@@ -68,6 +76,6 @@
     <h5>Brak egzemplarzy, skontaktuj się z nami po więcej informacji.</h5>
   </div>
 
-  <button (click)="addCopy()" type="button" class="return-btn btn btn-outline-secondary">Dodaj nową kopie</button>
+  <button (click)="addCopy()" type="button" class="return-btn add-btn btn btn-outline-secondary">Dodaj nową kopie</button>
   
 </div>

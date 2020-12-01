@@ -23,7 +23,6 @@ export class UserListComponent implements OnInit {
   // popup window stuff
   popoverTitle = 'Dialog usunięcia';
   popoverMessage = 'Czy jesteś pewien że chcesz usunąć tego użytkownika?';
-  confirmClicked = false;
 
   constructor(private userService: UserService) { }
 
