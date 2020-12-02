@@ -25,6 +25,18 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    public UserDto getById(Long id){
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        return this.userMapper.userToDto(user);
+    }
+
+    public UserDto getByCopyId(Long id){
+        User user = this.userRepository.findByCopiesId(id)
+                .orElseThrow(UserNotFoundException::new);
+        return this.userMapper.userToDto(user);
+    }
+
     public List<UserDto> getAll() {
         List<User> projections = this.userRepository.findAll();
         if(projections.isEmpty()){
@@ -41,18 +53,6 @@ public class UserService {
         return projections.map(this.userMapper::userToDto);
     }
 
-    public UserDto getById(Long id){
-        User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
-        return this.userMapper.userToDto(user);
-    }
-
-    public UserDto getByCopyId(Long id){
-        User user = this.userRepository.findByCopiesId(id)
-                .orElseThrow(UserNotFoundException::new);
-        return this.userMapper.userToDto(user);
-    }
-
     public UserDto updateUser(UserDto userDto){
         User userToUpdate = this.userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new UserNotFoundException(userDto.getId()));
@@ -63,7 +63,6 @@ public class UserService {
         userToUpdate.setRole(userDto.getRole());
         return this.userMapper.userToDto(this.userRepository.save(userToUpdate));
     }
-
 
     public void deleteUser(Long id) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));

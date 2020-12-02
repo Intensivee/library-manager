@@ -29,30 +29,6 @@ public class CopyController {
         this.copyService = copyService;
     }
 
-    @GetMapping("/search/findByBookId/{id}")
-    public ResponseEntity<?> getAllByBookId(@PathVariable("id") Long id){
-        List<EntityModel<?>> copies = this.copyService.getAllByBookId(id).stream()
-                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(id).withSelfRel()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
-    }
-
-    @GetMapping("/search/findByUserId/{id}")
-    public ResponseEntity<?> getAllByUserId(@PathVariable("id") Long id){
-        List<EntityModel<?>> copies = this.copyService.getAllByUserId(id).stream()
-                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(id).withSelfRel()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
-    }
-
-    @GetMapping("/search/findBorrowed")
-    public ResponseEntity<?> getBorrowedCopies(){
-        List<EntityModel<?>> copies = this.copyService.getBorrowedCopies().stream()
-                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(copy.getId()).withSelfRel()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
-    }
-
     @PostMapping
     public ResponseEntity<?> createCopy(@RequestBody CopyDto copyDto){
         Copy copy = this.copyService.createCopy(copyDto);
@@ -71,4 +47,27 @@ public class CopyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/search/findBorrowed")
+    public ResponseEntity<?> getBorrowedCopies(){
+        List<EntityModel<?>> copies = this.copyService.getBorrowedCopies().stream()
+                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(copy.getId()).withSelfRel()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
+    }
+
+    @GetMapping("/search/findByBookId/{id}")
+    public ResponseEntity<?> getAllByBookId(@PathVariable("id") Long id){
+        List<EntityModel<?>> copies = this.copyService.getAllByBookId(id).stream()
+                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(id).withSelfRel()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
+    }
+
+    @GetMapping("/search/findByUserId/{id}")
+    public ResponseEntity<?> getAllByUserId(@PathVariable("id") Long id){
+        List<EntityModel<?>> copies = this.copyService.getAllByUserId(id).stream()
+                .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(id).withSelfRel()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new CollectionModel<>(copies).add(linkTo(CopyController.class).withSelfRel()));
+    }
 }

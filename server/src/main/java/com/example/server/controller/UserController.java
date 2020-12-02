@@ -32,6 +32,17 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAll(){
+        List<EntityModel<?>> users =  this.userService.getAll().stream()
+                .map(user -> EntityModel.of(user, linkTo(BookController.class).slash(user.getId()).withSelfRel()))
+                .collect(Collectors.toList());
+
+        // wrapping to collection with href link
+        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(users).add(linkTo(UserController.class).withSelfRel());
+        return ResponseEntity.ok(collection);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
         UserDto user = this.userService.getById(id);
@@ -55,17 +66,6 @@ public class UserController {
     public ResponseEntity<?> getAll(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
         Page<UserDto> page = this.userService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(page));
-    }
-
-    @GetMapping
-    public ResponseEntity<?> getAll(){
-        List<EntityModel<?>> users =  this.userService.getAll().stream()
-                .map(user -> EntityModel.of(user, linkTo(BookController.class).slash(user.getId()).withSelfRel()))
-                .collect(Collectors.toList());
-
-        // wrapping to collection with href link
-        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(users).add(linkTo(UserController.class).withSelfRel());
-        return ResponseEntity.ok(collection);
     }
 
     @GetMapping("/search/findByCopyId/{id}")

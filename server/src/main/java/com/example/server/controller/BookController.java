@@ -33,13 +33,6 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
-        BookDto book = bookService.getById(id);
-        EntityModel<?> entityModel = EntityModel.of(book, linkTo(BookController.class).slash(id).withSelfRel());
-        return ResponseEntity.ok(entityModel);
-    }
-
     @GetMapping()
     public ResponseEntity<?> getAll() {
         // adding href link to each element
@@ -50,6 +43,13 @@ public class BookController {
         // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
         return ResponseEntity.ok(collection);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
+        BookDto book = bookService.getById(id);
+        EntityModel<?> entityModel = EntityModel.of(book, linkTo(BookController.class).slash(id).withSelfRel());
+        return ResponseEntity.ok(entityModel);
     }
 
     @GetMapping(value = "/paged")
