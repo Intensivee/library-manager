@@ -7,6 +7,19 @@ body {
   background-color: rgb(218, 212, 201);
 }
 
+a {
+  text-decoration: none;
+  transition: color .3s;
+}
+
+ul {
+  list-style: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .solid {
   position: relative;
   width: 100%;

@@ -1,14 +1,31 @@
+<div class="aside-menu-container">
 
-<h4>Panel Administratora:</h4>
+    <h4 class="title">Panel Pracownika:</h4>
+    <hr class="aside-solid">
+    <ul class="list">
+        <li>
+            <a routerLink="/users"><i class="list-img fas fa-user"></i>Użytkownicy</a>
+        </li>
+        <li>
+            <a routerLink="/copies"><i class="list-img fas fa-layer-group"></i>Zaległe kopie</a>
+        </li>
+        <li>
+            <a routerLink="/copies"><i class="list-img fas fa-th"></i>Kategorie</a>
+        </li>
+        <li>
+            <a routerLink="/copies"><i class="list-img fas fa-plus-square"></i>Dodaj książkę</a>
+        </li>
+    </ul>
+    
+    <h4 class="title">Kategorie:</h4>
+    <hr class="aside-solid">
+    <ul class="list">
+        <li *ngFor="let category of categories">
+            <a routerLink="books/category/{{category.id}}">
+                <i class="category-img fas fa-caret-right"></i>{{category.name}}
+            </a>
+        </li>
+    </ul>
+</div>
 
-<h4>Panel pracownika:</h4>
-<ul>
-    <li><a routerLink="/users">Użytkownicy</a></li>
-    <li><a routerLink="/copies">Zaległe kopie</a></li>
-</ul>
-
-<h4>Kategorie:</h4>
-<ul *ngFor="let category of categories">
-    <li><a routerLink="books/category/{{category.id}}">{{category.name}}</a></li>
-</ul>
 
