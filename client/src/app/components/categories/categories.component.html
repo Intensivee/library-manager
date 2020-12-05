@@ -1,0 +1,26 @@
+<div class="categories-container">
+
+    <div class="category-list-container">
+        <h4 class="title">Kategorie:</h4>
+        <div class="category-list">
+            <ul class="list">
+                <li *ngFor="let category of categories"><p>{{category.name}}<i class="delete-icon fas fa-trash-alt"></i></p></li>
+
+        </ul>
+    </div>
+    </div>
+
+        <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
+            
+            <div class="form-group add-group">
+                <h4 class="title">Dodaj nową kategorie</h4>
+                <input type="text" name="pages" min="1" oninput="validity.valid||(value='');" [(ngModel)]="name" class="add-input form-control" [class.is-invalid]="!isValid && name == null">
+                <button type="submit" class="add-btn btn btn-outline-secondary">Dodaj</button>
+            </div> 
+        
+            <button [mat-dialog-close] class="close-btn btn btn-dark">Zamknij</button>
+        </form> 
+
+
+
+</div>

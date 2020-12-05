@@ -1,0 +1,70 @@
+.categories-container {
+  overflow: hidden;
+  display: flex;
+  width: 30vw;
+  height: 30vh;
+}
+
+.category-list-container {
+  /* background-color: red; */
+  width: 60%;
+  height: 100%;
+}
+
+.category-list {
+    overflow: auto;
+    width: 100%;
+    height: 80%;
+    background-color: rgb(240, 240, 240);
+    border-radius: 1em;
+}
+
+.list p{
+    display: flex;
+    font-size: 1.2em;
+    font-weight: 500;
+    justify-content: space-evenly;
+    margin: .4em;
+}
+
+.delete-icon {
+    margin-right: 4em;
+    margin-left: auto;
+    color: rgb(0, 0, 0)
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.add-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: .5em 1em;
+  white-space: nowrap;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.add-input {
+  width: 80%;
+  height: 1.5em;
+  border-radius: .5em;
+}
+
+.add-btn {
+  width: 5em;
+  height: 2.2em;
+  margin-top: .7em;
+}
+
+.close-btn {
+  align-self: flex-end;
+}

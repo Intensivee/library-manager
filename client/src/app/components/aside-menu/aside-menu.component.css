@@ -32,12 +32,17 @@
 }
 
 .list-img {
+  margin: .45em;
   font-size: 1.2em;
-  margin: .5em;
 }
 
 .category-img {
   margin: .3em .3em .3em .5em;
   color: rgb(133, 133, 133);
+}
+
+
+.dialog {
+  cursor: pointer;
 }
 

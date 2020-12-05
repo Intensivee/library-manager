@@ -24,6 +24,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CopyComponent } from './components/copy/copy.component';
 import { FormsModule } from '@angular/forms';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -46,8 +47,9 @@ const MAT_MODULES = [
     UserDetailsComponent,
     AbsoluteValuePipe,
     OverdueCopiesComponent,
-    CopyComponent
-  ],
+    CopyComponent,
+    CategoriesComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
