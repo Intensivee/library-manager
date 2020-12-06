@@ -23,10 +23,18 @@ export class CategoryService {
       map(response => response._embedded.categories));
   }
 
-  isEmpty(id: number) {
+  isEmpty(id: number): Observable<any> {
     return this.httpClient.get(`${API_URL}/categories/search/isEmpty/${id}`).pipe(
       map(response => response as boolean)
     );
+  }
+
+  addCategory(category: Category): Observable<any> {
+    return this.httpClient.post(`${API_URL}/categories`, category);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.httpClient.delete(`${API_URL}/categories/${id}`);
   }
 }
 

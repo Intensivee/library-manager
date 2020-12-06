@@ -33,7 +33,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAll() {
         // adding href link to each element
         List<EntityModel<?>> books =  bookService.getAll().stream()

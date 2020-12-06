@@ -20,5 +20,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findByBookId(@Param("id") Long id);
 
     Optional<Category> findById(@Param("id") Long id);
+
 }
 

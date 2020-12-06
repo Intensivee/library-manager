@@ -55,6 +55,10 @@ public class BookService {
         return books.map(bookMapper::bookToDto);
     }
 
+    public List<Book> getBookByCategory(Long id){
+       return bookRepository.findByCategoriesId(id);
+    }
+
     public List<BookDto> getByTitle(String title){
         List<Book> books = bookRepository.findFirst10ByTitleContaining(title);
         if(books.isEmpty()){

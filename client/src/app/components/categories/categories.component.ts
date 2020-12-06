@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs';
-import { BookService } from './../../service/book.service';
-import { CategoryService } from './../../service/category.service';
+
+import { CategoryService } from '../../service/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -24,12 +23,10 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private bookService: BookService,
-    private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data,
-    public dialogRef: MatDialogRef<CategoriesComponent>) { }
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
+    this.categories.length = 0;
     this.categoryService.getCategories().subscribe(categories => {
       categories.forEach(cat => {
         this.categoryService.isEmpty(cat.id).subscribe(isEmpty => {
@@ -43,22 +40,22 @@ export class CategoriesComponent implements OnInit {
 
   onSubmit(): void {
     if (this.validateData()) {
-      console.log('works');
+      const cat = new Category();
+      cat.id = null;
+      cat.name = this.name;
+      this.categoryService.addCategory(cat).subscribe(response => {
+        this.ngOnInit();
+      });
     }
   }
 
   validateData(): boolean {
-    if (this.name == null || this.name.length < 2) {
-      this.isValid = false;
-    }
-    else {
-      this.isValid = true;
-    }
+    this.isValid = !(this.name == null || this.name.length < 2);
     return this.isValid;
   }
 
   deleteCategory(id: number): void {
-    console.log('xd');
+    this.categoryService.deleteCategory(id).subscribe(response => this.ngOnInit());
   }
 
 }
@@ -66,5 +63,5 @@ export class CategoriesComponent implements OnInit {
 
 class CategoryObject {
   constructor(public category: Category,
-    public isEmpty: boolean) { }
+              public isEmpty: boolean) { }
 }

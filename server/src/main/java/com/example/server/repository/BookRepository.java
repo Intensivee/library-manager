@@ -29,6 +29,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> findByCategoriesId(Long id, Pageable pageable);
 
     @RestResource(exported = false)
+    List<Book> findByCategoriesId(Long id);
+
+    @RestResource(exported = false)
     List<Book> findFirst10ByTitleContaining(String title);
 
     @RestResource(exported = false)

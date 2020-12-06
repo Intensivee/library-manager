@@ -23,6 +23,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({UserOwnsCopiesDeleteException.class,
+                        CategoryOwnsBooksDeleteException.class,
                         ObjectCreateException.class})
     public final ResponseEntity<?> conflictHandler(Exception e){
         Map<String, Object> body = this.createBody(e);

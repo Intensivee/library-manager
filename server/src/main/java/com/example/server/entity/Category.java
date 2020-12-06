@@ -25,6 +25,12 @@ public class Category {
     public Category() {
     }
 
+    public Category(Long id, String name, List<Book> books) {
+        this.id = id;
+        this.name = name;
+        this.books = books;
+    }
+
     public Long getId() {
         return id;
     }
