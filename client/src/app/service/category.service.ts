@@ -22,6 +22,12 @@ export class CategoryService {
     return this.httpClient.get<ResponseUnwrap>(url).pipe(
       map(response => response._embedded.categories));
   }
+
+  isEmpty(id: number) {
+    return this.httpClient.get(`${API_URL}/categories/search/isEmpty/${id}`).pipe(
+      map(response => response as boolean)
+    );
+  }
 }
 
 interface ResponseUnwrap {

@@ -12,25 +12,29 @@
 }
 
 .category-list {
-    overflow: auto;
-    width: 100%;
-    height: 80%;
-    background-color: rgb(240, 240, 240);
-    border-radius: 1em;
+  overflow: auto;
+  width: 100%;
+  height: 80%;
+  background-color: rgb(240, 240, 240);
+  border-radius: 1em;
 }
 
-.list p{
-    display: flex;
-    font-size: 1.2em;
-    font-weight: 500;
-    justify-content: space-evenly;
-    margin: .4em;
+.list p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin: .4em;
+  text-align: left;
 }
 
 .delete-icon {
-    margin-right: 4em;
-    margin-left: auto;
-    color: rgb(0, 0, 0)
+  margin-right: 4em;
+  margin-left: auto;
+}
+
+.delete-icon:hover {
+  cursor: pointer;
 }
 
 .add-form {
@@ -67,4 +71,23 @@
 
 .close-btn {
   align-self: flex-end;
+}
+
+
+.disabled{
+  color: rgb(117, 117, 117);
+}
+
+.disabled:hover{
+  cursor: context-menu;
+}
+
+
+.disabled-msg {
+  top: 35vh;
+  padding: .2em;
+}
+
+.disabled:hover+.disabled-msg {
+  visibility: visible;
 }

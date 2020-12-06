@@ -28,6 +28,17 @@ a:hover {
   border-top: 1px solid black;
 }
 
+.disabled-msg {
+  position: absolute;
+  visibility: hidden;
+  box-sizing: border-box;
+  padding: .5em;
+  opacity: 1;
+  border-radius: .2em;
+  font-weight: bold;
+  background: rgb(190, 190, 190);
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

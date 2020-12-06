@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
 @Repository
@@ -17,5 +18,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query(value = "SELECT b.categories FROM Book b WHERE b.id = ?1")
     @RestResource(exported = false)
     List<Category> findByBookId(@Param("id") Long id);
+
+    Optional<Category> findById(@Param("id") Long id);
 }
 

@@ -22,6 +22,11 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
+    public boolean isEmpty(Long categoryId){
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+        return category.getBooks().isEmpty();
+    }
+
     public List<CategoryDto> getByBookId(long id){
         List<Category> categories = this.categoryRepository.findByBookId(id);
         if(categories.isEmpty()){

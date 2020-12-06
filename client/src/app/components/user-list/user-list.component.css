@@ -29,19 +29,8 @@ table {
   width: 6.2em;
 }
 
-
-
 .btn-disabled:hover+.disabled-msg {
   visibility: visible;
 }
 
-.disabled-msg {
-  position: absolute;
-  visibility: hidden;
-  box-sizing: border-box;
-  padding: .5em;
-  opacity: 1;
-  border-radius: .1em;
-  font-weight: bold;
-  background: rgb(190, 190, 190);
-}
+

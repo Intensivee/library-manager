@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs';
+import { BookService } from './../../service/book.service';
 import { CategoryService } from './../../service/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from 'src/app/models/category';
 
 @Component({
@@ -11,18 +13,31 @@ import { Category } from 'src/app/models/category';
 })
 export class CategoriesComponent implements OnInit {
 
-  categories: Category[];
+  categories: CategoryObject[] = [];
 
   isValid = true;
   name: string;
 
+  // popup window stuff
+  popoverTitle = 'Dialog usunięcia';
+  popoverMessage = 'Czy jesteś pewien że chcesz usunąć tę notatkę?';
+
   constructor(
     private categoryService: CategoryService,
+    private bookService: BookService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef: MatDialogRef<CategoriesComponent>) { }
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe( data => this. categories = data);
+    this.categoryService.getCategories().subscribe(categories => {
+      categories.forEach(cat => {
+        this.categoryService.isEmpty(cat.id).subscribe(isEmpty => {
+          this.categories.push(new CategoryObject(cat, isEmpty));
+        }
+        );
+      });
+    });
   }
 
 
@@ -33,14 +48,23 @@ export class CategoriesComponent implements OnInit {
   }
 
   validateData(): boolean {
-    if (this.name == null || this.name.length < 1){
+    if (this.name == null || this.name.length < 2) {
       this.isValid = false;
     }
     else {
       this.isValid = true;
     }
-
     return this.isValid;
   }
 
+  deleteCategory(id: number): void {
+    console.log('xd');
+  }
+
+}
+
+
+class CategoryObject {
+  constructor(public category: Category,
+    public isEmpty: boolean) { }
 }

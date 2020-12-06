@@ -4,10 +4,26 @@
         <h4 class="title">Kategorie:</h4>
         <div class="category-list">
             <ul class="list">
-                <li *ngFor="let category of categories"><p>{{category.name}}<i class="delete-icon fas fa-trash-alt"></i></p></li>
-
-        </ul>
-    </div>
+                <li *ngFor="let categoryObj of categories">
+                    <p>{{categoryObj.category.name}}
+                        <i
+                            *ngIf="categoryObj.isEmpty"
+                            class="delete-icon fas fa-trash-alt"
+                            mwlConfirmationPopover
+                            [popoverTitle]="popoverTitle"
+                            [popoverMessage]="popoverMessage"
+                            placement="left"
+                            (confirm)="deleteCategory(categoryObj.category.id)"
+                        ></i>
+                        <i
+                        *ngIf="!categoryObj.isEmpty"
+                        class="delete-icon disabled fas fa-trash-alt"
+                        ></i>
+                            <span class="disabled-msg">Istnieje przynajmniej jedna książka przypisana do tej kategorii.</span>
+                    </p>
+                 </li>
+            </ul>       
+        </div>
     </div>
 
         <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
