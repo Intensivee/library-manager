@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CategoriesComponent } from '../categories/categories.component';
+import { AuthorComponent } from '../author/author.component';
 
 @Component({
   selector: 'app-aside-menu',
@@ -20,12 +21,18 @@ export class AsideMenuComponent implements OnInit {
     this.getCategories();
   }
 
-  openCategoryDialog() {
+  openCategoryDialog(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(CategoriesComponent, dialogConfig)
       .afterClosed()
       .subscribe(() => this.ngOnInit());
+  }
+
+  openAuthorDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(AuthorComponent, dialogConfig);
   }
 
   getCategories(): void {

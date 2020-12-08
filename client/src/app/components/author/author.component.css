@@ -1,0 +1,55 @@
+.author-container {
+    display: flex;
+    width: 35vw;
+    height: 30vh;
+}
+
+.photo-form {
+    width: 45%;
+    height: 100%;
+}
+
+.add-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.field-title {
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.add-input {
+    height: 2em;
+    width: 70%;
+}
+
+.add-btn {
+    width: 25%;
+    align-self: center;
+}
+
+.img {
+    background: lightgray;
+    width: 80%;
+    height: 80%;
+    margin-bottom: .5em;
+}
+
+.img-input {
+    width: 80%;
+}
+
+.btn-close {
+   width: 25%;
+   margin-top: 1em;
+   align-self: flex-end;
+}

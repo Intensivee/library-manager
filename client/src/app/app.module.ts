@@ -25,6 +25,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { CopyComponent } from './components/copy/copy.component';
 import { FormsModule } from '@angular/forms';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { AuthorComponent } from './components/author/author.component';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -48,7 +49,8 @@ const MAT_MODULES = [
     AbsoluteValuePipe,
     OverdueCopiesComponent,
     CopyComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    AuthorComponent
     ],
   imports: [
     BrowserModule,

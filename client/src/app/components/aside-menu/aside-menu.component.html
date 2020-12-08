@@ -7,10 +7,15 @@
             <a routerLink="/users"><i class="list-img fas fa-user"></i>Użytkownicy</a>
         </li>
         <li>
-            <a routerLink="/copies"><i class="list-img fas fa-layer-group"></i>Zaległe kopie</a>
+            <a routerLink="/copies"><i class="list-img fas fa-layer-group"></i>Wypożyczone kopie</a>
         </li>
         <li>
-            <a (click)="openCategoryDialog()" class="dialog"><i class="list-img fas fa-th"></i>Kategorie</a>
+            <a (click)="openCategoryDialog()" class="dialog">
+                <i class=" list-img fas fa-th"></i>Kategorie</a>
+        </li>
+        <li>
+            <a (click)="openAuthorDialog()" class="dialog">
+                <i class="list-img fas fa-pen-nib"></i>Dodaj autora</a>
         </li>
         <li>
             <a routerLink="/copies"><i class="list-img fas fa-plus-square"></i>Dodaj książkę</a>
