@@ -1,4 +1,5 @@
-import { CategoryService } from './../../service/category.service';
+import { BookAddComponent } from '../book-add/book-add.component';
+import { CategoryService } from '../../service/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -33,6 +34,12 @@ export class AsideMenuComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(AuthorComponent, dialogConfig);
+  }
+
+  openBookDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(BookAddComponent, dialogConfig);
   }
 
   getCategories(): void {

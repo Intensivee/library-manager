@@ -23,16 +23,21 @@ import { OverdueCopiesComponent } from './components/overdue-copies/overdue-copi
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CopyComponent } from './components/copy/copy.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { AuthorComponent } from './components/author/author.component';
+import { BookAddComponent } from './components/book-add/book-add.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatSelectModule} from '@angular/material/select';
 
 const MAT_MODULES = [
   MatTableModule,
   MatFormFieldModule,
   MatInputModule,
   MatDialogModule,
-  MatSortModule
+  MatSortModule,
+  MatSelectModule,
+  NgxMatSelectSearchModule
 ];
 
 @NgModule({
@@ -50,7 +55,8 @@ const MAT_MODULES = [
     OverdueCopiesComponent,
     CopyComponent,
     CategoriesComponent,
-    AuthorComponent
+    AuthorComponent,
+    BookAddComponent
     ],
   imports: [
     BrowserModule,
@@ -59,6 +65,7 @@ const MAT_MODULES = [
     NgbModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
     }),

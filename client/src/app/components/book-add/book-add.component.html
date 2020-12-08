@@ -1,0 +1,61 @@
+<div class="book-container">
+
+    <div class="photo-form">
+        <div class="img"></div>
+        <input (change)="uploadPhoto()" type="file" class="img-input">
+    </div>
+    <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
+        <div class="field form-group add-group">
+            <p class="field-title">Tytuł</p>
+            <input type="text" name="book.title" min="1" oninput="validity.valid||(value='');" [(ngModel)]="book.title" class="add-input form-control input" [class.is-invalid]="!isValid && book.title == null">
+        </div>
+        <div class="field form-group add-group">
+            <p class="field-title">Opis</p>
+            <input type="text" name="book.description" min="1" oninput="validity.valid||(value='');" [(ngModel)]="book.description" class="add-input form-control input" [class.is-invalid]="!isValid && book.description == null">
+        </div>
+        <div class="field form-group add-group">
+            <p class="field-title">Autor</p>
+            <p class="add-input">
+                <mat-form-field class="mat-form">
+                    <mat-select [formControl]="authorCtrl" #singleSelect>  
+
+                        <mat-option>
+                            <ngx-mat-select-search [formControl]="authorFilterCtrl"
+                            placeholderLabel="Szukaj.." 
+                            noEntriesFoundLabel="Nie znaleziono autora"></ngx-mat-select-search>
+                        </mat-option>
+                        
+                        <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
+                            {{author.firstName}} {{author.lastName}}
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </p>
+        </div>
+        <div class="field form-group add-group">
+            <p class="field-title">Kategorie</p>
+        <p class="add-input">
+            <mat-form-field color="accent">
+              <mat-select [formControl]="categoryCtrl" [multiple]="true" #multiSelect>
+
+                <mat-option>
+                  <ngx-mat-select-search [showToggleAllCheckbox]="true"
+                  placeholderLabel="Szukaj.." 
+                  noEntriesFoundLabel="Nie znaleziono kategorii" (toggleAll)="toggleSelectAll($event)" [formControl]="categoryFilterCtrl"></ngx-mat-select-search>
+                </mat-option>
+
+                <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+                  {{category.name}}
+                </mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </p>
+        </div>
+        
+        <button type="submit" class="add-btn btn btn-outline-secondary">Dodaj</button>
+        <button [mat-dialog-close] class="btn-close btn btn-dark">Zamknij</button>
+    </form> 
+    
+</div>

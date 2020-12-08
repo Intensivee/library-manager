@@ -1,7 +1,7 @@
-.author-container {
+.book-container {
     display: flex;
     width: 35vw;
-    height: 30vh;
+    height: 32vh;
 }
 
 .photo-form {
@@ -34,7 +34,7 @@
 
 .add-btn {
     width: 25%;
-    align-self: center;
+    /* align-self: center; */
 }
 
 .img {
@@ -54,4 +54,6 @@
    align-self: flex-end;
 }
 
-
+mat-form-field {
+    width: 100%;
+}

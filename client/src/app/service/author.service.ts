@@ -12,6 +12,10 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
+  getAuthors(): Observable<Author[]> {
+    const url = `${API_URL}/authors`;
+    return this.http.get<UnwrapAuthors>(url).pipe(map(response => response._embedded.authors));
+  }
 
   getAuthorsByName(name: string): Observable<Author[]> {
     const url = `${API_URL}/authors/search/findByName?name=${name}`;
@@ -30,17 +34,5 @@ export class AuthorService {
 interface UnwrapAuthors {
   _embedded: {
     authors: Author[];
-  };
-}
-
-interface UnwrapPagedAuthors {
-  _embedded: {
-    authors: Author[];
-    page: {
-      size: number;
-      totalElements: number;
-      totalPages: number;
-      number: number;
-    }
   };
 }
