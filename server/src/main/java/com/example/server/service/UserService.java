@@ -3,7 +3,6 @@ package com.example.server.service;
 import com.example.server.dtos.UserDto;
 import com.example.server.entity.User;
 import com.example.server.exception.UserNotFoundException;
-import com.example.server.exception.UserOwnsCopiesDeleteException;
 import com.example.server.mapper.UserMapper;
 import com.example.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +65,6 @@ public class UserService {
 
     public void deleteUser(Long id) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        if(!user.getCopies().isEmpty()){
-            throw new UserOwnsCopiesDeleteException(id);
-        }
         this.userRepository.delete(user);
     }
 }

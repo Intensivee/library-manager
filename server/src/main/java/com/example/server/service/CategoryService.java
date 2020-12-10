@@ -3,7 +3,6 @@ package com.example.server.service;
 import com.example.server.dtos.CategoryDto;
 import com.example.server.entity.Category;
 import com.example.server.exception.CategoryNotFoundException;
-import com.example.server.exception.CategoryOwnsBooksDeleteException;
 import com.example.server.mapper.CategoryMapper;
 import com.example.server.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +39,6 @@ public class CategoryService {
 
     public void deleteCategory(Long id) {
         Category category = this.getCategory(id);
-        if(!category.getBooks().isEmpty()){
-            throw new CategoryOwnsBooksDeleteException(id);
-        }
         this.categoryRepository.delete(category);
     }
 }

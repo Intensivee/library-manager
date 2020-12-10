@@ -22,9 +22,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({UserOwnsCopiesDeleteException.class,
-                        CategoryOwnsBooksDeleteException.class,
-                        ObjectCreateException.class})
+    @ExceptionHandler({ObjectCreateException.class})
     public final ResponseEntity<?> conflictHandler(Exception e){
         Map<String, Object> body = this.createBody(e);
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
