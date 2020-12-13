@@ -7,6 +7,12 @@ body {
   background-color: rgb(218, 212, 201);
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 a {
   text-decoration: none;
   transition: color .3s;
@@ -14,6 +20,18 @@ a {
 
 ul {
   list-style: none;
+}
+
+.dialog {
+  cursor: pointer;
+}
+
+.dialog-close {
+  position: absolute;
+  font-size: 1.5em;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
 }
 
 a:hover {

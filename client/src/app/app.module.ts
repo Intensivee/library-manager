@@ -29,6 +29,10 @@ import { AuthorComponent } from './components/author/author.component';
 import { BookAddComponent } from './components/book-add/book-add.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {MatSelectModule} from '@angular/material/select';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -37,11 +41,18 @@ const MAT_MODULES = [
   MatDialogModule,
   MatSortModule,
   MatSelectModule,
-  NgxMatSelectSearchModule
+  NgxMatSelectSearchModule,
+  MatButtonModule,
+  MatIconModule
+];
+
+const PIPES = [
+  AbsoluteValuePipe
 ];
 
 @NgModule({
   declarations: [
+    PIPES,
     AppComponent,
     AsideMenuComponent,
     BookListComponent,
@@ -51,12 +62,13 @@ const MAT_MODULES = [
     AuthorDetailsComponent,
     UserListComponent,
     UserDetailsComponent,
-    AbsoluteValuePipe,
     OverdueCopiesComponent,
     CopyComponent,
     CategoriesComponent,
     AuthorComponent,
-    BookAddComponent
+    BookAddComponent,
+    LoginComponent,
+    RegisterComponent
     ],
   imports: [
     BrowserModule,
