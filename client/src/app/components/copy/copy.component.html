@@ -1,5 +1,5 @@
 <form #form="ngForm" autocomplete="off" (submit)="onSubmit()">
-
+    <i [mat-dialog-close] class="dialog-close fas fa-times"></i>
     <div class="form-group">
         <label>Stron:</label>
         <input type="number" name="pages" min="1" oninput="validity.valid||(value='');" [(ngModel)]="pages" class="form-control" [class.is-invalid]="!isValid && pages == null">
