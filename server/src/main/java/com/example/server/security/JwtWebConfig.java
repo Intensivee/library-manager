@@ -44,6 +44,7 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), tokenConfig, tokenUtils))
                 .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), JwtAuthenticationFilter.class)
                 .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // ------- general -------
                     .antMatchers("/",
                             "/**/*.png",
