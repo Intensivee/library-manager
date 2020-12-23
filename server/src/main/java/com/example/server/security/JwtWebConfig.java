@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -21,12 +20,15 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
     private final JwtUserDetailsService userDetailsService;
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtils;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public JwtWebConfig(JwtUserDetailsService userDetailsService, JwtTokenConfig tokenConfig, JwtTokenUtil tokenUtils) {
+    public JwtWebConfig(JwtUserDetailsService userDetailsService, JwtTokenConfig tokenConfig,
+                        JwtTokenUtil tokenUtils, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.tokenConfig = tokenConfig;
         this.tokenUtils = tokenUtils;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -47,15 +49,10 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
-
-    @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(this.passwordEncoder());
-        provider.setUserDetailsService(this.userDetailsService());
+        provider.setPasswordEncoder(this.passwordEncoder);
+        provider.setUserDetailsService(this.userDetailsService);
         return provider;
     }
 }
