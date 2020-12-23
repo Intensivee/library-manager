@@ -14,7 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.example.server.security.sth.UserPermission.CATEGORY_WRITE;
+import static com.example.server.security.sth.UserPermission.*;
+import static com.example.server.security.sth.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -43,6 +44,7 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), tokenConfig, tokenUtils))
                 .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), JwtAuthenticationFilter.class)
                 .authorizeRequests()
+                // ------- general -------
                     .antMatchers("/",
                             "/**/*.png",
                             "/**/*.gif",
@@ -51,10 +53,21 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                             "/**/*.html",
                             "/**/*.css",
                             "/**/*.js").permitAll()
+                // ------- books -------
                     .antMatchers("/books/**").permitAll()
+                // ------- authors -------
                     .antMatchers("/authors").permitAll()
+                // ------- categories -------
                     .antMatchers(HttpMethod.GET, "/categories").permitAll()
                     .antMatchers("/categories").hasAnyAuthority(CATEGORY_WRITE.getPermission())
+                // ------- copies -------
+                    .antMatchers("/copies/search/findByUserId/*").hasAnyAuthority(USER_READ.getPermission())
+                    .antMatchers(HttpMethod.GET, "/copies/**").permitAll()
+                    .antMatchers("/copies/**").hasAnyAuthority(COPY_WRITE.getPermission())
+                // ------- users -------
+                    .antMatchers(HttpMethod.GET, "/users/*").hasAnyRole(USER.name(), AUTHORIZED_USER.name(), ADMIN.name())
+                    .antMatchers(HttpMethod.PUT, "/users/*").hasAnyRole(USER.name(), AUTHORIZED_USER.name(), ADMIN.name())
+                    .antMatchers("/users/**").hasAnyRole(ADMIN.name())
                 .anyRequest().authenticated();
     }
 

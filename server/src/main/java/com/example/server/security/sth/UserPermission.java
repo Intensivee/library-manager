@@ -6,7 +6,8 @@ public enum UserPermission {
     BOOK_WRITE("book:write"),
     USER_READ("user:read"),
     USER_WRITE("user:write"),
-    CATEGORY_WRITE("category:write");
+    CATEGORY_WRITE("category:write"),
+    COPY_WRITE("copy:write");
 
     private final String permission;
 

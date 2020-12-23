@@ -28,10 +28,6 @@ public class CategoryService {
         return category.getBooks().isEmpty();
     }
 
-    public boolean isPresent(Long id){
-        return this.categoryRepository.findById(id).isPresent();
-    }
-
     public Category getCategory(Long id){
         return this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }

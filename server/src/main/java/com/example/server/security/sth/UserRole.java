@@ -12,7 +12,7 @@ public enum UserRole {
 
     USER(Sets.newHashSet()),
     AUTHORIZED_USER(Sets.newHashSet(BOOK_READ, BOOK_WRITE)),
-    ADMIN(Sets.newHashSet(BOOK_READ, BOOK_WRITE, USER_READ, USER_WRITE));
+    ADMIN(Sets.newHashSet(BOOK_READ, BOOK_WRITE, USER_READ, USER_WRITE, CATEGORY_WRITE, COPY_WRITE));
 
     private final Set<UserPermission> permissions;
 
