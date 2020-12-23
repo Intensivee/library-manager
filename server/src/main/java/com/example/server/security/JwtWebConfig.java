@@ -5,6 +5,7 @@ import com.example.server.security.filters.JwtTokenVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static com.example.server.security.sth.UserPermission.CATEGORY_WRITE;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +43,18 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), tokenConfig, tokenUtils))
                 .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), JwtAuthenticationFilter.class)
                 .authorizeRequests()
+                    .antMatchers("/",
+                            "/**/*.png",
+                            "/**/*.gif",
+                            "/**/*.svg",
+                            "/**/*.jpg",
+                            "/**/*.html",
+                            "/**/*.css",
+                            "/**/*.js").permitAll()
+                    .antMatchers("/books/**").permitAll()
+                    .antMatchers("/authors").permitAll()
+                    .antMatchers(HttpMethod.GET, "/categories").permitAll()
+                    .antMatchers("/categories").hasAnyAuthority(CATEGORY_WRITE.getPermission())
                 .anyRequest().authenticated();
     }
 
