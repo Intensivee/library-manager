@@ -14,13 +14,13 @@ export class CategoryService {
 
   getCategories(): Observable<Category[]> {
     return this.httpClient.get<ResponseUnwrap>(`${API_URL}/categories`).pipe(
-      map(response => response._embedded.categories));
+      map(response => response._embedded.categoryDtoes));
   }
 
   getCategoriesByBookId(id: number): Observable<Category[]> {
     const url = `${API_URL}/categories/search/findByBookId?id=${id}`;
     return this.httpClient.get<ResponseUnwrap>(url).pipe(
-      map(response => response._embedded.categories));
+      map(response => response._embedded.categoryDtoes));
   }
 
   isEmpty(id: number): Observable<any> {
@@ -40,7 +40,7 @@ export class CategoryService {
 
 interface ResponseUnwrap {
   _embedded: {
-    categories: Category[];
+    categoryDtoes: Category[];
   };
 }
 
