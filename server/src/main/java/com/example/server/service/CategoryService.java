@@ -2,11 +2,14 @@ package com.example.server.service;
 
 import com.example.server.dtos.CategoryDto;
 import com.example.server.entity.Category;
+import com.example.server.exception.BookNotFoundException;
 import com.example.server.exception.CategoryNotFoundException;
 import com.example.server.mapper.CategoryMapper;
 import com.example.server.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoryService {
@@ -25,12 +28,16 @@ public class CategoryService {
         return category.getBooks().isEmpty();
     }
 
-    public boolean isPresent(Long id){
-        return this.categoryRepository.findById(id).isPresent();
-    }
-
     public Category getCategory(Long id){
         return this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+    }
+
+    public List<CategoryDto> getCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty()){
+            throw new BookNotFoundException();  // TODO: generic exceptions
+        }
+        return this.categoryMapper.categoriesToDto(categories);
     }
 
     public Category createCategory(CategoryDto dto) {

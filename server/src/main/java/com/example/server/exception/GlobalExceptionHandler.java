@@ -1,5 +1,6 @@
 package com.example.server.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,7 +23,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({ObjectCreateException.class})
+    @ExceptionHandler({ObjectCreateException.class,
+            DataIntegrityViolationException.class})
     public final ResponseEntity<?> conflictHandler(Exception e){
         Map<String, Object> body = this.createBody(e);
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
