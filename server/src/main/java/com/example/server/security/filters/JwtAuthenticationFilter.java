@@ -3,7 +3,9 @@ package com.example.server.security.filters;
 import com.example.server.security.JwtTokenConfig;
 import com.example.server.security.JwtTokenUtil;
 import com.example.server.security.sth.LoginRequest;
+import com.example.server.security.sth.TokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,6 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
 
         String token = this.jwtTokenUtil.createToken(authResult);
-        response.addHeader(this.jwtTokenConfig.getAuthenticationHeaders(), this.jwtTokenConfig.getTokenPrefix() + token);
+        // problems with exposing headers to client so i send in json format in response body
+        response.getWriter().write(new Gson().toJson(new TokenResponse(this.jwtTokenConfig.getTokenPrefix() + token)));
     }
 }

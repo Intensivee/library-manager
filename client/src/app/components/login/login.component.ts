@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
         this.invalidCredentials = false;
       }, error => {
         this.invalidCredentials = true;
+        console.log('error 2', error);
       }
     )
   }

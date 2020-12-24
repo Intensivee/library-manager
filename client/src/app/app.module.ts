@@ -85,7 +85,7 @@ const PIPES = [
     MAT_MODULES
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtHttpIntercepterService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtHttpIntercepterService, multi: true }
   ],
   bootstrap: [AppComponent]
 })
