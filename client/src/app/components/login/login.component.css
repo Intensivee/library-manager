@@ -53,3 +53,7 @@ form {
     background: rgb(26,24,0);
     background: linear-gradient(0deg, rgba(26,24,0,1) 11%, rgba(69,0,85,1) 100%);
 }
+
+.error-msg {
+    color: red;
+}

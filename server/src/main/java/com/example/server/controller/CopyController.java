@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("copies")
 public class CopyController {
