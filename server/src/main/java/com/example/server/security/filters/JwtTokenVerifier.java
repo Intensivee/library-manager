@@ -1,7 +1,7 @@
 package com.example.server.security.filters;
 
 import com.example.server.security.JwtTokenConfig;
-import com.example.server.security.JwtTokenUtil;
+import com.example.server.security.util.JwtTokenUtil;
 import com.google.common.base.Strings;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;

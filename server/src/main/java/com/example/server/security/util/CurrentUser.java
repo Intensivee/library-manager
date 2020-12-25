@@ -1,4 +1,4 @@
-package com.example.server.security;
+package com.example.server.security.util;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

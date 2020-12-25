@@ -1,11 +1,22 @@
 package com.example.server.security.payload;
 
 
+import javax.validation.constraints.NotBlank;
+
 public class RegisterRequest {
+
+    @NotBlank(message = "First name must be specified!")
     private String firstName;
-    private String secondName;
+
+    @NotBlank(message = "Last name must be specified!")
+    private String lastName;
+
+    @NotBlank(message = "Email must be specified!")
     private String email;
+
+    @NotBlank(message = "Password must be specified!")
     private String password;
+
 
     public String getFirstName() {
         return firstName;
@@ -15,12 +26,12 @@ public class RegisterRequest {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

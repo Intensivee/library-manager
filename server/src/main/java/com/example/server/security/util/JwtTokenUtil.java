@@ -1,5 +1,7 @@
-package com.example.server.security;
+package com.example.server.security.util;
 
+import com.example.server.security.JwtTokenConfig;
+import com.example.server.security.JwtUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;

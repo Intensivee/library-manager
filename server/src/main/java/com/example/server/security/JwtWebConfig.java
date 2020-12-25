@@ -2,6 +2,7 @@ package com.example.server.security;
 
 import com.example.server.security.filters.JwtTokenVerifier;
 import com.example.server.security.sth.JwtAuthenticationEntryPoint;
+import com.example.server.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,31 +14,34 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.example.server.security.sth.UserPermission.*;
-import static com.example.server.security.sth.UserRole.*;
+import static com.example.server.security.util.UserPermission.*;
+import static com.example.server.security.util.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
 public class JwtWebConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtUserDetailsService userDetailsService;
+    private final JwtAuthenticationService userDetailsService;
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtils;
-    private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public JwtWebConfig(JwtUserDetailsService userDetailsService, JwtTokenConfig tokenConfig,
-                        JwtTokenUtil tokenUtils, PasswordEncoder passwordEncoder,
-                        JwtAuthenticationEntryPoint unauthorizedHandler) {
+    public JwtWebConfig(JwtAuthenticationService userDetailsService, JwtTokenConfig tokenConfig,
+                        JwtTokenUtil tokenUtils, JwtAuthenticationEntryPoint unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.tokenConfig = tokenConfig;
         this.tokenUtils = tokenUtils;
-        this.passwordEncoder = passwordEncoder;
         this.unauthorizedHandler = unauthorizedHandler;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -50,7 +54,7 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                     .userDetailsService(this.userDetailsService)
-                    .passwordEncoder(this.passwordEncoder);
+                    .passwordEncoder(this.passwordEncoder());
     }
 
     @Override

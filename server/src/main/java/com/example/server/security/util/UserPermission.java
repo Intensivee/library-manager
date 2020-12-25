@@ -1,4 +1,4 @@
-package com.example.server.security.sth;
+package com.example.server.security.util;
 
 public enum UserPermission {
 
