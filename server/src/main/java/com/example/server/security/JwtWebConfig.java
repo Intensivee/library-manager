@@ -1,18 +1,21 @@
 package com.example.server.security;
 
-import com.example.server.security.filters.JwtAuthenticationFilter;
 import com.example.server.security.filters.JwtTokenVerifier;
+import com.example.server.security.sth.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.example.server.security.sth.UserPermission.*;
 import static com.example.server.security.sth.UserRole.*;
@@ -25,14 +28,23 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtils;
     private final PasswordEncoder passwordEncoder;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
     public JwtWebConfig(JwtUserDetailsService userDetailsService, JwtTokenConfig tokenConfig,
-                        JwtTokenUtil tokenUtils, PasswordEncoder passwordEncoder) {
+                        JwtTokenUtil tokenUtils, PasswordEncoder passwordEncoder,
+                        JwtAuthenticationEntryPoint unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.tokenConfig = tokenConfig;
         this.tokenUtils = tokenUtils;
         this.passwordEncoder = passwordEncoder;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -41,13 +53,15 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(this.unauthorizedHandler) // 401 instead of 403 when unauthorized token
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), tokenConfig, tokenUtils))
-                .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), JwtAuthenticationFilter.class)
+                .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), UsernamePasswordAuthenticationFilter.class)
+
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
                 // ------- general -------
+                    .antMatchers("/authentication/**").permitAll()
                     .antMatchers("/",
                             "/**/*.png",
                             "/**/*.gif",

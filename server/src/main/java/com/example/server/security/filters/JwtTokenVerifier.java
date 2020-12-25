@@ -45,7 +45,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         try {
             String token = authorizationHeader.replace(this.tokenConfig.getTokenPrefix(), "");
 
-            String username = this.tokenUtil.getUsername(token);
+            String email = this.tokenUtil.getEmail(token);
 
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = this.tokenUtil.getAuthorities(token)
                     .stream()
@@ -53,7 +53,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                     .collect(Collectors.toSet());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
+                    email,
                     null,
                     simpleGrantedAuthorities
             );

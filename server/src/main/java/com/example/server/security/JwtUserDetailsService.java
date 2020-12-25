@@ -26,10 +26,23 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return this.userRepository.findByEmail(email)
                 .map( user -> new JwtUserDetails(
-                        user.getUsername(),
+                        user.getId(),
+                        user.getEmail(),
                         passwordEncoder.encode(user.getPassword()),
                         UserRole.values()[user.getRole()].getGrantedAuthorities()
                 ))
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("Email %s not found", email)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with Email %s not found", email)));
+    }
+
+
+    public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
+        return this.userRepository.findById(id)
+                .map( user -> new JwtUserDetails(
+                        user.getId(),
+                        user.getEmail(),
+                        passwordEncoder.encode(user.getPassword()),
+                        UserRole.values()[user.getRole()].getGrantedAuthorities()
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with id %s not found", id)));
     }
 }

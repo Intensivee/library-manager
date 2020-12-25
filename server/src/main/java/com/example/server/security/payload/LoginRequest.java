@@ -1,4 +1,4 @@
-package com.example.server.security.sth;
+package com.example.server.security.payload;
 
 public class LoginRequest {
 
