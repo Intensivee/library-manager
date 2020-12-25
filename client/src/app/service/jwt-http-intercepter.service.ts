@@ -13,10 +13,8 @@ export class JwtHttpIntercepterService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // const token = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYSIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJib29rOnJlYWQifSx7ImF1dGhvcml0eSI6InVzZXI6cmVhZCJ9LHsiYXV0aG9yaXR5IjoidXNlcjp3cml0ZSJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiYm9vazp3cml0ZSJ9XSwiaWF0IjoxNjA4NzE4NzA0LCJleHAiOjE2MDkyODI4MDB9.H_hDVphZSekSYDrptWVur4ylYImUS1wsOFkpjLJjAdY';
-
     const token = this.authenticationService.getAuthenticatedToken();
-    const user = this.authenticationService.getAuthenticatedUser();
+    const user = this.authenticationService.getAuthenticatedUserId();
 
     if (user && token) {
 

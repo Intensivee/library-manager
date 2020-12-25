@@ -1,10 +1,14 @@
+import { UserService } from './user.service';
 import { API_URL } from '../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '../models/user';
+import { Observable } from 'rxjs';
 
 export const JWT_TOKEN = 'token';
-export const AUTHENTICATED_USER = 'authenticatedUser';
+export const AUTHENTICATED_USER_ID = 'authenticatedUserId';
 export const AUTHORIZATION_HEADER = 'Authorization';
 
 @Injectable({
@@ -12,38 +16,44 @@ export const AUTHORIZATION_HEADER = 'Authorization';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private userService: UserService) { }
 
 
   public authenticateCredentials(email: string, password: string) {
 
-    console.log('xd');
-    return this.http.post<any>(`${API_URL}/login`, { email, password })
+    const jwtHelper = new JwtHelperService();
+
+    return this.http.post<any>(`${API_URL}/authentication/login`, { email, password })
       .pipe(
         map(
           response => {
-
-            sessionStorage.setItem(AUTHENTICATED_USER, email);
+            const token = jwtHelper.decodeToken(response.token);
+            sessionStorage.setItem(AUTHENTICATED_USER_ID, token.sub);
             sessionStorage.setItem(JWT_TOKEN, response.token);
             return response;
-          }, error => console.log('error')
+          }
         )
       );
   }
 
-  getAuthenticatedUser() {
-    return sessionStorage.getItem(AUTHENTICATED_USER);
+  getAuthenticatedUser(): Observable<User> {
+      return this.userService.getUser(this.getAuthenticatedUserId())
+  }
+
+  getAuthenticatedUserId() {
+    return +sessionStorage.getItem(AUTHENTICATED_USER_ID);
   }
 
   getAuthenticatedToken() {
-    if (this.getAuthenticatedUser()) {
+    if (this.getAuthenticatedUserId()) {
       return sessionStorage.getItem(JWT_TOKEN);
     }
     return null;
   }
 
   logout() {
-    sessionStorage.removeItem(AUTHENTICATED_USER);
+    sessionStorage.removeItem(AUTHENTICATED_USER_ID);
     sessionStorage.removeItem(JWT_TOKEN);
   }
 
