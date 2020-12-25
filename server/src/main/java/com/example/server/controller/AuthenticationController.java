@@ -1,12 +1,12 @@
 package com.example.server.controller;
 
 import com.example.server.entity.User;
-import com.example.server.security.JwtAuthenticationService;
+import com.example.server.service.AuthenticationService;
 import com.example.server.security.JwtTokenConfig;
-import com.example.server.security.payload.LoginRequest;
-import com.example.server.security.payload.RegisterRequest;
-import com.example.server.security.payload.TokenResponse;
-import com.example.server.security.util.JwtTokenUtil;
+import com.example.server.payload.LoginRequest;
+import com.example.server.payload.RegisterRequest;
+import com.example.server.payload.TokenResponse;
+import com.example.server.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,13 +23,13 @@ import java.net.URI;
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
-    private final JwtAuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
     private final JwtTokenUtil tokenUtil;
     private final JwtTokenConfig tokenConfig;
 
     @Autowired
     public AuthenticationController(JwtTokenUtil tokenUtil,
-                                    JwtTokenConfig tokenConfig, JwtAuthenticationService authenticationService) {
+                                    JwtTokenConfig tokenConfig, AuthenticationService authenticationService) {
         this.tokenUtil = tokenUtil;
         this.tokenConfig = tokenConfig;
         this.authenticationService = authenticationService;

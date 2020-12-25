@@ -1,11 +1,12 @@
-package com.example.server.security;
+package com.example.server.service;
 
 import com.example.server.entity.User;
 import com.example.server.exception.RegistrationException;
 import com.example.server.repository.UserRepository;
-import com.example.server.security.payload.LoginRequest;
-import com.example.server.security.payload.RegisterRequest;
-import com.example.server.security.util.UserRole;
+import com.example.server.security.JwtUserDetails;
+import com.example.server.payload.LoginRequest;
+import com.example.server.payload.RegisterRequest;
+import com.example.server.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JwtAuthenticationService implements UserDetailsService {
+public class AuthenticationService implements UserDetailsService {
 
 
     private final UserRepository userRepository;
@@ -27,8 +28,8 @@ public class JwtAuthenticationService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public JwtAuthenticationService(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository,
-                                    @Lazy AuthenticationManager authenticationManager) {
+    public AuthenticationService(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository,
+                                 @Lazy AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;

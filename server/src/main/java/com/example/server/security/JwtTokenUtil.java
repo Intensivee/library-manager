@@ -1,4 +1,4 @@
-package com.example.server.security.util;
+package com.example.server.security;
 
 import com.example.server.security.JwtTokenConfig;
 import com.example.server.security.JwtUserDetails;

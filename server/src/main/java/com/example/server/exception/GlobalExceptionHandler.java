@@ -1,6 +1,6 @@
 package com.example.server.exception;
 
-import com.example.server.security.payload.ErrorResponse;
+import com.example.server.payload.ErrorResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.example.server.security.payload;
+package com.example.server.payload;
 
 import org.springframework.http.HttpStatus;
 

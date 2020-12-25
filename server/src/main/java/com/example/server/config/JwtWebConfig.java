@@ -1,8 +1,10 @@
-package com.example.server.security;
+package com.example.server.config;
 
-import com.example.server.security.filters.JwtTokenVerifier;
-import com.example.server.security.sth.JwtAuthenticationEntryPoint;
-import com.example.server.security.util.JwtTokenUtil;
+import com.example.server.security.JwtTokenConfig;
+import com.example.server.security.JwtTokenVerifierFilter;
+import com.example.server.security.JwtAuthenticationEntryPoint;
+import com.example.server.security.JwtTokenUtil;
+import com.example.server.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,20 +20,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.example.server.security.util.UserPermission.*;
-import static com.example.server.security.util.UserRole.*;
+import static com.example.server.security.UserPermission.*;
+import static com.example.server.security.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
 public class JwtWebConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtAuthenticationService userDetailsService;
+    private final AuthenticationService userDetailsService;
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtils;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public JwtWebConfig(JwtAuthenticationService userDetailsService, JwtTokenConfig tokenConfig,
+    public JwtWebConfig(AuthenticationService userDetailsService, JwtTokenConfig tokenConfig,
                         JwtTokenUtil tokenUtils, JwtAuthenticationEntryPoint unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.tokenConfig = tokenConfig;
@@ -67,7 +69,7 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtTokenVerifierFilter(tokenConfig, tokenUtils), UsernamePasswordAuthenticationFilter.class)
 
                 .authorizeRequests()
                 // ------- general -------

@@ -1,7 +1,5 @@
-package com.example.server.security.filters;
+package com.example.server.security;
 
-import com.example.server.security.JwtTokenConfig;
-import com.example.server.security.util.JwtTokenUtil;
 import com.google.common.base.Strings;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +17,13 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class JwtTokenVerifier extends OncePerRequestFilter {
+public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtil;
 
     @Autowired
-    public JwtTokenVerifier(JwtTokenConfig tokenConfig, JwtTokenUtil tokenUtil) {
+    public JwtTokenVerifierFilter(JwtTokenConfig tokenConfig, JwtTokenUtil tokenUtil) {
         this.tokenConfig = tokenConfig;
         this.tokenUtil = tokenUtil;
     }
