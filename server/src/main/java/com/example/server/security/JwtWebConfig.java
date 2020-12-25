@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +44,13 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                    .userDetailsService(this.userDetailsService)
+                    .passwordEncoder(this.passwordEncoder);
     }
 
     @Override
@@ -86,18 +92,5 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, "/users/*").hasAnyRole(USER.name(), AUTHORIZED_USER.name(), ADMIN.name())
                     .antMatchers("/users/**").hasAnyRole(ADMIN.name())
                 .anyRequest().authenticated();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(this.daoAuthenticationProvider());
-    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(this.passwordEncoder);
-        provider.setUserDetailsService(this.userDetailsService);
-        return provider;
     }
 }
