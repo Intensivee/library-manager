@@ -1,3 +1,5 @@
+import { AuthorService } from './../../service/author.service';
+import { AuthenticationService } from './../../service/authentication.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -11,7 +13,8 @@ import { RegisterComponent } from '../register/register.component';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private route: Router,
+  constructor(public authService: AuthenticationService,
+              private route: Router,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -33,4 +36,7 @@ export class NavBarComponent implements OnInit {
     this.dialog.open(RegisterComponent, dialogConfig);
   }
 
+  logoutUser(): void {
+    this.authService.logout();
+  }
 }

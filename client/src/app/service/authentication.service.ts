@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Pipe } from '@angular/core';
@@ -17,7 +18,8 @@ export const CURRENT_ROLE = 'currentRole';
 export class AuthenticationService {
 
   constructor(private http: HttpClient,
-              private userService: UserService) { }
+              private userService: UserService,
+              private router: Router) { }
 
 
   public authenticateCredentials(email: string, password: string) {
@@ -61,7 +63,7 @@ export class AuthenticationService {
 
   }
 
-  getUserRole(): number {
+  getUserRoleId(): number {
     if (this.isAuthenticated()) {
 
       return +sessionStorage.getItem(CURRENT_ROLE);
@@ -85,6 +87,8 @@ export class AuthenticationService {
   logout(): void {
     sessionStorage.removeItem(AUTHENTICATED_USER_ID);
     sessionStorage.removeItem(JWT_TOKEN);
+    sessionStorage.removeItem(CURRENT_ROLE);
+    this.router.navigate(['books']);
   }
 
 }
