@@ -1,6 +1,5 @@
 import { BorrowDetailsService } from '../../service/borrow-details.service';
 import { borrowDetails } from '../../models/borrow-details';
-import { BookService } from '../../service/book.service';
 import { UserService } from '../../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +18,6 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
-              private bookService: BookService,
               private borrowDetailsService: BorrowDetailsService) { }
 
   ngOnInit(): void {

@@ -1,10 +1,11 @@
+import { JwtHttpIntercepterService } from './service/jwt-http-intercepter.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AsideMenuComponent } from './components/aside-menu/aside-menu.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -21,17 +22,17 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { AbsoluteValuePipe } from './pipes/absolute-value.pipe';
 import { OverdueCopiesComponent } from './components/overdue-copies/overdue-copies.component';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CopyComponent } from './components/copy/copy.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { AuthorComponent } from './components/author/author.component';
 import { BookAddComponent } from './components/book-add/book-add.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 const MAT_MODULES = [
@@ -69,7 +70,7 @@ const PIPES = [
     BookAddComponent,
     LoginComponent,
     RegisterComponent
-    ],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -83,7 +84,9 @@ const PIPES = [
     }),
     MAT_MODULES
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtHttpIntercepterService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

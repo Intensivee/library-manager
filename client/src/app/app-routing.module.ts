@@ -1,3 +1,5 @@
+import { ADMIN_ROLE } from './app.constants';
+import { RoleGuardService as RoleGuard} from './service/route/role-guard.service';
 import { OverdueCopiesComponent } from './components/overdue-copies/overdue-copies.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserListComponent } from './components/user-list/user-list.component';
@@ -13,8 +15,17 @@ const routes: Routes = [
   { path: 'books/category/:id', component: BookListComponent },
   { path: 'books', component: BookListComponent },
   { path: 'copies', component: OverdueCopiesComponent },
-  { path: 'users/:id', component: UserDetailsComponent},
-  { path: 'users', component: UserListComponent},
+  { 
+    path: 'users/:id',
+    component: UserDetailsComponent,
+    canActivate: [RoleGuard], 
+    data: { expectedRole: ADMIN_ROLE }
+  },
+  { 
+    path: 'users',
+    component: UserListComponent,
+    canActivate: [RoleGuard], 
+    data: { expectedRole: ADMIN_ROLE }},
   { path: 'author/:id', component: AuthorDetailsComponent},
   { path: 'search/:key', component: SearchComponent },
   { path: '', redirectTo: '/books', pathMatch: 'full' },

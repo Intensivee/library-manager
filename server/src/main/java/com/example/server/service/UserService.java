@@ -57,7 +57,6 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(userDto.getId()));
         userToUpdate.setFirstName(userDto.getFirstName());
         userToUpdate.setLastName(userDto.getLastName());
-        userToUpdate.setUsername(userDto.getUsername());
         userToUpdate.setEmail(userDto.getEmail());
         userToUpdate.setRole(userDto.getRole());
         return this.userMapper.userToDto(this.userRepository.save(userToUpdate));

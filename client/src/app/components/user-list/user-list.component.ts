@@ -1,10 +1,10 @@
-import { UNTRUSTED_USER_ROLE } from '../../app.constants';
+import { UNTRUSTED_USER_ROLE_ID } from '../../app.constants';
 import { UserService } from '../../service/user.service';
 import { User } from 'src/app/models/user';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { TRUSTED_USER_ROLE } from 'src/app/app.constants';
+import { TRUSTED_USER_ROLE_ID } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-user-list',
@@ -44,12 +44,12 @@ export class UserListComponent implements OnInit {
   }
 
   activateUser(user: User): void {
-    user.role = TRUSTED_USER_ROLE;
+    user.role = TRUSTED_USER_ROLE_ID;
     this.userService.updateUser(user).subscribe(response => user = response);
   }
 
   deActivateUser(user: User): void {
-    user.role = UNTRUSTED_USER_ROLE;
+    user.role = UNTRUSTED_USER_ROLE_ID;
     this.userService.updateUser(user).subscribe(response => user = response);
   }
 

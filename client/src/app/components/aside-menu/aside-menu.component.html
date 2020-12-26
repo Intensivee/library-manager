@@ -1,26 +1,29 @@
 <div class="aside-menu-container">
 
-    <h4 class="title">Panel Pracownika:</h4>
-    <hr class="aside-solid">
-    <ul class="list">
-        <li>
-            <a routerLink="/users"><i class="list-img fas fa-user"></i>Użytkownicy</a>
-        </li>
-        <li>
-            <a routerLink="/copies"><i class="list-img fas fa-layer-group"></i>Wypożyczone kopie</a>
-        </li>
-        <li>
-            <a (click)="openCategoryDialog()" class="dialog">
-                <i class=" list-img fas fa-th"></i>Kategorie</a>
-        </li>
-        <li>
-            <a (click)="openAuthorDialog()" class="dialog">
-                <i class="list-img fas fa-pen-nib"></i>Dodaj autora</a>
-        </li>
-        <li>
-            <a (click)="openBookDialog()" class="dialog"><i class="list-img fas fa-plus-square"></i>Dodaj książkę</a>
-        </li>
-    </ul>
+    <div *ngIf="authService.getUserRoleId() == ADMIN_ROLE_ID">
+
+        <h4 class="title">Panel Pracownika:</h4>
+        <hr class="aside-solid">
+        <ul class="list">
+            <li>
+                <a routerLink="/users"><i class="list-img fas fa-user"></i>Użytkownicy</a>
+            </li>
+            <li>
+                <a routerLink="/copies"><i class="list-img fas fa-layer-group"></i>Wypożyczone kopie</a>
+            </li>
+            <li>
+                <a (click)="openCategoryDialog()" class="dialog">
+                    <i class=" list-img fas fa-th"></i>Kategorie</a>
+                </li>
+                <li>
+                <a (click)="openAuthorDialog()" class="dialog">
+                    <i class="list-img fas fa-pen-nib"></i>Dodaj autora</a>
+                </li>
+                <li>
+                <a (click)="openBookDialog()" class="dialog"><i class="list-img fas fa-plus-square"></i>Dodaj książkę</a>
+            </li>
+        </ul>
+    </div>
     
     <h4 class="title">Kategorie:</h4>
     <hr class="aside-solid">

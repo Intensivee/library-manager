@@ -8,7 +8,8 @@ import java.util.Set;
 
 public class JwtUserDetails implements UserDetails {
 
-    private final String username;
+    private Long id;
+    private final String email;
     private final String password;
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final Boolean isAccountNonExpired;
@@ -16,16 +17,22 @@ public class JwtUserDetails implements UserDetails {
     private final Boolean isCredentialsNonExpired;
     private final Boolean isEnabled;
 
-    public JwtUserDetails(String username,
+    public JwtUserDetails(
+                          Long id, String email,
                           String password,
                           Set<? extends GrantedAuthority> grantedAuthorities) {
-        this.username = username;
+        this.id = id;
+        this.email = email;
         this.password = password;
         this.grantedAuthorities = grantedAuthorities;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
         this.isEnabled = true;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
@@ -40,7 +47,7 @@ public class JwtUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     @Override

@@ -13,12 +13,12 @@ import java.util.Set;
 
 
 @Configuration
-public class MyDataRestConfig implements RepositoryRestConfigurer {
+public class DataRestConfig implements RepositoryRestConfigurer {
 
     private final EntityManager entityManager;
 
     @Autowired
-    public MyDataRestConfig(EntityManager entityManager) {
+    public DataRestConfig(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

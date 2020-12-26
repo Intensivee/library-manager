@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
-@CrossOrigin("http://localhost:4200")
 @RestController()
 @RequestMapping("books")
 public class BookController {

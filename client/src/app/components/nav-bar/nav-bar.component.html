@@ -4,11 +4,10 @@
 
     <a  href="#">Nasza Biblioteka</a>
     
-    <a (click)="openLoginDialog()" class="dialog">Login</a>
-    <a (click)="openRegisterDialog()" class="dialog">Register</a>
-
-    <!-- <a class="nav-link active">Logout</a>
-      <a class="nav-link active">Settings</a> -->
+    <a *ngIf="!authService.isAuthenticated()" (click)="openLoginDialog()" class="dialog">Login</a>
+    <a *ngIf="!authService.isAuthenticated()" (click)="openRegisterDialog()" class="dialog">Register</a>
+    <a *ngIf="authService.isAuthenticated()" class="dialog">Settings</a>
+    <a *ngIf="authService.isAuthenticated()" (click)="logoutUser()" class="dialog">Logout</a>
       
       <form>
         

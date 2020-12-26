@@ -1,50 +1,79 @@
-package com.example.server.security;
+package com.example.server.config;
 
-import com.example.server.security.filters.JwtAuthenticationFilter;
-import com.example.server.security.filters.JwtTokenVerifier;
+import com.example.server.security.JwtTokenConfig;
+import com.example.server.security.JwtTokenVerifierFilter;
+import com.example.server.security.JwtAuthenticationEntryPoint;
+import com.example.server.security.JwtTokenUtil;
+import com.example.server.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.example.server.security.sth.UserPermission.*;
-import static com.example.server.security.sth.UserRole.*;
+import static com.example.server.security.UserPermission.*;
+import static com.example.server.security.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
 public class JwtWebConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtUserDetailsService userDetailsService;
+    private final AuthenticationService userDetailsService;
     private final JwtTokenConfig tokenConfig;
     private final JwtTokenUtil tokenUtils;
-    private final PasswordEncoder passwordEncoder;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public JwtWebConfig(JwtUserDetailsService userDetailsService, JwtTokenConfig tokenConfig,
-                        JwtTokenUtil tokenUtils, PasswordEncoder passwordEncoder) {
+    public JwtWebConfig(AuthenticationService userDetailsService, JwtTokenConfig tokenConfig,
+                        JwtTokenUtil tokenUtils, JwtAuthenticationEntryPoint unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.tokenConfig = tokenConfig;
         this.tokenUtils = tokenUtils;
-        this.passwordEncoder = passwordEncoder;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
+    }
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                    .userDetailsService(this.userDetailsService)
+                    .passwordEncoder(this.passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(this.unauthorizedHandler) // 401 instead of 403 when unauthorized token
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), tokenConfig, tokenUtils))
-                .addFilterAfter(new JwtTokenVerifier(tokenConfig, tokenUtils), JwtAuthenticationFilter.class)
+                .addFilterAfter(new JwtTokenVerifierFilter(tokenConfig, tokenUtils), UsernamePasswordAuthenticationFilter.class)
+
                 .authorizeRequests()
                 // ------- general -------
+                    .antMatchers("/authentication/**").permitAll()
                     .antMatchers("/",
                             "/**/*.png",
                             "/**/*.gif",
@@ -69,18 +98,5 @@ public class JwtWebConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, "/users/*").hasAnyRole(USER.name(), AUTHORIZED_USER.name(), ADMIN.name())
                     .antMatchers("/users/**").hasAnyRole(ADMIN.name())
                 .anyRequest().authenticated();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(this.daoAuthenticationProvider());
-    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(this.passwordEncoder);
-        provider.setUserDetailsService(this.userDetailsService);
-        return provider;
     }
 }

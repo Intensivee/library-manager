@@ -2,19 +2,19 @@
     <i [mat-dialog-close] class="dialog-close fas fa-times"></i>
     <div class="header flex-column">
         <p class="title">Login</p>
-        <p class="error-msg"></p>
+        <p *ngIf="invalidCredentials" class="error-msg">{{errorMessage}}</p>
     </div>
-    <form class="flex-column">
+    <div class="flex-column">
         <div class="inputs">
             <p class="input-header">Email</p>
-            <input class="login-input" type="text">
+            <input class="login-input" type="email" [(ngModel)]="email" email>
             <p class="input-header">Hasło</p>
-            <input class="login-input" type="password">
+            <input class="login-input" type="password" [(ngModel)]="password">
         </div>
         <div class="flex-column buttons">
-            <button type="submit">Zaloguj</button>
-            <button>Rejestracja</button>
+            <button type="submit" (click)=handleLogin()>Zaloguj</button>
+            <button [mat-dialog-close] (click)=openRegisterDialog()>Rejestracja</button>
         </div>
-    </form>
+    </div>
 
 </div>

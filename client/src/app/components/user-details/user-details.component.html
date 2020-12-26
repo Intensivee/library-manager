@@ -10,7 +10,6 @@
     
     <p class="user-name">{{user.firstName}} {{user.lastName}}</p>
     <div class="user-info">
-      <p><strong>Login: </strong> {{user.username}}</p>
       <p><strong>Email: </strong> {{user.email}}</p>
       <p *ngIf="user.role == 0"><strong>Typ użytkownika: </strong> Nowe konto</p>
       <p *ngIf="user.role == 1"><strong>Typ użytkownika:</strong> Sprawdzony</p>

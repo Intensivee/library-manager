@@ -1,3 +1,5 @@
+import { ADMIN_ROLE_ID } from './../../app.constants';
+import { AuthenticationService } from './../../service/authentication.service';
 import { BookAddComponent } from '../book-add/book-add.component';
 import { CategoryService } from '../../service/category.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,10 +15,13 @@ import { AuthorComponent } from '../author/author.component';
 })
 export class AsideMenuComponent implements OnInit {
 
+  readonly ADMIN_ROLE_ID = ADMIN_ROLE_ID;
+
   categories: Category[];
 
   constructor(private categoryService: CategoryService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              public authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.getCategories();
