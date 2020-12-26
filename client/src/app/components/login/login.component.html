@@ -7,13 +7,13 @@
     <div class="flex-column">
         <div class="inputs">
             <p class="input-header">Email</p>
-            <input class="login-input" type="text" [(ngModel)]="email">
+            <input class="login-input" type="email" [(ngModel)]="email" email>
             <p class="input-header">Hasło</p>
             <input class="login-input" type="password" [(ngModel)]="password">
         </div>
         <div class="flex-column buttons">
             <button type="submit" (click)=handleLogin()>Zaloguj</button>
-            <button>Rejestracja</button>
+            <button [mat-dialog-close] (click)=openRegisterDialog()>Rejestracja</button>
         </div>
     </div>
 

@@ -2,23 +2,22 @@
     <i [mat-dialog-close] class="dialog-close fas fa-times"></i>
     <div class="header flex-column">
         <p class="title">Rejestracja</p>
-        <p class="error-msg"></p>
+        <p *ngIf="invalidCredentials" class="error-msg">{{errorMessage}}</p>
     </div>
-    <form class="flex-column">
+    <div class="flex-column">
         <div class="inputs">
             <p class="input-header">Email</p>
-            <input class="login-input" type="text">
+            <input class="login-input" name="email" type="email" [(ngModel)]="email" email>
             <p class="input-header">Imię</p>
-            <input class="login-input" type="text">
+            <input class="login-input" type="text" [(ngModel)]="firstName">
             <p class="input-header">Nazwisko</p>
-            <input class="login-input" type="text">
+            <input class="login-input" type="text" [(ngModel)]="lastName">
             <p class="input-header">Hasło</p>
-            <input class="login-input" type="password">
+            <input class="login-input" type="password" [(ngModel)]="password">
         </div>
         <div class="flex-column buttons">
-            <button type="submit">Zarejestruj</button>
-            <button>Logowanie</button>
+            <button type="submit" (click)=handleRegistration() >Zarejestruj</button>
         </div>
-    </form>
+    </div>
 
 </div>

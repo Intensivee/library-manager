@@ -1,14 +1,15 @@
+
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Pipe } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { API_URL } from '../app.constants';
+import {Observable} from 'rxjs';
 
 export const JWT_TOKEN = 'token';
 export const AUTHENTICATED_USER_ID = 'authenticatedUserId';
-export const AUTHORIZATION_HEADER = 'Authorization';
 export const CURRENT_ROLE = 'currentRole';
 
 
@@ -22,7 +23,7 @@ export class AuthenticationService {
               private router: Router) { }
 
 
-  public authenticateCredentials(email: string, password: string) {
+  public authenticateCredentials(email: string, password: string): Observable<any> {
 
     const jwtHelper = new JwtHelperService();
 
@@ -36,31 +37,34 @@ export class AuthenticationService {
             this.userService.getUser(token.sub).subscribe(( user => {
                 sessionStorage.setItem(CURRENT_ROLE, String(user.role));
               })
-            )
+            );
             return response;
           }
         )
       );
   }
 
+  public registerUser(email: string, password: string, firstName: string, lastName: string): Observable<any> {
+    return this.http.post<any>(`${API_URL}/authentication/register`,
+      {firstName, lastName, email, password});
+  }
+
   isAuthenticated(): boolean {
     const jwtHelper = new JwtHelperService();
 
-    if( !this.getAuthenticatedToken() || !this.getAuthenticatedUserId()){
+    if ( !this.getAuthenticatedToken() || !this.getAuthenticatedUserId()){
       return false;
     }
-
-    return !jwtHelper.isTokenExpired(sessionStorage.getItem(JWT_TOKEN))
+    return !jwtHelper.isTokenExpired(sessionStorage.getItem(JWT_TOKEN));
   }
 
-  getAuthenticatedUserId() {
+  getAuthenticatedUserId(): number {
     return +sessionStorage.getItem(AUTHENTICATED_USER_ID);
   }
 
-  getAuthenticatedToken() {
+  getAuthenticatedToken(): string {
 
     return sessionStorage.getItem(JWT_TOKEN);
-
   }
 
   getUserRoleId(): number {
