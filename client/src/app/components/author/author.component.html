@@ -1,9 +1,11 @@
 <div class="author-container">
 
-    <div class="photo-form">
-        <div class="img"></div>
-        <input (change)="uploadPhoto()" type="file" class="img-input">
-    </div>
+    <form class="photo-form">
+        <img [src]="imageSrc" class="img">
+        <input (change)="showImg($event)" type="file" class="img-input" >
+    </form>
+
+
     <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
         <div class="field form-group add-group">
             <p class="field-title">Imie</p>

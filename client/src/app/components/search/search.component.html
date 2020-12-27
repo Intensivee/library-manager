@@ -15,7 +15,7 @@
             <h3>{{book.title}}</h3>
           </a>
           
-          <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>
+          <a routerLink="/authors/{{book.authorId}}" class="author">{{book.authorName}}</a>
           
           <div class="categories">
             <ul *ngFor="let category of book.categories">
@@ -48,7 +48,7 @@
         <img src="{{author.imageUrl}}" alt="zdjęcie {{author.firstName}}" class="author-img img-responsive">
         
         <div class="author-details">
-          <a routerLink="/author/{{author.id}}">
+          <a routerLink="/authors/{{author.id}}">
             <h3>{{author.firstName}} {{author.lastName}}</h3>
           </a>
           
@@ -57,7 +57,7 @@
 
         <p class="memoir">
           {{author.memoir | slice:0:200}}..
-          <a routerLink="/author/{{author.id}}">Sprawdź</a>
+          <a routerLink="/authors/{{author.id}}">Sprawdź</a>
         </p>
         
         

@@ -29,6 +29,15 @@ export class AuthorService {
     return this.http.get<Author>(url);
   }
 
+  addAuthor(author: Author): Observable<number> {
+    const url = `${API_URL}/authors`;
+    return this.http.post<any>(url, author).pipe(
+      map(
+        response => response.id
+      )
+    );
+  }
+
 }
 
 interface UnwrapAuthors {
