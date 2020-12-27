@@ -54,4 +54,7 @@ public class Category {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+    public void addNewBook(Book book){
+        this.books.add(book);
+    }
 }

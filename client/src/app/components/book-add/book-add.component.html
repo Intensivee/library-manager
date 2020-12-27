@@ -1,10 +1,10 @@
 <div class="book-container">
 
     <form class="photo-form">
-        <img [src]="imageSrc" class="img">
+        <img alt="photo inserted by user" [src]="imageSrc" class="img">
         <input (change)="showImg($event)" type="file" class="img-input" >
     </form>
-    
+
     <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
         <div class="field form-group add-group">
             <p class="field-title">Tytuł</p>
@@ -18,15 +18,15 @@
             <p class="field-title">Autor</p>
             <p class="add-input">
                 <mat-form-field class="mat-form">
-                    <mat-select [formControl]="authorCtrl" #singleSelect>  
+                    <mat-select [formControl]="authorCtrl" #singleSelect>
 
                         <mat-option>
                             <ngx-mat-select-search [formControl]="authorFilterCtrl"
-                            placeholderLabel="Szukaj.." 
+                            placeholderLabel="Szukaj.."
                             noEntriesFoundLabel="Nie znaleziono autora"></ngx-mat-select-search>
                         </mat-option>
-                        
-                        <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
+
+                        <mat-option *ngFor="let author of filteredAuthors | async" [value]="author.id">
                             {{author.firstName}} {{author.lastName}}
                         </mat-option>
 
@@ -41,9 +41,9 @@
               <mat-select [formControl]="categoryCtrl" [multiple]="true" #multiSelect>
 
                 <mat-option>
-                  <ngx-mat-select-search [showToggleAllCheckbox]="true"
-                  placeholderLabel="Szukaj.." 
-                  noEntriesFoundLabel="Nie znaleziono kategorii" (toggleAll)="toggleSelectAll($event)" [formControl]="categoryFilterCtrl"></ngx-mat-select-search>
+                  <ngx-mat-select-search
+                  placeholderLabel="Szukaj.."
+                  noEntriesFoundLabel="Nie znaleziono kategorii" [formControl]="categoryFilterCtrl"></ngx-mat-select-search>
                 </mat-option>
 
                 <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
@@ -54,9 +54,9 @@
             </mat-form-field>
           </p>
         </div>
-        
+
         <button type="submit" class="add-btn btn btn-outline-secondary">Dodaj</button>
         <button [mat-dialog-close] class="btn-close btn btn-dark">Zamknij</button>
-    </form> 
-    
+    </form>
+
 </div>

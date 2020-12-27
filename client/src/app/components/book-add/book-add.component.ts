@@ -8,7 +8,7 @@ import { Book } from 'src/app/models/book';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
-import { finalize, take } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -30,10 +30,10 @@ export class BookAddComponent implements OnInit {
 
   // Author mat-select-search stuff
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
-   authors: Author[] = [];
-   authorCtrl: FormControl = new FormControl();
-   authorFilterCtrl: FormControl = new FormControl();
-   filteredAuthors: ReplaySubject<Author[]> = new ReplaySubject<Author[]>(1);
+  authors: Author[] = [];
+  authorCtrl: FormControl = new FormControl();
+  authorFilterCtrl: FormControl = new FormControl();
+  filteredAuthors: ReplaySubject<Author[]> = new ReplaySubject<Author[]>(1);
 
   // Categories mat-select-search stuff
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
@@ -59,11 +59,11 @@ export class BookAddComponent implements OnInit {
         .subscribe(() => this.filterAuthors());
     });
 
-    this.categoryService.getCategories().subscribe( categories => {
+    this.categoryService.getCategories().subscribe(categories => {
       this.categories = categories;
       this.filteredCategories.next(this.categories.slice());
       this.categoryFilterCtrl.valueChanges
-      .subscribe( () => this.filterCategories());
+        .subscribe(() => this.filterCategories());
     });
   }
 
@@ -99,16 +99,7 @@ export class BookAddComponent implements OnInit {
     );
   }
 
-  toggleSelectAll(selectAllValue: boolean): void {
-    this.filteredCategories.pipe(take(1))
-      .subscribe(val => {
-        if (selectAllValue) {
-          this.categoryCtrl.patchValue(val);
-        } else {
-          this.categoryCtrl.patchValue([]);
-        }
-      });
-  }
+
 
   onSubmit(): void {
     if (this.validateData()) {
@@ -121,15 +112,15 @@ export class BookAddComponent implements OnInit {
               finalize(() => {
                 fileRef.getDownloadURL().subscribe((url) => {
                   this.imageUrl = url;
-                  this.author.imageUrl = url;
-                  this.authorService.addAuthor(this.author).subscribe(
-                    authorId => {
-                        console.log(authorId);
-                        this.router.navigate(['/books', authorId]);
+                  this.book.imageUrl = url;
+                  this.book.categories = this.categoryCtrl.value;
+                  this.book.authorId = this.authorCtrl.value;
+                  this.bookService.addBook(this.book).subscribe(
+                    bookId => {
+                        this.router.navigate(['/books', bookId]);
                         this.dialogRef.close();
                     },  error => {
-                        // deleting photo if server didn't accept author (not very sufficient..)
-                        console.log(error);
+                        // deleting photo if server didn't accept book (not very sufficient..)
                         this.fireStorage.refFromURL(url).delete();
                         this.isValid = false;
                     }
@@ -142,7 +133,7 @@ export class BookAddComponent implements OnInit {
   }
 
   validateData(): boolean {
-    this.isValid = false;
+    this.isValid = true;
     return this.isValid;
   }
 

@@ -43,7 +43,8 @@ public class BookMapper {
     }
 
     public Book dtoToBook(BookDto bookDto) {
-        return new Book(
+
+        Book book = new Book(
                 bookDto.getId(),
                 bookDto.getTitle(),
                 bookDto.getDescription(),
@@ -54,6 +55,14 @@ public class BookMapper {
                         .collect(Collectors.toList()),
                 bookDto.getId() != null ? this.copyRepository.findByBookId(bookDto.getId()) : null
         );
+
+        // appending newly created book to each category (id doesn't happen automatically)
+        book.getCategories().forEach(category -> {
+            if (!category.getBooks().contains(book)) {
+                category.addNewBook(book);
+            }
+        });
+        return book;
     }
 
     public List<Book> dtoToBooks(List<BookDto> dto){

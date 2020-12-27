@@ -2,6 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.dtos.CopyDto;
 import com.example.server.entity.Copy;
+import com.example.server.payload.CreateResponse;
 import com.example.server.service.CopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -37,7 +38,7 @@ public class CopyController {
                 .buildAndExpand(copy.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(new CreateResponse(copy.getId(), location));
     }
 
     @DeleteMapping("/{id}")

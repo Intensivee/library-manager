@@ -3,6 +3,7 @@ package com.example.server.dtos;
 import org.springframework.hateoas.server.core.Relation;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Relation
@@ -15,10 +16,10 @@ public class BookDto {
     private String description;
     @NotBlank(message = "image url can not be empty!")
     private String imageUrl;
-    @NotBlank(message = "author must be selected!")
+    @NotNull(message = "author must be selected!")
     private Long authorId;
     private String authorName;
-    @NotBlank(message = "categories must be selected!")
+    @NotNull(message = "categories must be selected!")
     private List<CategoryDto> categories;
 
     public BookDto() {
