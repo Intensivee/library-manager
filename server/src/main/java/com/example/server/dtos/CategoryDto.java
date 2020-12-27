@@ -1,7 +1,10 @@
 package com.example.server.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 public class CategoryDto {
     private Long id;
+    @NotBlank(message = "category can not be empty!")
     private String name;
 
     public CategoryDto() {

@@ -3,6 +3,7 @@ package com.example.server.service;
 import com.example.server.dtos.BookDto;
 import com.example.server.entity.Book;
 import com.example.server.exception.BookNotFoundException;
+import com.example.server.exception.ObjectCreateException;
 import com.example.server.mapper.BookMapper;
 import com.example.server.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,13 @@ public class BookService {
             throw new BookNotFoundException();
         }
         return this.bookMapper.booksToDto(books);
+    }
+
+    public Book createBook(BookDto bookDto) {
+        if (bookDto.getId() != null) {
+            throw new ObjectCreateException(bookDto.getId());
+        }
+        Book book = this.bookMapper.dtoToBook(bookDto);
+        return this.bookRepository.save(book);
     }
 }

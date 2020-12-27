@@ -50,6 +50,13 @@ export class BookService {
       map(response => response._embedded.bookDtoes)
     );
   }
+
+  addBook(book: Book): Observable<number> {
+    const url = `${API_URL}/books`;
+    return this.httpClient.post<any>(url, book).pipe(
+      map(response => response.id)
+    );
+  }
 }
 
 interface UnwrapResponse {

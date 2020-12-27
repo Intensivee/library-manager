@@ -56,7 +56,6 @@ public class AuthenticationController {
                 .buildAndExpand(user.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
-
+        return ResponseEntity.created(location).body(user.getId());
     }
 }

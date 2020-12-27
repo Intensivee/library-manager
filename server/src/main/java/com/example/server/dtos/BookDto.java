@@ -2,18 +2,27 @@ package com.example.server.dtos;
 
 import org.springframework.hateoas.server.core.Relation;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Relation
 public class BookDto {
 
     private Long id;
+    @NotBlank(message = "title can not be empty!")
     private String title;
+    @NotBlank(message = "description can not be empty!")
     private String description;
+    @NotBlank(message = "image url can not be empty!")
     private String imageUrl;
+    @NotBlank(message = "author must be selected!")
     private Long authorId;
     private String authorName;
+    @NotBlank(message = "categories must be selected!")
     private List<CategoryDto> categories;
+
+    public BookDto() {
+    }
 
     public BookDto(Long id, String title, String description, String imageUrl, Long authorId, String authorName, List<CategoryDto> categories) {
         this.id = id;

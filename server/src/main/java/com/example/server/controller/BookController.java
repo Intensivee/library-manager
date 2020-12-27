@@ -1,9 +1,9 @@
 package com.example.server.controller;
 
 import com.example.server.dtos.BookDto;
+import com.example.server.entity.Book;
+import com.example.server.payload.CreateResponse;
 import com.example.server.service.BookService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +12,10 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +26,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("books")
 public class BookController {
 
-    private final Logger logger = LoggerFactory.getLogger(BookController.class);
     private final BookService bookService;
 
     @Autowired
@@ -41,6 +43,18 @@ public class BookController {
         // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
         return ResponseEntity.ok(collection);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addBook(@Valid @RequestBody BookDto bookDto){
+        Book book = this.bookService.createBook(bookDto);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(book.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(new CreateResponse(book.getId(), location));
     }
 
     @GetMapping("/{id}")

@@ -3,6 +3,7 @@ package com.example.server.controller;
 
 import com.example.server.dtos.CategoryDto;
 import com.example.server.entity.Category;
+import com.example.server.payload.CreateResponse;
 import com.example.server.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +44,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CategoryDto categoryDto){
+    public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryDto categoryDto){
         Category category = this.categoryService.createCategory(categoryDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -50,7 +52,7 @@ public class CategoryController {
                 .buildAndExpand(category.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(new CreateResponse(category.getId(), location));
     }
 
     @DeleteMapping("/{id}")

@@ -34,6 +34,16 @@ public class Book {
     public Book() {
     }
 
+    public Book(long id, String title, String description, String imageUrl, Author author, List<Category> categories, List<Copy> copies) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.author = author;
+        this.categories = categories;
+        this.copies = copies;
+    }
+
     public long getId() {
         return id;
     }
