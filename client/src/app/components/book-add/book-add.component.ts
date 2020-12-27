@@ -8,7 +8,10 @@ import { Book } from 'src/app/models/book';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
-import { take } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-add',
@@ -20,6 +23,10 @@ export class BookAddComponent implements OnInit {
   isValid = true;
   book: Book = new Book();
   author: Author;
+
+  imageUrl: string;
+  imageSrc: string;
+  selectedImage: any = null;
 
   // Author mat-select-search stuff
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
@@ -38,7 +45,10 @@ export class BookAddComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private authorService: AuthorService,
-    private categoryService: CategoryService) { }
+    private categoryService: CategoryService,
+    private fireStorage: AngularFireStorage,
+    private router: Router,
+    private dialogRef: MatDialogRef<BookAddComponent>) { }
 
   ngOnInit(): void {
     this.authorService.getAuthors().subscribe(authors => {
@@ -102,7 +112,32 @@ export class BookAddComponent implements OnInit {
 
   onSubmit(): void {
     if (this.validateData()) {
-
+      // adding current time to avoid duplicate names + deleting file extension
+      const filePath = `image/book/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+      const fileRef = this.fireStorage.ref(filePath);
+      this.fireStorage.upload(filePath, this.selectedImage)
+            .snapshotChanges()
+            .pipe(
+              finalize(() => {
+                fileRef.getDownloadURL().subscribe((url) => {
+                  this.imageUrl = url;
+                  this.author.imageUrl = url;
+                  this.authorService.addAuthor(this.author).subscribe(
+                    authorId => {
+                        console.log(authorId);
+                        this.router.navigate(['/books', authorId]);
+                        this.dialogRef.close();
+                    },  error => {
+                        // deleting photo if server didn't accept author (not very sufficient..)
+                        console.log(error);
+                        this.fireStorage.refFromURL(url).delete();
+                        this.isValid = false;
+                    }
+                  );
+                });
+              } )
+            )
+            .subscribe();
     }
   }
 
@@ -111,8 +146,13 @@ export class BookAddComponent implements OnInit {
     return this.isValid;
   }
 
-  uploadPhoto(): void {
-
+  showImg(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.imageSrc = e.target.result;
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedImage = event.target.files[0];
+    }
   }
 
 }
