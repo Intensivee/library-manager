@@ -22,7 +22,7 @@
           <h3>{{book.title}}</h3> 
         </a>
         
-        <a routerLink="/author/{{book.authorId}}" class="author">{{book.authorName}}</a>   
+        <a routerLink="/authors/{{book.authorId}}" class="author">{{book.authorName}}</a>   
         
         <div class="categories">
           <ul *ngFor="let category of book.categories">

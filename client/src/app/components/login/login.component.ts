@@ -1,5 +1,5 @@
 import { RegisterComponent } from '../register/register.component';
-import { AuthenticationService } from '../../service/authentication.service';
+import { AuthenticationService } from '../../service/security/authentication.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';

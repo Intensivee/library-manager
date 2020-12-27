@@ -4,6 +4,7 @@ import com.example.server.dtos.CategoryDto;
 import com.example.server.entity.Category;
 import com.example.server.exception.BookNotFoundException;
 import com.example.server.exception.CategoryNotFoundException;
+import com.example.server.exception.ObjectCreateException;
 import com.example.server.mapper.CategoryMapper;
 import com.example.server.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class CategoryService {
     }
 
     public Category createCategory(CategoryDto dto) {
+        if(dto.getId() != null) {
+            throw new ObjectCreateException(dto.getId());
+        }
         return this.categoryRepository.save(categoryMapper.dtoToCategory(dto));
     }
 

@@ -1,8 +1,9 @@
-import { AuthenticationService } from '../authentication.service';
+
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../../components/login/login.component';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'

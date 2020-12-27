@@ -1,50 +1,35 @@
-package com.example.server.entity;
+package com.example.server.dtos;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
-@Entity
-@Table(name="author")
-public class Author {
+public class AuthorDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id")
+
     private Long id;
-
-    @Column(name = "first_name")
+    @NotBlank(message = "first name can not be empty.")
     private String firstName;
-
-    @Column(name = "last_name")
+    @NotBlank(message = "last name can not be empty.")
     private String lastName;
-
-    @Column(name = "birth_date")
+    @NotNull(message = "birth date can not be empty.")
     private Date birthDate;
-
-    @Column(name = "memoir")
+    @NotBlank(message = "memoir can not be empty.")
     private String memoir;
-
-    @Column(name = "url")
+    @NotBlank(message = "image can not be empty.")
     private String imageUrl;
 
-    @OneToMany(mappedBy = "author")
-    @JsonBackReference
-    private List<Book> books;
 
-    public Author() {
+    public AuthorDto() {
     }
 
-    public Author(Long id, String firstName, String lastName, Date birthDate, String memoir, String imageUrl, List<Book> books) {
+    public AuthorDto(Long id, String firstName, String lastName, Date birthDate, String memoir, String imageUrl) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.memoir = memoir;
         this.imageUrl = imageUrl;
-        this.books = books;
     }
 
     public Long getId() {
@@ -77,14 +62,6 @@ public class Author {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 
     public String getMemoir() {

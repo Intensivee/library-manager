@@ -1,12 +1,11 @@
-
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { API_URL } from '../app.constants';
 import {Observable} from 'rxjs';
+import { API_URL } from 'src/app/app.constants';
+import { UserService } from '../user.service';
 
 export const JWT_TOKEN = 'token';
 export const AUTHENTICATED_USER_ID = 'authenticatedUserId';

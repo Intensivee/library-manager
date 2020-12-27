@@ -1,5 +1,4 @@
-import { AuthorService } from './../../service/author.service';
-import { AuthenticationService } from './../../service/authentication.service';
+import { AuthenticationService } from '../../service/security/authentication.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';

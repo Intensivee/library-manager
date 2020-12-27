@@ -1,5 +1,5 @@
-import { ADMIN_ROLE_ID } from './../../app.constants';
-import { AuthenticationService } from './../../service/authentication.service';
+import { ADMIN_ROLE_ID } from '../../app.constants';
+import { AuthenticationService } from '../../service/security/authentication.service';
 import { BookAddComponent } from '../book-add/book-add.component';
 import { CategoryService } from '../../service/category.service';
 import { Component, OnInit } from '@angular/core';

@@ -1,4 +1,4 @@
-import { JwtHttpIntercepterService } from './service/jwt-http-intercepter.service';
+import { JwtHttpIntercepterService } from './service/security/jwt-http-intercepter.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -34,6 +34,10 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
 
 const MAT_MODULES = [
   MatTableModule,
@@ -82,7 +86,10 @@ const PIPES = [
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
     }),
-    MAT_MODULES
+    MAT_MODULES,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtHttpIntercepterService, multi: true }
