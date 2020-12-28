@@ -1,6 +1,6 @@
 package com.example.server.exception;
 
-import com.example.server.payload.ErrorResponse;
+import com.example.server.payload.ExceptionResponse;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -24,36 +22,39 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({ ResourceNotFoundException.class})
-    public final Map<String, Object> notFoundHandler(Exception e){
-        return this.createBody(e);
+    @ExceptionHandler({ResourceNotFoundException.class})
+    public final ExceptionResponse notFoundHandler(Exception e) {
+        return this.createBody(e, HttpStatus.NOT_FOUND);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler({ResourceCreateException.class,
             DataIntegrityViolationException.class,
             RegistrationException.class})
-    public final Map<String, Object> conflictHandler(Exception e){
-        return this.createBody(e);
+    public final ExceptionResponse conflictHandler(Exception e) {
+        return this.createBody(e, HttpStatus.CONFLICT);
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
         List<String> errorList = ex
                 .getBindingResult()
                 .getFieldErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
-        ErrorResponse errorDetails = new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errorList);
+        ExceptionResponse errorDetails = new ExceptionResponse(HttpStatus.BAD_REQUEST, new Date(), errorList);
         return handleExceptionInternal(ex, errorDetails, headers, errorDetails.getStatus(), request);
     }
 
-    private Map<String, Object> createBody(Exception e){
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", e.toString());
-        return body;
+    private ExceptionResponse createBody(Exception e, HttpStatus httpStatus) {
+        return new ExceptionResponse(
+                httpStatus,
+                new Date(),
+                e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.toString()
+        );
     }
 }
