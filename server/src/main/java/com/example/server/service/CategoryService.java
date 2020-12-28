@@ -2,9 +2,8 @@ package com.example.server.service;
 
 import com.example.server.dtos.CategoryDto;
 import com.example.server.entity.Category;
-import com.example.server.exception.BookNotFoundException;
-import com.example.server.exception.CategoryNotFoundException;
-import com.example.server.exception.ObjectCreateException;
+import com.example.server.exception.ResourceCreateException;
+import com.example.server.exception.ResourceNotFoundException;
 import com.example.server.mapper.CategoryMapper;
 import com.example.server.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +23,28 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    public boolean containNoBooks(Long id){
-        Category category = this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+    public boolean containNoBooks(Long id)  {
+        Category category = this.categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
         return category.getBooks().isEmpty();
     }
 
     public Category getCategory(Long id){
-        return this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+        return this.categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
     }
 
     public List<CategoryDto> getCategories() {
         List<Category> categories = categoryRepository.findAll();
         if(categories.isEmpty()){
-            throw new BookNotFoundException();  // TODO: generic exceptions
+            throw new ResourceNotFoundException("categories");
         }
         return this.categoryMapper.categoriesToDto(categories);
     }
 
     public Category createCategory(CategoryDto dto) {
         if(dto.getId() != null) {
-            throw new ObjectCreateException(dto.getId());
+            throw new ResourceCreateException(dto.getId());
         }
         return this.categoryRepository.save(categoryMapper.dtoToCategory(dto));
     }

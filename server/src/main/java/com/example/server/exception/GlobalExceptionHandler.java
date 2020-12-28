@@ -24,16 +24,13 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({ BookNotFoundException.class,
-                        CategoryNotFoundException.class,
-                        UserNotFoundException.class,
-                        CopyNotFoundException.class})
+    @ExceptionHandler({ ResourceNotFoundException.class})
     public final Map<String, Object> notFoundHandler(Exception e){
         return this.createBody(e);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({ObjectCreateException.class,
+    @ExceptionHandler({ResourceCreateException.class,
             DataIntegrityViolationException.class,
             RegistrationException.class})
     public final Map<String, Object> conflictHandler(Exception e){

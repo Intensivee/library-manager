@@ -2,8 +2,8 @@ package com.example.server.service;
 
 import com.example.server.dtos.CopyDto;
 import com.example.server.entity.Copy;
-import com.example.server.exception.CopyNotFoundException;
-import com.example.server.exception.ObjectCreateException;
+import com.example.server.exception.ResourceCreateException;
+import com.example.server.exception.ResourceNotFoundException;
 import com.example.server.mapper.CopyMapper;
 import com.example.server.repository.CopyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +40,17 @@ public class CopyService {
 
     public Copy createCopy(CopyDto dtoCopy) {
         if(dtoCopy.getId() != null){
-            throw new ObjectCreateException(dtoCopy.getId());
+            throw new ResourceCreateException(dtoCopy.getId());
         }
         else if(dtoCopy.getBookId() == null || dtoCopy.getPages() == null || dtoCopy.getBorrowed() == null){
-            throw new ObjectCreateException();
+            throw new ResourceCreateException();
         }
         return this.copyRepository.save(this.copyMapper.dtoToCopy(dtoCopy));
     }
 
     public void deleteCopy(Long id) {
-        Copy copy = this.copyRepository.findById(id).orElseThrow( () -> new CopyNotFoundException(id));
+        Copy copy = this.copyRepository.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("copy", "id", id));
         this.copyRepository.delete(copy);
     }
 }
