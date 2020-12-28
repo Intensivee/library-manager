@@ -2,7 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.dtos.BookDto;
 import com.example.server.entity.Book;
-import com.example.server.payload.CreateResponse;
+import com.example.server.payload.PostResponse;
 import com.example.server.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<Object> getAll() {
         // adding href link to each element
         List<EntityModel<?>> books =  bookService.getAll().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addBook(@Valid @RequestBody BookDto bookDto){
+    public ResponseEntity<PostResponse> addBook(@Valid @RequestBody BookDto bookDto){
         Book book = this.bookService.createBook(bookDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -54,24 +54,24 @@ public class BookController {
                 .buildAndExpand(book.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(new CreateResponse(book.getId(), location));
+        return ResponseEntity.created(location).body(new PostResponse(book.getId(), location));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> getById(@PathVariable("id") Long id) {
         BookDto book = bookService.getById(id);
         EntityModel<?> entityModel = EntityModel.of(book, linkTo(BookController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
     }
 
     @GetMapping(value = "/paged")
-    public ResponseEntity<?> getAll(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
+    public ResponseEntity<Object> getAll(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
         Page<BookDto> books = bookService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(books));
     }
 
     @GetMapping(value = "/search/findByCategoryId/{id}")
-    public ResponseEntity<?> getByCategoryId(@PathVariable("id") Long id,
+    public ResponseEntity<Object> getByCategoryId(@PathVariable("id") Long id,
                                              Pageable pageable,
                                              PagedResourcesAssembler<BookDto> assembler){
         Page<BookDto> books = bookService.getByCategory(id, pageable);
@@ -79,7 +79,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/search/findByTitle/{title}")
-    public ResponseEntity<CollectionModel<EntityModel<?>>> getByTitle(@PathVariable("title") String title){
+    public ResponseEntity<Object> getByTitle(@PathVariable("title") String title){
 
         List<EntityModel<?>> books = bookService.getByTitle(title).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
@@ -90,7 +90,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/search/findByAuthorId/{id}")
-    public ResponseEntity<?> getByAuthorId(@PathVariable("id") long id){
+    public ResponseEntity<Object> getByAuthorId(@PathVariable("id") long id){
         List<EntityModel<?>> books =  bookService.getByAuthorId(id).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());

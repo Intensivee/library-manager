@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<Object> getAll(){
         List<EntityModel<?>> users =  this.userService.getAll().stream()
                 .map(user -> EntityModel.of(user, linkTo(BookController.class).slash(user.getId()).withSelfRel()))
                 .collect(Collectors.toList());
@@ -43,14 +43,14 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EntityModel<?>> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> getById(@PathVariable("id") Long id) {
         UserDto user = this.userService.getById(id);
         EntityModel<?> entityModel = EntityModel.of(user, linkTo(UserController.class).slash(id).withSelfRel());
         return ResponseEntity.ok(entityModel);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody UserDto user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto user){
         UserDto userUpdated = this.userService.updateUser(user);
         return ResponseEntity.ok(userUpdated);
     }
@@ -62,13 +62,13 @@ public class UserController {
     }
 
     @GetMapping("/paged")
-    public ResponseEntity<?> getAll(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
+    public ResponseEntity<Object> getAll(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
         Page<UserDto> page = this.userService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(page));
     }
 
     @GetMapping("/search/findByCopyId/{id}")
-    public ResponseEntity<?> findBYCopyId(@PathVariable("id") Long id){
+    public ResponseEntity<Object> findBYCopyId(@PathVariable("id") Long id){
         UserDto user = this.userService.getByCopyId(id);
         return ResponseEntity.ok(EntityModel.of(user, linkTo(UserController.class).slash(user.getId()).withSelfRel()));
     }

@@ -2,7 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.dtos.CopyDto;
 import com.example.server.entity.Copy;
-import com.example.server.payload.CreateResponse;
+import com.example.server.payload.PostResponse;
 import com.example.server.service.CopyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -30,7 +30,7 @@ public class CopyController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createCopy(@RequestBody CopyDto copyDto){
+    public ResponseEntity<PostResponse> createCopy(@RequestBody CopyDto copyDto){
         Copy copy = this.copyService.createCopy(copyDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -38,17 +38,17 @@ public class CopyController {
                 .buildAndExpand(copy.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(new CreateResponse(copy.getId(), location));
+        return ResponseEntity.created(location).body(new PostResponse(copy.getId(), location));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCopy(@PathVariable("id") Long id){
+    public ResponseEntity<HttpStatus> deleteCopy(@PathVariable("id") Long id){
         this.copyService.deleteCopy(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/search/findBorrowed")
-    public ResponseEntity<?> getBorrowedCopies(){
+    public ResponseEntity<Object> getBorrowedCopies(){
         List<EntityModel<?>> copies = this.copyService.getBorrowedCopies().stream()
                 .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(copy.getId()).withSelfRel()))
                 .collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class CopyController {
     }
 
     @GetMapping("/search/findByBookId/{id}")
-    public ResponseEntity<?> getAllByBookId(@PathVariable("id") Long id){
+    public ResponseEntity<Object> getAllByBookId(@PathVariable("id") Long id){
         List<EntityModel<?>> copies = this.copyService.getAllByBookId(id).stream()
                 .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(id).withSelfRel()))
                 .collect(Collectors.toList());
@@ -64,7 +64,7 @@ public class CopyController {
     }
 
     @GetMapping("/search/findByUserId/{id}")
-    public ResponseEntity<?> getAllByUserId(@PathVariable("id") Long id){
+    public ResponseEntity<Object> getAllByUserId(@PathVariable("id") Long id){
         List<EntityModel<?>> copies = this.copyService.getAllByUserId(id).stream()
                 .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(id).withSelfRel()))
                 .collect(Collectors.toList());

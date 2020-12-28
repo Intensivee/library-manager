@@ -3,7 +3,7 @@ package com.example.server.controller;
 
 import com.example.server.dtos.CategoryDto;
 import com.example.server.entity.Category;
-import com.example.server.payload.CreateResponse;
+import com.example.server.payload.PostResponse;
 import com.example.server.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -32,7 +32,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<Object> getAll() {
         // adding href link to each element
         List<EntityModel<?>> categories =  categoryService.getCategories().stream()
                 .map(category -> EntityModel.of(category, linkTo(CategoryController.class).slash(category.getId()).withSelfRel()))
@@ -44,7 +44,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addCategory(@Valid @RequestBody CategoryDto categoryDto){
+    public ResponseEntity<PostResponse> addCategory(@Valid @RequestBody CategoryDto categoryDto){
         Category category = this.categoryService.createCategory(categoryDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -52,11 +52,11 @@ public class CategoryController {
                 .buildAndExpand(category.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(new CreateResponse(category.getId(), location));
+        return ResponseEntity.created(location).body(new PostResponse(category.getId(), location));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id){
         this.categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

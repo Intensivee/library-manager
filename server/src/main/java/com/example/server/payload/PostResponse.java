@@ -2,15 +2,15 @@ package com.example.server.payload;
 
 import java.net.URI;
 
-public class CreateResponse {
+public class PostResponse {
 
     private Long id;
     private URI location;
 
-    public CreateResponse() {
+    public PostResponse() {
     }
 
-    public CreateResponse(Long id, URI location) {
+    public PostResponse(Long id, URI location) {
         this.id = id;
         this.location = location;
     }

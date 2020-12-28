@@ -2,7 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.dtos.AuthorDto;
 import com.example.server.entity.Author;
-import com.example.server.payload.CreateResponse;
+import com.example.server.payload.PostResponse;
 import com.example.server.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -32,7 +32,7 @@ public class AuthorController {
 
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<Object> getAll() {
         // adding href link to each element
         List<EntityModel<?>> books =  authorService.getAll().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
@@ -44,7 +44,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addAuthor(@Valid @RequestBody AuthorDto authorDto){
+    public ResponseEntity<Object> addAuthor(@Valid @RequestBody AuthorDto authorDto){
         Author author = this.authorService.addAuthor(authorDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -52,6 +52,6 @@ public class AuthorController {
                 .buildAndExpand(author.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(new CreateResponse(author.getId(), location));
+        return ResponseEntity.created(location).body(new PostResponse(author.getId(), location));
     }
 }
