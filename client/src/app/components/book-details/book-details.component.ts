@@ -19,13 +19,13 @@ export class BookDetailsComponent implements OnInit {
 
   // popup window stuff
   popoverTitle = 'Dialog usunięcia';
-  popoverMessage = 'Czy jesteś pewien że chcesz usunąć tę kopie?';
+  popoverMessage = 'Czy jesteś pewien?';
 
 
   constructor(private bookService: BookService,
-              private copyService: CopyService,
-              private route: ActivatedRoute,
-              private dialog: MatDialog) { }
+    private copyService: CopyService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.getBookDetails());
@@ -50,7 +50,13 @@ export class BookDetailsComponent implements OnInit {
   }
 
   deleteCopy(copy: Copy): void {
-    this.copyService.deleteCopy(copy.id).subscribe( () => this.ngOnInit());
+    this.copyService.deleteCopy(copy.id).subscribe(() => this.ngOnInit());
+  }
+
+  deleteBook(book: Book): void {
+    // this.bookService.deleteBook(book.id).subscribe(
+
+    // )
   }
 
 

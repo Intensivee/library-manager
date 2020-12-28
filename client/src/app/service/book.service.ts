@@ -9,6 +9,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class BookService {
+  deleteBook(id: number) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private httpClient: HttpClient) { }
 

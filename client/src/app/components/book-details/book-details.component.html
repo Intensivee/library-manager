@@ -19,6 +19,12 @@
     </div>
     
     <div class="description">
+      <button class="btn btn-dark btn-delete"
+      mwlConfirmationPopover
+      [popoverTitle]="popoverTitle"
+      [popoverMessage]="popoverMessage"
+      placement="left"
+      (confirm)="deleteBook(book)"><i class="far fa-trash-alt"></i> Usuń </button>
       <p >{{book.description}}</p>
     </div>
   </div>

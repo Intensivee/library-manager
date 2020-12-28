@@ -47,14 +47,20 @@
   color: black;
 }
 
-.description p {
-  margin-top: 4em;
-  font-size: 1em;
+.description {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 1em;
 }
 
-.description {
+.btn-delete {
+  align-self: flex-end;
+}
 
-  overflow: hidden;
+.description p {
+  margin-top: 1em;
+  font-size: 1em;
 }
 
 .solid {
@@ -75,4 +81,5 @@
 
 .action {
   padding: .5em;
+  cursor: pointer;
 }
