@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   users: User[] = [];
-  displayedColumns = ['firstName', 'lastName', 'username', 'email', 'role', 'copies', 'actions'];
+  displayedColumns = ['firstName', 'lastName', 'email', 'role', 'copies', 'actions'];
   dataSource = new MatTableDataSource(this.users);
 
 

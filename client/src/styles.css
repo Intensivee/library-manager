@@ -57,8 +57,15 @@ a:hover {
   background: rgb(190, 190, 190);
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
 /* -------------------book list + search component shared classes */
@@ -79,20 +86,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex-direction: column;
   margin: 1em 2em;
   min-width: 40%;
-  white-space: nowrap;
 }
 
 .book-img {
-  width:6vw;
+  width: 6vw;
   height: auto;
   border: 1px solid #333;
   border-radius: .2em;
 }
 
 .author {
-padding: 2px;
-margin-left: .3em;
-font-size: 1.15em;
+  padding: 2px;
+  margin-left: .3em;
+  font-size: 1.15em;
 }
 
 .categories {
@@ -135,5 +141,3 @@ font-size: 1.15em;
 .list {
   list-style: none;
 }
-
-

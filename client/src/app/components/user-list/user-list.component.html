@@ -19,11 +19,6 @@
         <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
       </ng-container>
           
-      <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> login </th>
-        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
-      </ng-container>
-          
       <ng-container matColumnDef="email" >
         <th mat-header-cell *matHeaderCellDef mat-sort-header> email </th>
         <td mat-cell *matCellDef="let user"> {{user.email}} </td>
