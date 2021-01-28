@@ -1,7 +1,7 @@
 # library-manager
 The project is REST-API built using Spring Boot and Angular.
 Application allows to search for books/authors and order copies.
-There is also admin panel that can be accessed only to authorized users.
+There is also an admin panel that can be accessed only by authorized users.
 > Project is not finished yet
 
 ## technologies
@@ -22,8 +22,8 @@ There is also admin panel that can be accessed only to authorized users.
 
 ## Security
 Project provides authentication and authorization with JWT Spring Security.
-There are parts of application available without user having to login, and parts that require specific
-authority.
+There are parts of application available for not logged users, and parts that require specific
+permissions.
 > User types:
 - not logged in
 - unauthorized
@@ -32,8 +32,8 @@ authority.
 > Example JWT token payload:
 <img src="https://user-images.githubusercontent.com/64193740/106105103-b6a67f00-6143-11eb-97e4-d6558c57a28a.png" width=250>
 
-Security has some drawbacks. Application uses Firebase (just for the image storage) but it's not secured yet. It lacks validation between angular and firebase - it will be provided in future.
-Also i would like to move roles and permissions from java Enums to database.
+Security has some drawbacks. Application uses Firebase (just for the image storage) but it's not secured yet. It lacks validation between angular and firebase - it will be provided in the future.
+Also I would like to move roles and permissions from java Enums to database.
 
 ## erd diagram
 <img src="https://user-images.githubusercontent.com/64193740/106116162-e2306600-6151-11eb-82e8-52fa1c0a3818.png" width=700>
