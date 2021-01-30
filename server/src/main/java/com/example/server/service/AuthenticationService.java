@@ -2,10 +2,10 @@ package com.example.server.service;
 
 import com.example.server.entity.User;
 import com.example.server.exception.RegistrationException;
-import com.example.server.repository.UserRepository;
-import com.example.server.security.JwtUserDetails;
 import com.example.server.payload.LoginRequest;
 import com.example.server.payload.RegisterRequest;
+import com.example.server.repository.UserRepository;
+import com.example.server.security.JwtUserDetails;
 import com.example.server.security.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -36,24 +36,24 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         return this.userRepository.findByEmail(email)
                 .map( user -> new JwtUserDetails(
                         user.getId(),
                         user.getEmail(),
-                        passwordEncoder.encode(user.getPassword()),
+                        user.getPassword(),
                         UserRole.values()[user.getRole()].getGrantedAuthorities()
                 ))
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with Email %s not found", email)));
     }
 
 
-    public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
+    public UserDetails loadUserById(Long id) {
         return this.userRepository.findById(id)
                 .map( user -> new JwtUserDetails(
                         user.getId(),
                         user.getEmail(),
-                        passwordEncoder.encode(user.getPassword()),
+                        user.getPassword(),
                         UserRole.values()[user.getRole()].getGrantedAuthorities()
                 ))
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with id %s not found", id)));

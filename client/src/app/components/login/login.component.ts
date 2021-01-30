@@ -26,10 +26,8 @@ export class LoginComponent implements OnInit {
 
   handleLogin(): void {
     this.authenticationService.authenticateCredentials(this.email, this.password).subscribe(
-      successful => {
-        this.router.navigate(['books']);
-        this.invalidCredentials = false;
-        this.dialogRef.close();
+      () => {
+        this.handleSuccessfulAuthentication();
       }, error => {
         this.invalidCredentials = true;
       }
@@ -40,6 +38,12 @@ export class LoginComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(RegisterComponent, dialogConfig);
+  }
+
+  handleSuccessfulAuthentication(): void {
+    this.router.navigate(['books']);
+    this.invalidCredentials = false;
+    this.dialogRef.close();
   }
 
 }

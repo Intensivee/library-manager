@@ -1,12 +1,12 @@
 package com.example.server.controller;
 
 import com.example.server.entity.User;
-import com.example.server.service.AuthenticationService;
-import com.example.server.security.JwtTokenConfig;
 import com.example.server.payload.LoginRequest;
 import com.example.server.payload.RegisterRequest;
 import com.example.server.payload.TokenResponse;
+import com.example.server.security.JwtTokenConfig;
 import com.example.server.security.JwtTokenUtil;
+import com.example.server.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

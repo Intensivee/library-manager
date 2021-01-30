@@ -24,19 +24,11 @@ export class AuthenticationService {
 
   public authenticateCredentials(email: string, password: string): Observable<any> {
 
-    const jwtHelper = new JwtHelperService();
-
     return this.http.post<any>(`${API_URL}/authentication/login`, { email, password })
       .pipe(
         map(
           response => {
-            const token = jwtHelper.decodeToken(response.token);
-            sessionStorage.setItem(AUTHENTICATED_USER_ID, token.sub);
-            sessionStorage.setItem(JWT_TOKEN, response.token);
-            this.userService.getUser(token.sub).subscribe(( user => {
-                sessionStorage.setItem(CURRENT_ROLE, String(user.role));
-              })
-            );
+            this.setSessionStorage(response);
             return response;
           }
         )
@@ -46,6 +38,18 @@ export class AuthenticationService {
   public registerUser(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     return this.http.post<any>(`${API_URL}/authentication/register`,
       {firstName, lastName, email, password});
+  }
+
+  setSessionStorage(response): void {
+    const jwtHelper = new JwtHelperService();
+    const token = jwtHelper.decodeToken(response.token);
+
+    sessionStorage.setItem(AUTHENTICATED_USER_ID, token.sub);
+    sessionStorage.setItem(JWT_TOKEN, response.token);
+    this.userService.getUser(token.sub).subscribe(( user => {
+        sessionStorage.setItem(CURRENT_ROLE, String(user.role));
+      })
+    );
   }
 
   isAuthenticated(): boolean {

@@ -2,7 +2,7 @@
     <i [mat-dialog-close] class="dialog-close fas fa-times"></i>
     <div class="header flex-column">
         <p class="title">Rejestracja</p>
-        <p *ngIf="invalidCredentials" class="error-msg">{{errorMessage}}</p>
+        <p *ngIf="!isValid" class="error-msg">{{errorMessage}}</p>
     </div>
     <div class="flex-column">
         <div class="inputs">
@@ -16,7 +16,7 @@
             <input class="login-input" type="password" [(ngModel)]="password">
         </div>
         <div class="flex-column buttons">
-            <button class="btn-auth" type="submit" (click)=handleRegistration() >Zarejestruj</button>
+            <button class="btn-auth" type="submit" (click)=onSubmit() >Zarejestruj</button>
         </div>
     </div>
 

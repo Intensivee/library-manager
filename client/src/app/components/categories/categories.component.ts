@@ -2,7 +2,7 @@
 import { CategoryService } from '../../service/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from 'src/app/models/category';
 
 @Component({
@@ -43,19 +43,19 @@ export class CategoriesComponent implements OnInit {
       const cat = new Category();
       cat.id = null;
       cat.name = this.name;
-      this.categoryService.addCategory(cat).subscribe(response => {
+      this.categoryService.addCategory(cat).subscribe(() => {
         this.ngOnInit();
       });
     }
   }
 
   validateData(): boolean {
-    this.isValid = !(this.name == null || this.name.length < 2);
+    this.isValid = !(this.name == null || this.name.length < 1);
     return this.isValid;
   }
 
   deleteCategory(id: number): void {
-    this.categoryService.deleteCategory(id).subscribe(response => this.ngOnInit());
+    this.categoryService.deleteCategory(id).subscribe(() => this.ngOnInit());
   }
 
 }

@@ -1,9 +1,11 @@
 .register-container {
-    position: relative;
-    width: 12vw;
-    height: 45vh;
+  position: relative;
+  padding-bottom: 0;
+  width: 12vw;
+  height: 47vh;
 }
 
 .header {
-    height: 15%;
+  height: 15%;
+  margin-bottom: 1.5em;
 }
