@@ -1,7 +1,5 @@
 package com.example.server.security;
 
-import com.example.server.security.JwtTokenConfig;
-import com.example.server.security.JwtUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +32,7 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .setSubject(Long.toString(userDetails.getId()))
                 .claim("email", userDetails.getUsername())
-                .claim("authorities", authResult.getAuthorities())  // body
+                .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(this.tokenConfig.getTokenExpirationAfterDays())))
                 .signWith(this.tokenConfig.getSecretKeyForSigning())

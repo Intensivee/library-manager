@@ -1,6 +1,6 @@
 import { BookService } from '../../service/book.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthorService } from './../../service/author.service';
+import { AuthorService } from '../../service/author.service';
 import { Component, OnInit } from '@angular/core';
 import { Author } from 'src/app/models/author';
 import { Book } from 'src/app/models/book';
@@ -30,7 +30,7 @@ export class AuthorDetailsComponent implements OnInit {
 
       this.bookService.getBooksByAuthorId(authorId).subscribe(books => {
         this.books = books;
-      });
+      }, () => {});
     }
   }
 }

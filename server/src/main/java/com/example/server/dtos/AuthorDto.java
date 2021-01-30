@@ -1,24 +1,29 @@
 package com.example.server.dtos;
 
-import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class AuthorDto {
 
-
     private Long id;
-    @NotBlank(message = "first name can not be empty.")
+
+    @Size(min = 2, max = 20, message = "first name must be between 2 and 20 characters")
     private String firstName;
-    @NotBlank(message = "last name can not be empty.")
+
+    @Size(min = 2, max = 30, message = "first name must be between 2 and 30 characters")
     private String lastName;
+
     @NotNull(message = "birth date can not be empty.")
     private Date birthDate;
-    @NotBlank(message = "memoir can not be empty.")
-    private String memoir;
-    @NotBlank(message = "image can not be empty.")
-    private String imageUrl;
 
+    @Size(min = 1, max = 250, message = "Memoir must be between 1 and 250 characters")
+    private String memoir;
+
+    @URL(message = "image must be url.")
+    private String imageUrl;
 
     public AuthorDto() {
     }

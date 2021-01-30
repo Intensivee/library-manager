@@ -2,11 +2,12 @@
 
     <form class="photo-form">
         <img [src]="imageSrc" class="img">
-        <input (change)="showImg($event)" type="file" class="img-input" >
+        <input (change)="showImg($event)" type="file" class="img-input" accept=".png, .img, .jpng">
     </form>
 
 
     <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
+        <p class="error-msg">{{errorMessage}}</p>
         <div class="field form-group add-group">
             <p class="field-title">Imie</p>
             <input type="text" name="author.firstName" min="1" oninput="validity.valid||(value='');" [(ngModel)]="author.firstName" class="add-input form-control input" [class.is-invalid]="!isValid && author.firstName == null">
@@ -22,11 +23,10 @@
         <div class="field form-group add-group">
             <p class="field-title">Data urodzin</p>
             <input type="date" name="author.birthDate" [(ngModel)]="author.birthDate" class="add-input form-control input" [class.is-invalid]="!isValid && author.birthDate == null">
-        </div> 
-        
+        </div>
+
         <button type="submit" class="add-btn btn btn-outline-secondary">Dodaj</button>
         <button [mat-dialog-close] class="btn-close btn btn-dark">Zamknij</button>
-    </form> 
-    
+    </form>
+
 </div>
-    
