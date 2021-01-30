@@ -1,10 +1,11 @@
 package com.example.server.payload;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
 
-    @NotBlank(message = "Email must be specified!")
+    @Email(message = "Provided email is not valid.")
     private String email;
 
     @NotBlank(message = "Password must be specified!")

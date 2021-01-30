@@ -1,5 +1,6 @@
 package com.example.server.dtos;
 
+import org.hibernate.validator.constraints.URL;
 import org.springframework.hateoas.server.core.Relation;
 
 import javax.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ public class BookDto {
     private String title;
     @NotBlank(message = "description can not be empty!")
     private String description;
-    @NotBlank(message = "image url can not be empty!")
+    @URL(message = "image must be url!")
     private String imageUrl;
     @NotNull(message = "author must be selected!")
     private Long authorId;

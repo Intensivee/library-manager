@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class CopyController {
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> createCopy(@RequestBody CopyDto copyDto){
+    public ResponseEntity<PostResponse> createCopy(@Valid @RequestBody CopyDto copyDto){
         Copy copy = this.copyService.createCopy(copyDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

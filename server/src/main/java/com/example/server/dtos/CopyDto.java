@@ -1,13 +1,18 @@
 package com.example.server.dtos;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class CopyDto {
     private Long id;
+    @Min(1)
     private Integer pages;
+    @NotNull(message = "borrowed must be specified")
     private Boolean borrowed;
     private Date borrowDate;
     private Date returnDate;
+    @NotNull(message = "bookId must be specified")
     private Long bookId;
     private Long userId;
 
