@@ -23,9 +23,9 @@ export class BookDetailsComponent implements OnInit {
 
 
   constructor(private bookService: BookService,
-    private copyService: CopyService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog) { }
+              private copyService: CopyService,
+              private route: ActivatedRoute,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.getBookDetails());
@@ -35,7 +35,8 @@ export class BookDetailsComponent implements OnInit {
     if (this.route.snapshot.paramMap.has('id')) {
       const id = +this.route.snapshot.paramMap.get('id');
       this.bookService.getBook(id).subscribe(data => this.book = data);
-      this.copyService.getCopiesByBookId(id).subscribe(data => this.copies = data);
+      this.copyService.getCopiesByBookId(id)
+        .subscribe(data => this.copies = data, () => {});
     }
   }
 
@@ -51,6 +52,7 @@ export class BookDetailsComponent implements OnInit {
 
   deleteCopy(copy: Copy): void {
     this.copyService.deleteCopy(copy.id).subscribe(() => this.ngOnInit());
+    this.copies = [];
   }
 
   deleteBook(book: Book): void {
@@ -58,6 +60,4 @@ export class BookDetailsComponent implements OnInit {
 
     // )
   }
-
-
 }

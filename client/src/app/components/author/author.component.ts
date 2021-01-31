@@ -37,15 +37,51 @@ export class AuthorComponent implements OnInit {
       // adding current time to avoid duplicate names + deleting file extension
       const filePath = `image/author/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
       const fileRef = this.fireStorage.ref(filePath);
+
       this.fireStorage
         .upload(filePath, this.selectedImage)
-        .snapshotChanges()
-        .pipe(
+        .snapshotChanges().pipe(
           finalize(() => {
             this.createAuthor(fileRef);
           }))
         .subscribe();
     }
+  }
+
+  createAuthor(fileRef): void {
+    fileRef.getDownloadURL().subscribe((url) => {
+      this.imageUrl = url;
+      this.author.imageUrl = url;
+
+      this.authorService.addAuthor(this.author).subscribe(
+        authorId => {
+          this.navigateToAuthor(authorId);
+        }, () => {
+          this.clearAllFields();
+          this.errorMessage = 'Could not add author.';
+        }
+      );
+    });
+  }
+
+  navigateToAuthor(authorId: number): void {
+    this.router.navigate(['/authors', authorId]);
+    this.dialogRef.close();
+  }
+
+  clearAllFields(): void {
+    this.selectedImage = null;
+    this.author.firstName = '';
+    this.author.lastName = '';
+    this.author.memoir = '';
+    this.author.birthDate = null;
+    this.deleteImg();
+  }
+
+  deleteImg(): void {
+    this.fireStorage.refFromURL(this.imageUrl).delete();
+    this.imageSrc = DEFAULT_IMG;
+    this.isValid = false;
   }
 
   validateData(): boolean {
@@ -85,35 +121,6 @@ export class AuthorComponent implements OnInit {
     }
   }
 
-  createAuthor(fileRef) {
-    fileRef.getDownloadURL().subscribe((url) => {
-      this.imageUrl = url;
-      this.author.imageUrl = url;
-
-      this.authorService.addAuthor(this.author).subscribe(
-        authorId => {
-
-          this.navigateToAuthor(authorId);
-        }, error => {
-          this.deletePhoto(url);
-          this.errorMessage = 'Could not add Author.';
-          this.clearAllFields();
-        }
-      );
-    });
-  }
-
-  navigateToAuthor(authorId: number): void {
-    this.router.navigate(['/authors', authorId]);
-    this.dialogRef.close();
-  }
-
-  deletePhoto(url: string): void {
-    this.fireStorage.refFromURL(url).delete();
-    this.imageSrc = DEFAULT_IMG;
-    this.isValid = false;
-  }
-
   areInputsFilled(): boolean {
     return !(this.author.firstName == null ||
       this.author.lastName == null ||
@@ -122,11 +129,11 @@ export class AuthorComponent implements OnInit {
   }
 
   isFirstNameProperLength(): boolean {
-    return this.author.firstName.length < 20 && this.author.firstName.length > 2;
+    return this.author.firstName.length < 20 && this.author.firstName.length > 1;
   }
 
   isLastNameProperLength(): boolean {
-    return this.author.lastName.length < 30 && this.author.lastName.length > 2;
+    return this.author.lastName.length < 30 && this.author.lastName.length > 1;
   }
 
   isMemoirProperLength(): boolean {
@@ -143,13 +150,5 @@ export class AuthorComponent implements OnInit {
     const maxSizeInMB = 2;
     return this.selectedImage &&
       this.selectedImage.size / (1024 * 1024) < maxSizeInMB;
-  }
-
-  clearAllFields(): void {
-    this.selectedImage = null;
-    this.author.firstName = '';
-    this.author.lastName = '';
-    this.author.memoir = '';
-    this.author.birthDate = null;
   }
 }

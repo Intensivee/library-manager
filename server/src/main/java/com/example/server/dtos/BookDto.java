@@ -3,17 +3,17 @@ package com.example.server.dtos;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.hateoas.server.core.Relation;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Relation
 public class BookDto {
 
     private Long id;
-    @NotBlank(message = "title can not be empty!")
+    @Size(min = 2, max = 30, message = "Title must be between 2 and 30 characters")
     private String title;
-    @NotBlank(message = "description can not be empty!")
+    @Size(min = 1, max = 250, message = "Description must be between 1 and 250 characters")
     private String description;
     @URL(message = "image must be url!")
     private String imageUrl;

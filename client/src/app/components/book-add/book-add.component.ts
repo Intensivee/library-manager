@@ -1,3 +1,4 @@
+import { DEFAULT_IMG } from '../../app.constants';
 import { CategoryService } from '../../service/category.service';
 import { Category } from 'src/app/models/category';
 import { AuthorService } from '../../service/author.service';
@@ -25,8 +26,9 @@ export class BookAddComponent implements OnInit {
   author: Author;
 
   imageUrl: string;
-  imageSrc: string;
+  imageSrc = DEFAULT_IMG;
   selectedImage: any = null;
+  errorMessage: string;
 
   // Author mat-select-search stuff
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
@@ -51,6 +53,126 @@ export class BookAddComponent implements OnInit {
     private dialogRef: MatDialogRef<BookAddComponent>) { }
 
   ngOnInit(): void {
+    this.loadAuthors();
+    this.loadCategories();
+  }
+
+  onSubmit(): void {
+    if (this.validateData()) {
+      // adding current time to avoid duplicate names + deleting file extension
+      const filePath = `image/book/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+      const fileRef = this.fireStorage.ref(filePath);
+
+      this.fireStorage.upload(filePath, this.selectedImage)
+            .snapshotChanges().pipe(
+              finalize(() => {
+                this.createBook(fileRef);
+              } )
+            ).subscribe();
+    }
+  }
+
+  createBook(fileRef): void {
+    fileRef.getDownloadURL().subscribe((url) => {
+      this.imageUrl = url;
+      this.mapSelectInputsToBook();
+
+      this.bookService.addBook(this.book).subscribe(
+        bookId => {
+          this.navigateToBook(bookId);
+        },  () => {
+          this.clearAllFields();
+          this.errorMessage = 'Could not add book';
+        }
+      );
+    });
+  }
+
+  mapSelectInputsToBook(): void {
+    this.book.imageUrl = this.imageUrl;
+    this.book.categories = this.categoryCtrl.value;
+    this.book.authorId = this.authorCtrl.value;
+  }
+
+  navigateToBook(bookId: number): void {
+    this.router.navigate(['/books', bookId]);
+    this.dialogRef.close();
+  }
+
+  clearAllFields(): void {
+    this.selectedImage = null;
+    this.author.firstName = '';
+    this.author.lastName = '';
+    this.author.memoir = '';
+    this.author.birthDate = null;
+    this.deleteImg();
+  }
+
+  deleteImg(): void {
+    this.fireStorage.refFromURL(this.imageUrl).delete();
+    this.imageSrc = DEFAULT_IMG;
+    this.isValid = false;
+  }
+
+  validateData(): boolean {
+    this.isValid = true;
+    this.errorMessage = null;
+    if (!this.areInputsFilled()) {
+      this.errorMessage = 'Not all inputs are filled!';
+    }
+    else if (!this.isTitleProperLength()) {
+      this.errorMessage = 'Title must be between 2 and 30 characters!';
+    }
+    else if (!this.isDescriptionProperLength()) {
+      this.errorMessage = 'Last name must be between 1 and 250 characters!';
+    }
+    else if (!this.areCategoriesValid()) {
+      this.errorMessage = 'Select 1-3 categories';
+    }
+    else if (!this.isImageValid()) {
+      this.errorMessage = 'Provide proper image that weighs less than 2MB!';
+    }
+    if (this.errorMessage != null) {
+      this.isValid = false;
+    }
+    return this.isValid;
+  }
+
+  isTitleProperLength(): boolean {
+    return this.book.title.length < 30 && this.book.title.length > 1;
+  }
+
+  isDescriptionProperLength(): boolean {
+    return this.book.description.length < 250 && this.book.description.length > 1;
+  }
+
+  showImg(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.imageSrc = e.target.result;
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedImage = event.target.files[0];
+    }
+  }
+
+  isImageValid(): boolean {
+    const maxSizeInMB = 2;
+    return this.selectedImage &&
+      this.selectedImage.size / (1024 * 1024) < maxSizeInMB;
+  }
+
+  areCategoriesValid(): boolean {
+    return this.categoryCtrl.value.length > 0 && this.categoryCtrl.value.length < 4;
+  }
+
+  areInputsFilled(): boolean {
+    return !(
+      this.book.title == null ||
+      this.book.description == null ||
+      this.authorCtrl.value == null);
+  }
+
+  loadAuthors(): void {
     this.authorService.getAuthors().subscribe(authors => {
       this.authors = authors;
       this.authorCtrl.setValue(this.authors[0]);
@@ -58,7 +180,9 @@ export class BookAddComponent implements OnInit {
       this.authorFilterCtrl.valueChanges
         .subscribe(() => this.filterAuthors());
     });
+  }
 
+  loadCategories(): void {
     this.categoryService.getCategories().subscribe(categories => {
       this.categories = categories;
       this.filteredCategories.next(this.categories.slice());
@@ -98,52 +222,4 @@ export class BookAddComponent implements OnInit {
       this.categories.filter(category => category.name.toLowerCase().indexOf(search) > -1)
     );
   }
-
-
-
-  onSubmit(): void {
-    if (this.validateData()) {
-      // adding current time to avoid duplicate names + deleting file extension
-      const filePath = `image/book/${this.selectedImage.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
-      const fileRef = this.fireStorage.ref(filePath);
-      this.fireStorage.upload(filePath, this.selectedImage)
-            .snapshotChanges()
-            .pipe(
-              finalize(() => {
-                fileRef.getDownloadURL().subscribe((url) => {
-                  this.imageUrl = url;
-                  this.book.imageUrl = url;
-                  this.book.categories = this.categoryCtrl.value;
-                  this.book.authorId = this.authorCtrl.value;
-                  this.bookService.addBook(this.book).subscribe(
-                    bookId => {
-                        this.router.navigate(['/books', bookId]);
-                        this.dialogRef.close();
-                    },  error => {
-                        // deleting photo if server didn't accept book (not very sufficient..)
-                        this.fireStorage.refFromURL(url).delete();
-                        this.isValid = false;
-                    }
-                  );
-                });
-              } )
-            )
-            .subscribe();
-    }
-  }
-
-  validateData(): boolean {
-    this.isValid = true;
-    return this.isValid;
-  }
-
-  showImg(event: any): void {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => this.imageSrc = e.target.result;
-      reader.readAsDataURL(event.target.files[0]);
-      this.selectedImage = event.target.files[0];
-    }
-  }
-
 }

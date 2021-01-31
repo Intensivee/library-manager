@@ -2,10 +2,11 @@
 
     <form class="photo-form">
         <img alt="photo inserted by user" [src]="imageSrc" class="img">
-        <input (change)="showImg($event)" type="file" class="img-input" >
+        <input (change)="showImg($event)" type="file" class="img-input" accept=".png, .img, .jpng">
     </form>
 
     <form #form="ngForm" class="add-form" autocomplete="off" (submit)="onSubmit()">
+        <p class="error-msg">{{errorMessage}}</p>
         <div class="field form-group add-group">
             <p class="field-title">Tytuł</p>
             <input type="text" name="book.title" min="1" oninput="validity.valid||(value='');" [(ngModel)]="book.title" class="add-input form-control input" [class.is-invalid]="!isValid && book.title == null">
