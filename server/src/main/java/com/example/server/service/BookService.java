@@ -83,4 +83,10 @@ public class BookService {
         Book book = this.bookMapper.dtoToBook(bookDto);
         return this.bookRepository.save(book);
     }
+
+    public void deleteBook(Long id) {
+        Book book = this.bookRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
+        this.bookRepository.delete(book);
+    }
 }

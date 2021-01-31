@@ -17,14 +17,28 @@
         <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
       </ul>
     </div>
+
     
     <div class="description">
       <button class="btn btn-dark btn-delete"
+      *ngIf="copies.length == 0"
       mwlConfirmationPopover
       [popoverTitle]="popoverTitle"
       [popoverMessage]="popoverMessage"
       placement="left"
-      (confirm)="deleteBook(book)"><i class="far fa-trash-alt"></i> Usuń </button>
+      (confirm)="deleteBook(book)"><i class="far fa-trash-alt"></i> Usuń
+    </button>
+
+      <button class="btn btn-dark btn-delete"
+      *ngIf="copies.length > 0"
+      disabled
+      mwlConfirmationPopover
+      [popoverTitle]="popoverTitle"
+      [popoverMessage]="popoverMessage"
+      placement="left"
+      (confirm)="deleteBook(book)"><i class="far fa-trash-alt"></i> Usuń
+    </button>
+
       <p >{{book.description}}</p>
     </div>
   </div>

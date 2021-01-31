@@ -1,7 +1,7 @@
 import { CopyService } from '../../service/copy.service';
 import { Copy } from '../../models/copy';
 import { BookService } from '../../service/book.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/models/book';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -25,6 +25,7 @@ export class BookDetailsComponent implements OnInit {
   constructor(private bookService: BookService,
               private copyService: CopyService,
               private route: ActivatedRoute,
+              private router: Router,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -56,8 +57,11 @@ export class BookDetailsComponent implements OnInit {
   }
 
   deleteBook(book: Book): void {
-    // this.bookService.deleteBook(book.id).subscribe(
-
-    // )
+    this.bookService.deleteBook(book.id).subscribe(
+      () => {
+        this.router.navigate(['/books']);
+      }
+      , () => this.ngOnInit()
+    );
   }
 }

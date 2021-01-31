@@ -9,9 +9,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class BookService {
-  deleteBook(id: number) {
-    throw new Error('Method not implemented.');
-  }
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,8 +31,8 @@ export class BookService {
   }
 
   getBooksByCategoryId(page: number,
-                          pageSize: number,
-                          categoryId: number): Observable<UnwrapPagedResponse> {
+                       pageSize: number,
+                       categoryId: number): Observable<UnwrapPagedResponse> {
     const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
@@ -59,6 +56,10 @@ export class BookService {
     return this.httpClient.post<any>(url, book).pipe(
       map(response => response.id)
     );
+  }
+
+  deleteBook(bookId: number): Observable<any> {
+    return this.httpClient.delete(`${API_URL}/books/${bookId}`);
   }
 }
 
