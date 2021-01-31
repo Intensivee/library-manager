@@ -40,7 +40,7 @@
       <tbody  class="tbody-dark">
         <tr *ngFor="let details of borrowDetails">
           <td>{{details.copyId}}</td>
-          <td><a class="book-title" routerLink="/books/{{details.copyId}}">{{details.bookTitle}}</a></td>
+          <td><a class="book-title" routerLink="/books/{{details.bookId}}">{{details.bookTitle}}</a></td>
           <td class="text-success" *ngIf="dayDifference(details.returnDate)>0">
             {{dayDifference(details.returnDate)}} dni do terminu</td>
             <td class="text-warning" *ngIf="dayDifference(details.returnDate)==0">Zwrot dziś</td>

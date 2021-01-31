@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BookService } from '../../service/book.service';
 import { BorrowDetailsService } from '../../service/borrow-details.service';
 import { CopyService } from '../../service/copy.service';
-import { borrowDetails } from '../../models/borrow-details';
+import { BorrowDetails } from '../../models/borrow-details';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -17,7 +17,7 @@ export class OverdueCopiesComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  copies: borrowDetails[] = [];
+  copies: BorrowDetails[] = [];
   dataSource = new MatTableDataSource(this.copies);
   displayedColumns = ['copyId', 'bookTitle', 'status', 'pages', 'borrowDate', 'returnDate', 'actions'];
 

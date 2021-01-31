@@ -1,5 +1,5 @@
 import { BorrowDetailsService } from '../../service/borrow-details.service';
-import { borrowDetails } from '../../models/borrow-details';
+import { BorrowDetails } from '../../models/borrow-details';
 import { UserService } from '../../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import { User } from 'src/app/models/user';
 export class UserDetailsComponent implements OnInit {
 
   user: User = new User();
-  borrowDetails: borrowDetails[] = [];
+  borrowDetails: BorrowDetails[] = [];
 
 
   constructor(private route: ActivatedRoute,
