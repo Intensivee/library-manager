@@ -10,12 +10,35 @@
         </figure>
             
         <div class="author-details">
-            <h2>{{author.firstName}} {{author.lastName}}</h2>
+            <div class="header-container">
+               
+                <h2>{{author.firstName}} {{author.lastName}}</h2>
+
+                <button class="btn btn-dark btn-delete"
+                *ngIf="books.length == 0"
+                mwlConfirmationPopover
+                [popoverTitle]="popoverTitle"
+                [popoverMessage]="popoverMessage"
+                placement="right"
+                (confirm)="deleteAuthor()"><i class="far fa-trash-alt"></i> Delete
+                </button>
+            
+                <button class="btn btn-dark btn-delete"
+                *ngIf="books.length > 0"
+                disabled
+                mwlConfirmationPopover
+                [popoverTitle]="popoverTitle"
+                [popoverMessage]="popoverMessage"
+                placement="right"
+                (confirm)="deleteAuthor()"><i class="far fa-trash-alt"></i> Delete
+                </button>
+            </div>
             
             <p class="date">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
             
             <p class="memoir">{{author.memoir | slice:0:600}}</p>
         </div>        
+
     </div>
  
     <hr class="solid">

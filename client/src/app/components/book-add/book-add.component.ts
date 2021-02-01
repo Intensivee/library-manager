@@ -124,7 +124,7 @@ export class BookAddComponent implements OnInit {
       this.errorMessage = 'Title must be between 2 and 30 characters!';
     }
     else if (!this.isDescriptionProperLength()) {
-      this.errorMessage = 'Last name must be between 1 and 250 characters!';
+      this.errorMessage = 'Last name must be between 1 and 400 characters!';
     }
     else if (!this.areCategoriesValid()) {
       this.errorMessage = 'Select 1-3 categories';
@@ -139,11 +139,11 @@ export class BookAddComponent implements OnInit {
   }
 
   isTitleProperLength(): boolean {
-    return this.book.title.length < 30 && this.book.title.length > 1;
+    return this.book.title.length < 31 && this.book.title.length > 1;
   }
 
   isDescriptionProperLength(): boolean {
-    return this.book.description.length < 250 && this.book.description.length > 1;
+    return this.book.description.length < 401 && this.book.description.length > 1;
   }
 
   showImg(event: any): void {

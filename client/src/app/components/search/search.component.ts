@@ -39,12 +39,12 @@ export class SearchComponent implements OnInit {
           .subscribe(data => {
             this.books = data;
             console.log(data);
-          });
+          }, () => {});
       } else {
         this.authorService.getAuthorsByName(this.currentKey)
           .subscribe(data => {
             this.authors = data;
-          });
+          }, () => {});
       }
     }
   }

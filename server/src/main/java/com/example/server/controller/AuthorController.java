@@ -7,6 +7,7 @@ import com.example.server.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,17 +30,13 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-
-
     @GetMapping
     public ResponseEntity<Object> getAll() {
-        // adding href link to each element
-        List<EntityModel<?>> books =  authorService.getAll().stream()
+        List<EntityModel<?>> authors =  authorService.getAll().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
-        // wrapping to collection with href link
-        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
+        CollectionModel<EntityModel<?>> collection = new CollectionModel<>(authors).add(linkTo(AuthorController.class).withSelfRel());
         return ResponseEntity.ok(collection);
     }
 
@@ -53,5 +50,18 @@ public class AuthorController {
                 .toUri();
 
         return ResponseEntity.created(location).body(new PostResponse(author.getId(), location));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getById(@PathVariable("id") Long id) {
+        AuthorDto author = this.authorService.getById(id);
+        EntityModel<?> entityModel = EntityModel.of(author, linkTo(BookController.class).slash(id).withSelfRel());
+        return ResponseEntity.ok(entityModel);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable("id") Long id) {
+        this.authorService.deleteAuthor(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

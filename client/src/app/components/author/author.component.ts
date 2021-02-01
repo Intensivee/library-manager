@@ -129,15 +129,15 @@ export class AuthorComponent implements OnInit {
   }
 
   isFirstNameProperLength(): boolean {
-    return this.author.firstName.length < 20 && this.author.firstName.length > 1;
+    return this.author.firstName.length < 21 && this.author.firstName.length > 1;
   }
 
   isLastNameProperLength(): boolean {
-    return this.author.lastName.length < 30 && this.author.lastName.length > 1;
+    return this.author.lastName.length < 31 && this.author.lastName.length > 1;
   }
 
   isMemoirProperLength(): boolean {
-    return this.author.memoir.length < 250 && this.author.memoir.length > 0;
+    return this.author.memoir.length < 251 && this.author.memoir.length > 0;
   }
 
   isDataCorrect(): boolean {

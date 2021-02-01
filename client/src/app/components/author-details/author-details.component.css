@@ -20,7 +20,13 @@
 }
 
 .author-details {
+  width: 80%;
   margin-left: 2em;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .date {

@@ -38,6 +38,11 @@ export class AuthorService {
     );
   }
 
+  deleteAuthor(authorId: number): Observable<any> {
+    const url = `${API_URL}/authors/${authorId}`;
+    return this.http.delete<any>(url);
+  }
+
 }
 
 interface UnwrapAuthors {

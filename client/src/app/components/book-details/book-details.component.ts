@@ -18,8 +18,8 @@ export class BookDetailsComponent implements OnInit {
   copies: Copy[] = [];
 
   // popup window stuff
-  popoverTitle = 'Dialog usunięcia';
-  popoverMessage = 'Czy jesteś pewien?';
+  popoverTitle = 'Delete dialog';
+  popoverMessage = 'Are you sure?';
 
 
   constructor(private bookService: BookService,
@@ -60,8 +60,8 @@ export class BookDetailsComponent implements OnInit {
     this.bookService.deleteBook(book.id).subscribe(
       () => {
         this.router.navigate(['/books']);
-      }
-      , () => this.ngOnInit()
+      },
+      () => this.ngOnInit()
     );
   }
 }

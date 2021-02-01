@@ -28,4 +28,15 @@ public class AuthorMapper {
                 (dto.getId() == null) ? null: bookRepository.findByAuthorId(dto.getId())
         );
     }
+
+    public AuthorDto authorToDto(Author author) {
+        return new AuthorDto(
+                author.getId(),
+                author.getFirstName(),
+                author.getLastName(),
+                author.getBirthDate(),
+                author.getMemoir(),
+                author.getImageUrl()
+        );
+    }
 }

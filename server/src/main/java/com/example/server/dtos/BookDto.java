@@ -13,7 +13,7 @@ public class BookDto {
     private Long id;
     @Size(min = 2, max = 30, message = "Title must be between 2 and 30 characters")
     private String title;
-    @Size(min = 1, max = 250, message = "Description must be between 1 and 250 characters")
+    @Size(min = 1, max = 400, message = "Description must be between 1 and 400 characters")
     private String description;
     @URL(message = "image must be url!")
     private String imageUrl;
