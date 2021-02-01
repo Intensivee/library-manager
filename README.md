@@ -18,7 +18,7 @@ There is also an admin panel that can be accessed only by authorized users.
 - pagination
 - book copies borrow system
 - user list (activating/deactivating, deleting..)
-- Create/Reade/Delete operations for copies, books, authors and categories
+- Create/Read/Delete operations for copies, books, authors and categories
 
 ## Security
 Project provides authentication and authorization with JWT Spring Security.
