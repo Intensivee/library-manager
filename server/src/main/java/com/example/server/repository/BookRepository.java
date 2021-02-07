@@ -14,26 +14,20 @@ import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200")
 @Repository
+@RestResource(exported = false)
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @RestResource(exported = false)
     Optional<Book> findById(Long id);
 
-    @RestResource(exported = false)
     List<Book> findAll();
 
-    @RestResource(exported = false)
     Page<Book> findAll(Pageable pageable);
 
-    @RestResource(exported = false)
     Page<Book> findByCategoriesId(Long id, Pageable pageable);
 
-    @RestResource(exported = false)
     List<Book> findByCategoriesId(Long id);
 
-    @RestResource(exported = false)
     List<Book> findFirst10ByTitleContaining(String title);
 
-    @RestResource(exported = false)
     List<Book> findByAuthorId(@Param("id") Long id);
 }

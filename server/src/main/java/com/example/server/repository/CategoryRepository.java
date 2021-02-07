@@ -16,10 +16,9 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "SELECT b.categories FROM Book b WHERE b.id = ?1")
-    @RestResource(exported = false)
     List<Category> findByBookId(@Param("id") Long id);
 
+    @RestResource(exported = false)
     Optional<Category> findById(@Param("id") Long id);
-
 }
 
