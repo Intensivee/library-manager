@@ -27,12 +27,17 @@ public class AuthorService {
         return this.authorRepository.findAll();
     }
 
+    public AuthorDto getById(long id){
+        return this.authorRepository.findById(id)
+                .map(this.authorMapper::authorToDto)
+                .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
+    }
+
     public Author addAuthor(AuthorDto dto) {
         if (dto.getId() != null){
             throw new ResourceCreateException(dto.getId());
         }
-        Author author = authorMapper.dtoToAuthor(dto);
-        return this.authorRepository.save(author);
+        return this.authorRepository.save(authorMapper.dtoToAuthor(dto));
     }
 
     public void deleteAuthor(Long id) {
@@ -42,9 +47,4 @@ public class AuthorService {
 
     }
 
-    public AuthorDto getById(long id){
-        Author author = this.authorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
-        return this.authorMapper.authorToDto(author);
-    }
 }

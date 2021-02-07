@@ -68,7 +68,6 @@ public class AuthenticationService implements UserDetailsService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         return authentication;
     }
 
@@ -80,12 +79,16 @@ public class AuthenticationService implements UserDetailsService {
                     ));
                 });
 
+        User user = this.createUserFromRegisterRequest(registerRequest);
+        return this.userRepository.save(user);
+    }
+
+    private User createUserFromRegisterRequest(RegisterRequest registerRequest){
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setFirstName(registerRequest.getFirstName());
         user.setLastName(registerRequest.getLastName());
-
-        return this.userRepository.save(user);
+        return user;
     }
 }

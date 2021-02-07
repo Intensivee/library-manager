@@ -26,13 +26,14 @@ public class BookService {
     }
 
     public BookDto getById(long id){
-        Book book = bookRepository.findById(id)
+        return bookRepository.findById(id)
+                .map(this.bookMapper::bookToDto)
                 .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
-        return this.bookMapper.bookToDto(book);
     }
 
     public List<BookDto> getAll(){
         List<Book> books = bookRepository.findAll();
+
         if(books.isEmpty()){
             throw new ResourceNotFoundException("books");
         }
@@ -41,27 +42,25 @@ public class BookService {
 
     public Page<BookDto> getAll(Pageable pageable) {
         Page<Book> books = bookRepository.findAll(pageable);
+
         if(books.isEmpty()){
             throw new ResourceNotFoundException("books");
         }
-        // build-in Page.map method
         return books.map(bookMapper::bookToDto);
     }
 
     public Page<BookDto> getByCategory(Long id, Pageable pageable){
         Page<Book> books = bookRepository.findByCategoriesId(id, pageable);
+
         if(books.isEmpty()){
             throw new ResourceNotFoundException("books", "categoryId", id);
         }
         return books.map(bookMapper::bookToDto);
     }
 
-    public List<Book> getBookByCategory(Long id){
-       return bookRepository.findByCategoriesId(id);
-    }
-
     public List<BookDto> getByTitle(String title){
         List<Book> books = bookRepository.findFirst10ByTitleContaining(title);
+
         if(books.isEmpty()){
             throw new ResourceNotFoundException("book", "title", title);
         }
@@ -70,6 +69,7 @@ public class BookService {
 
     public List<BookDto> getByAuthorId(Long id) {
         List<Book> books = bookRepository.findByAuthorId(id);
+
         if(books.isEmpty()){
             throw new ResourceNotFoundException("books", "authorId", id);
         }
@@ -80,8 +80,7 @@ public class BookService {
         if (bookDto.getId() != null) {
             throw new ResourceCreateException(bookDto.getId());
         }
-        Book book = this.bookMapper.dtoToBook(bookDto);
-        return this.bookRepository.save(book);
+        return this.bookRepository.save(this.bookMapper.dtoToBook(bookDto));
     }
 
     public void deleteBook(Long id) {

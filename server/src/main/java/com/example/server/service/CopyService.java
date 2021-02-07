@@ -42,9 +42,6 @@ public class CopyService {
         if(dtoCopy.getId() != null){
             throw new ResourceCreateException(dtoCopy.getId());
         }
-        else if(dtoCopy.getBookId() == null || dtoCopy.getPages() == null || dtoCopy.getBorrowed() == null){
-            throw new ResourceCreateException();
-        }
         return this.copyRepository.save(this.copyMapper.dtoToCopy(dtoCopy));
     }
 

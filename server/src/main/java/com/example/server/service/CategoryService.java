@@ -24,18 +24,14 @@ public class CategoryService {
     }
 
     public boolean containNoBooks(Long id)  {
-        Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
-        return category.getBooks().isEmpty();
-    }
-
-    public Category getCategory(Long id){
         return this.categoryRepository.findById(id)
+                .map(category -> category.getBooks().isEmpty())
                 .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
     }
 
     public List<CategoryDto> getCategories() {
         List<Category> categories = categoryRepository.findAll();
+
         if(categories.isEmpty()){
             throw new ResourceNotFoundException("categories");
         }
@@ -52,5 +48,10 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         Category category = this.getCategory(id);
         this.categoryRepository.delete(category);
+    }
+
+    public Category getCategory(Long id){
+        return this.categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
     }
 }

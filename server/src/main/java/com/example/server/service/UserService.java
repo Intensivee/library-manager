@@ -24,20 +24,9 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public UserDto getById(Long id){
-        User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
-        return this.userMapper.userToDto(user);
-    }
-
-    public UserDto getByCopyId(Long id){
-        User user = this.userRepository.findByCopiesId(id)
-                .orElseThrow( () -> new ResourceNotFoundException("users", "copyId", id));
-        return this.userMapper.userToDto(user);
-    }
-
     public List<UserDto> getAll() {
         List<User> projections = this.userRepository.findAll();
+
         if(projections.isEmpty()){
             throw new ResourceNotFoundException("users");
         }
@@ -46,25 +35,40 @@ public class UserService {
 
     public Page<UserDto> getAll(Pageable pageable) {
         Page<User> projections = this.userRepository.findAll(pageable);
+
         if(projections.isEmpty()){
             throw new ResourceNotFoundException("users");
         }
         return projections.map(this.userMapper::userToDto);
     }
 
-    public UserDto updateUser(UserDto userDto){
-        User userToUpdate = this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("user", "id", userDto.getId()));
-        userToUpdate.setFirstName(userDto.getFirstName());
-        userToUpdate.setLastName(userDto.getLastName());
-        userToUpdate.setEmail(userDto.getEmail());
-        userToUpdate.setRole(userDto.getRole());
-        return this.userMapper.userToDto(this.userRepository.save(userToUpdate));
+    public UserDto getById(Long id){
+        return this.userRepository.findById(id)
+                .map(this.userMapper::userToDto)
+                .orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
+    }
+
+    public UserDto getByCopyId(Long id){
+        return this.userRepository.findByCopiesId(id)
+                .map(this.userMapper::userToDto)
+                .orElseThrow( () -> new ResourceNotFoundException("users", "copyId", id));
     }
 
     public void deleteUser(Long id) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
         this.userRepository.delete(user);
+    }
+
+    public UserDto updateUser(UserDto userDto){
+        User userToUpdate = this.userRepository.findById(userDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("user", "id", userDto.getId()));
+
+        userToUpdate.setFirstName(userDto.getFirstName());
+        userToUpdate.setLastName(userDto.getLastName());
+        userToUpdate.setEmail(userDto.getEmail());
+        userToUpdate.setRole(userDto.getRole());
+
+        return this.userMapper.userToDto(this.userRepository.save(userToUpdate));
     }
 }
