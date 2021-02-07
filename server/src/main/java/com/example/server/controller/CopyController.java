@@ -32,7 +32,7 @@ public class CopyController {
 
     @PostMapping
     public ResponseEntity<PostResponse> create(@Valid @RequestBody CopyDto copyDto){
-        Copy copy = this.copyService.createCopy(copyDto);
+        Copy copy = this.copyService.create(copyDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -44,7 +44,7 @@ public class CopyController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id){
-        this.copyService.deleteCopy(id);
+        this.copyService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

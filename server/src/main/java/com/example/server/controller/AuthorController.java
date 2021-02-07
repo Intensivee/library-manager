@@ -42,7 +42,7 @@ public class AuthorController {
 
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody AuthorDto authorDto){
-        Author author = this.authorService.addAuthor(authorDto);
+        Author author = this.authorService.create(authorDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -61,7 +61,7 @@ public class AuthorController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable("id") Long id) {
-        this.authorService.deleteAuthor(id);
+        this.authorService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

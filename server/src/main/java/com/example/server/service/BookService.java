@@ -25,12 +25,6 @@ public class BookService {
         this.bookMapper = bookMapper;
     }
 
-    public BookDto getById(long id){
-        return bookRepository.findById(id)
-                .map(this.bookMapper::bookToDto)
-                .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
-    }
-
     public List<BookDto> getAll(){
         List<Book> books = bookRepository.findAll();
 
@@ -49,7 +43,13 @@ public class BookService {
         return books.map(bookMapper::bookToDto);
     }
 
-    public Page<BookDto> getByCategory(Long id, Pageable pageable){
+    public BookDto getById(long id){
+        return bookRepository.findById(id)
+                .map(this.bookMapper::bookToDto)
+                .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
+    }
+
+    public Page<BookDto> getAllByCategoryId(Long id, Pageable pageable){
         Page<Book> books = bookRepository.findByCategoriesId(id, pageable);
 
         if(books.isEmpty()){
@@ -58,7 +58,7 @@ public class BookService {
         return books.map(bookMapper::bookToDto);
     }
 
-    public List<BookDto> getByTitle(String title){
+    public List<BookDto> getAllByTitle(String title){
         List<Book> books = bookRepository.findFirst10ByTitleContaining(title);
 
         if(books.isEmpty()){
@@ -67,7 +67,7 @@ public class BookService {
         return this.bookMapper.booksToDto(books);
     }
 
-    public List<BookDto> getByAuthorId(Long id) {
+    public List<BookDto> getAllByAuthorId(Long id) {
         List<Book> books = bookRepository.findByAuthorId(id);
 
         if(books.isEmpty()){
@@ -76,14 +76,14 @@ public class BookService {
         return this.bookMapper.booksToDto(books);
     }
 
-    public Book createBook(BookDto bookDto) {
+    public Book create(BookDto bookDto) {
         if (bookDto.getId() != null) {
             throw new ResourceCreateException(bookDto.getId());
         }
         return this.bookRepository.save(this.bookMapper.dtoToBook(bookDto));
     }
 
-    public void deleteBook(Long id) {
+    public void deleteById(Long id) {
         Book book = this.bookRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
         this.bookRepository.delete(book);

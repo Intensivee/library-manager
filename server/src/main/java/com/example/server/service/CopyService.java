@@ -38,14 +38,14 @@ public class CopyService {
         return this.copyMapper.copiesToDto(copies);
     }
 
-    public Copy createCopy(CopyDto dtoCopy) {
+    public Copy create(CopyDto dtoCopy) {
         if(dtoCopy.getId() != null){
             throw new ResourceCreateException(dtoCopy.getId());
         }
         return this.copyRepository.save(this.copyMapper.dtoToCopy(dtoCopy));
     }
 
-    public void deleteCopy(Long id) {
+    public void delete(Long id) {
         Copy copy = this.copyRepository.findById(id)
                 .orElseThrow( () -> new ResourceNotFoundException("copy", "id", id));
         this.copyRepository.delete(copy);

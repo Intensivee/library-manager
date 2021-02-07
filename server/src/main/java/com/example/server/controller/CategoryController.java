@@ -33,7 +33,7 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<Object> getAll() {
-        List<EntityModel<?>> categories =  categoryService.getCategories().stream()
+        List<EntityModel<?>> categories =  categoryService.getAll().stream()
                 .map(category -> EntityModel.of(category, linkTo(CategoryController.class).slash(category.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
@@ -43,7 +43,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<PostResponse> create(@Valid @RequestBody CategoryDto categoryDto){
-        Category category = this.categoryService.createCategory(categoryDto);
+        Category category = this.categoryService.create(categoryDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -55,7 +55,7 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id){
-        this.categoryService.deleteCategory(id);
+        this.categoryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

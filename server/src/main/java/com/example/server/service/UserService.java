@@ -54,13 +54,13 @@ public class UserService {
                 .orElseThrow( () -> new ResourceNotFoundException("users", "copyId", id));
     }
 
-    public void deleteUser(Long id) {
+    public void deleteById(Long id) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
         this.userRepository.delete(user);
     }
 
-    public UserDto updateUser(UserDto userDto){
+    public UserDto update(UserDto userDto){
         User userToUpdate = this.userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("user", "id", userDto.getId()));
 

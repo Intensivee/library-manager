@@ -46,7 +46,7 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<PostResponse> create(@Valid @RequestBody BookDto bookDto){
-        Book book = this.bookService.createBook(bookDto);
+        Book book = this.bookService.create(bookDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -65,7 +65,7 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable("id") Long id) {
-        this.bookService.deleteBook(id);
+        this.bookService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -79,13 +79,13 @@ public class BookController {
     public ResponseEntity<Object> getByCategoryId(@PathVariable("id") Long id,
                                              Pageable pageable,
                                              PagedResourcesAssembler<BookDto> assembler){
-        Page<BookDto> books = bookService.getByCategory(id, pageable);
+        Page<BookDto> books = bookService.getAllByCategoryId(id, pageable);
         return ResponseEntity.ok(assembler.toModel(books));
     }
 
     @GetMapping(value = "/search/findByTitle/{title}")
     public ResponseEntity<Object> getByTitle(@PathVariable("title") String title){
-        List<EntityModel<?>> books = bookService.getByTitle(title).stream()
+        List<EntityModel<?>> books = bookService.getAllByTitle(title).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
@@ -95,7 +95,7 @@ public class BookController {
 
     @GetMapping(value = "/search/findByAuthorId/{id}")
     public ResponseEntity<Object> getByAuthorId(@PathVariable("id") long id){
-        List<EntityModel<?>> books =  bookService.getByAuthorId(id).stream()
+        List<EntityModel<?>> books =  bookService.getAllByAuthorId(id).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 

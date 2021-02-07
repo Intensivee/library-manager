@@ -35,7 +35,7 @@ public class CategoryMapper {
         return  new Category(
                 dto.getId(),
                 dto.getName(),
-                dto.getId() != null ? this.categoryService.getCategory(dto.getId()).getBooks() : null
+                dto.getId() != null ? this.categoryService.getById(dto.getId()).getBooks() : null
         );
     }
 

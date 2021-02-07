@@ -47,7 +47,6 @@ public class AuthenticationService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with Email %s not found", email)));
     }
 
-
     public UserDetails loadUserById(Long id) {
         return this.userRepository.findById(id)
                 .map( user -> new JwtUserDetails(

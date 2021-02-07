@@ -33,14 +33,14 @@ public class AuthorService {
                 .orElseThrow(() -> new ResourceNotFoundException("book", "id", id));
     }
 
-    public Author addAuthor(AuthorDto dto) {
+    public Author create(AuthorDto dto) {
         if (dto.getId() != null){
             throw new ResourceCreateException(dto.getId());
         }
         return this.authorRepository.save(authorMapper.dtoToAuthor(dto));
     }
 
-    public void deleteAuthor(Long id) {
+    public void deleteById(Long id) {
         Author author = this.authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("author", "id", id));
         this.authorRepository.delete(author);

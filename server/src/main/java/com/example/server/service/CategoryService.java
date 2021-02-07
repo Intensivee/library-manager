@@ -29,7 +29,7 @@ public class CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
     }
 
-    public List<CategoryDto> getCategories() {
+    public List<CategoryDto> getAll() {
         List<Category> categories = categoryRepository.findAll();
 
         if(categories.isEmpty()){
@@ -38,19 +38,19 @@ public class CategoryService {
         return this.categoryMapper.categoriesToDto(categories);
     }
 
-    public Category createCategory(CategoryDto dto) {
+    public Category create(CategoryDto dto) {
         if(dto.getId() != null) {
             throw new ResourceCreateException(dto.getId());
         }
         return this.categoryRepository.save(categoryMapper.dtoToCategory(dto));
     }
 
-    public void deleteCategory(Long id) {
-        Category category = this.getCategory(id);
+    public void deleteById(Long id) {
+        Category category = this.getById(id);
         this.categoryRepository.delete(category);
     }
 
-    public Category getCategory(Long id){
+    public Category getById(Long id){
         return this.categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
     }
