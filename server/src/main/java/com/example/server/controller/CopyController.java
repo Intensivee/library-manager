@@ -31,7 +31,7 @@ public class CopyController {
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> createCopy(@Valid @RequestBody CopyDto copyDto){
+    public ResponseEntity<PostResponse> create(@Valid @RequestBody CopyDto copyDto){
         Copy copy = this.copyService.createCopy(copyDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -43,13 +43,13 @@ public class CopyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteCopy(@PathVariable("id") Long id){
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id){
         this.copyService.deleteCopy(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/search/findBorrowed")
-    public ResponseEntity<Object> getBorrowedCopies(){
+    public ResponseEntity<Object> getBorrowed(){
         List<EntityModel<?>> copies = this.copyService.getBorrowedCopies().stream()
                 .map(copy -> EntityModel.of(copy, linkTo(CopyController.class).slash(copy.getId()).withSelfRel()))
                 .collect(Collectors.toList());

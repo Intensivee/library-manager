@@ -37,7 +37,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> authenticateCredentials(@Valid @RequestBody LoginRequest loginRequest){
-
         Authentication authentication = this.authenticationService.authenticateCredentials(loginRequest);
 
         String token = this.tokenUtil.createToken(authentication);
@@ -47,7 +46,6 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody RegisterRequest registerRequest){
-
         User user = this.authenticationService.registerUser(registerRequest);
 
         URI location = ServletUriComponentsBuilder

@@ -33,18 +33,16 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<Object> getAll() {
-        // adding href link to each element
         List<EntityModel<?>> categories =  categoryService.getCategories().stream()
                 .map(category -> EntityModel.of(category, linkTo(CategoryController.class).slash(category.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
-        // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(categories).add(linkTo(CategoryController.class).withSelfRel());
         return ResponseEntity.ok(collection);
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> addCategory(@Valid @RequestBody CategoryDto categoryDto){
+    public ResponseEntity<PostResponse> create(@Valid @RequestBody CategoryDto categoryDto){
         Category category = this.categoryService.createCategory(categoryDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -56,13 +54,13 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id){
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") Long id){
         this.categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/search/isEmpty/{id}")
-    public Boolean isEmpty(@PathVariable("id") Long id) {
+    public Boolean hasNoBooksById(@PathVariable("id") Long id) {
         return this.categoryService.containNoBooks(id);
     }
 }

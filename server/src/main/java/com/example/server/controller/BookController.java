@@ -35,19 +35,17 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getAll() {
-        // adding href link to each element
+    public ResponseEntity<Object> getAllPaged() {
         List<EntityModel<?>> books =  bookService.getAll().stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
-        // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(linkTo(BookController.class).withSelfRel());
         return ResponseEntity.ok(collection);
     }
 
     @PostMapping
-    public ResponseEntity<PostResponse> addBook(@Valid @RequestBody BookDto bookDto){
+    public ResponseEntity<PostResponse> create(@Valid @RequestBody BookDto bookDto){
         Book book = this.bookService.createBook(bookDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -72,7 +70,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/paged")
-    public ResponseEntity<Object> getAll(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
+    public ResponseEntity<Object> getAllPaged(Pageable pageable, PagedResourcesAssembler<BookDto> assembler) {
         Page<BookDto> books = bookService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(books));
     }
@@ -87,7 +85,6 @@ public class BookController {
 
     @GetMapping(value = "/search/findByTitle/{title}")
     public ResponseEntity<Object> getByTitle(@PathVariable("title") String title){
-
         List<EntityModel<?>> books = bookService.getByTitle(title).stream()
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
@@ -102,7 +99,6 @@ public class BookController {
                 .map(book -> EntityModel.of(book, linkTo(BookController.class).slash(book.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
-        // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(books).add(
                 linkTo(methodOn(BookController.class).getByAuthorId(id)).withSelfRel());
         return ResponseEntity.ok(collection);

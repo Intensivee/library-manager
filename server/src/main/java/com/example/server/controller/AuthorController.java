@@ -41,7 +41,7 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> addAuthor(@Valid @RequestBody AuthorDto authorDto){
+    public ResponseEntity<Object> create(@Valid @RequestBody AuthorDto authorDto){
         Author author = this.authorService.addAuthor(authorDto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

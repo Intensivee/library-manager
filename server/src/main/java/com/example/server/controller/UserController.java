@@ -2,8 +2,6 @@ package com.example.server.controller;
 
 import com.example.server.dtos.UserDto;
 import com.example.server.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +21,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping("users")
 public class UserController {
 
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @Autowired
@@ -37,7 +34,6 @@ public class UserController {
                 .map(user -> EntityModel.of(user, linkTo(BookController.class).slash(user.getId()).withSelfRel()))
                 .collect(Collectors.toList());
 
-        // wrapping to collection with href link
         CollectionModel<EntityModel<?>> collection = new CollectionModel<>(users).add(linkTo(UserController.class).withSelfRel());
         return ResponseEntity.ok(collection);
     }
@@ -50,25 +46,25 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto user){
+    public ResponseEntity<UserDto> updateById(@PathVariable("id") Long id, @RequestBody UserDto user){
         UserDto userUpdated = this.userService.updateUser(user);
         return ResponseEntity.ok(userUpdated);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id){
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id){
         this.userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/paged")
-    public ResponseEntity<Object> getAll(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
+    public ResponseEntity<Object> getAllPaged(Pageable pageable, PagedResourcesAssembler<UserDto> assembler){
         Page<UserDto> page = this.userService.getAll(pageable);
         return ResponseEntity.ok(assembler.toModel(page));
     }
 
     @GetMapping("/search/findByCopyId/{id}")
-    public ResponseEntity<Object> findBYCopyId(@PathVariable("id") Long id){
+    public ResponseEntity<Object> getByCopyId(@PathVariable("id") Long id){
         UserDto user = this.userService.getByCopyId(id);
         return ResponseEntity.ok(EntityModel.of(user, linkTo(UserController.class).slash(user.getId()).withSelfRel()));
     }
