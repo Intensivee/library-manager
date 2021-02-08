@@ -1,9 +1,8 @@
-
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { LoginComponent } from '../../components/login/login.component';
-import { AuthenticationService } from './authentication.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {LoginComponent} from '../../components/login/login.component';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +11,21 @@ export class RoleGuardService {
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+  }
 
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
 
-    // check's sessions storage and token expiration
-    if(!this.authenticationService.isAuthenticated()){
+    if (!this.authenticationService.isAuthenticated()) {
       this.openLoginDialog();
       return false;
     }
     const hasAuthorization = this.authenticationService
-                                  .getAuthenticatedUserAuthorities()
-                                    .includes(route.data.expectedRole);
+      .getAuthenticatedUserAuthorities()
+      .includes(route.data.expectedRole);
 
-    if(hasAuthorization){
+    if (hasAuthorization) {
       return true;
     }
 

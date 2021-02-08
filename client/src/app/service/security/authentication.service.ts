@@ -25,8 +25,7 @@ export class AuthenticationService {
   public authenticateCredentials(email: string, password: string): Observable<any> {
 
     return this.http.post<any>(`${API_URL}/authentication/login`, { email, password })
-      .pipe(
-        map(
+    .pipe(map(
           response => {
             this.setSessionStorage(response);
             return response;

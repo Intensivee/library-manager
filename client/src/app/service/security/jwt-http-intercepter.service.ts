@@ -17,7 +17,6 @@ export class JwtHttpIntercepterService implements HttpInterceptor {
     const user = this.authenticationService.getAuthenticatedUserId();
 
     if (user && token) {
-
       request = request.clone({
         setHeaders: {
           'Content-Type': 'application/json',
@@ -26,7 +25,6 @@ export class JwtHttpIntercepterService implements HttpInterceptor {
       });
     }
 
-    // pass request with headers to next httpHandler (sth like filters in spring security)
     return next.handle(request);
   }
 }
