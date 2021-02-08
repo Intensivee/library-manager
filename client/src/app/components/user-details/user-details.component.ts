@@ -30,10 +30,10 @@ export class UserDetailsComponent implements OnInit {
 
     if (this.route.snapshot.paramMap.has('id')){
       const id = +this.route.snapshot.paramMap.get('id');
-      this.userService.getUser(id)
+      this.userService.getById(id)
       .subscribe(data => {
         this.user = data;
-        this.borrowDetails = this.borrowDetailsService.getBorrowDetailsByCopies(this.user.copies);
+        this.borrowDetails = this.borrowDetailsService.getByCopies(this.user.copies);
       });
     }
   }

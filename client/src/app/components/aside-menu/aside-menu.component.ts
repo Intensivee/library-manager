@@ -48,7 +48,7 @@ export class AsideMenuComponent implements OnInit {
   }
 
   getCategories(): void {
-    this.categoryService.getCategories().subscribe(
+    this.categoryService.getAll().subscribe(
       data => {
         this.categories = data;
       }

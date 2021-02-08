@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
   }
 
   getDataSource(): void {
-    this.userService.getUsers().subscribe(data => {
+    this.userService.getAll().subscribe(data => {
       this.users = data;
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.sort = this.sort;
@@ -45,15 +45,15 @@ export class UserListComponent implements OnInit {
 
   activateUser(user: User): void {
     user.role = TRUSTED_USER_ROLE_ID;
-    this.userService.updateUser(user).subscribe(response => user = response);
+    this.userService.update(user).subscribe(response => user = response);
   }
 
   deActivateUser(user: User): void {
     user.role = UNTRUSTED_USER_ROLE_ID;
-    this.userService.updateUser(user).subscribe(response => user = response);
+    this.userService.update(user).subscribe(response => user = response);
   }
 
   deleteUser(user: User): void {
-    this.userService.deleteUser(user).subscribe( () => this.getDataSource());
+    this.userService.deleteById(user).subscribe( () => this.getDataSource());
   }
 }

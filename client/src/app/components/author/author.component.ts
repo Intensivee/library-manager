@@ -53,7 +53,7 @@ export class AuthorComponent implements OnInit {
       this.imageUrl = url;
       this.author.imageUrl = url;
 
-      this.authorService.addAuthor(this.author).subscribe(
+      this.authorService.create(this.author).subscribe(
         authorId => {
           this.navigateToAuthor(authorId);
         }, () => {

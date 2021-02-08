@@ -1,4 +1,4 @@
-import { API_URL } from './../app.constants';
+import { API_URL } from '../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { Copy } from '../models/copy';
@@ -12,7 +12,7 @@ export class CopyService {
 
   constructor(private http: HttpClient) { }
 
-  createCopies(copy: Copy, quantity: number) {
+  createMultiple(copy: Copy, quantity: number): Observable<any> {
     const observables = [];
     const url = `${API_URL}/copies`;
     for (let i = 0; i < quantity; i++){
@@ -21,26 +21,26 @@ export class CopyService {
     return forkJoin(observables);
   }
 
-  deleteCopy(id: number) {
+  deleteById(id: number): Observable<any> {
     const url = `${API_URL}/copies/${id}`;
     return this.http.delete(url);
   }
 
-  getCopiesByBookId(id: number): Observable<Copy[]> {
+  getAllByBookId(id: number): Observable<Copy[]> {
     const url = `${API_URL}/copies/search/findByBookId/${id}`;
     return this.http.get<UnwrapResponse>(url).pipe(
       map(data => data._embedded.copyDtoes)
     );
   }
 
-  getCopiesByUserId(id: number): Observable<Copy[]> {
+  getAllByUserId(id: number): Observable<Copy[]> {
     const url = `${API_URL}/copies/search/findByUserId/${id}`;
     return this.http.get<UnwrapResponse>(url).pipe(
       map(data => data._embedded.copyDtoes)
     );
   }
 
-  getBorrowedCopies(): Observable<Copy[]> {
+  getAllBorrowed(): Observable<Copy[]> {
     const url = `${API_URL}/copies/search/findBorrowed`;
     return this.http.get<UnwrapResponse>(url).pipe(
       map(data => data._embedded.copyDtoes)

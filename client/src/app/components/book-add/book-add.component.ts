@@ -77,7 +77,7 @@ export class BookAddComponent implements OnInit {
       this.imageUrl = url;
       this.mapSelectInputsToBook();
 
-      this.bookService.addBook(this.book).subscribe(
+      this.bookService.create(this.book).subscribe(
         bookId => {
           this.navigateToBook(bookId);
         },  () => {
@@ -173,7 +173,7 @@ export class BookAddComponent implements OnInit {
   }
 
   loadAuthors(): void {
-    this.authorService.getAuthors().subscribe(authors => {
+    this.authorService.getAll().subscribe(authors => {
       this.authors = authors;
       this.authorCtrl.setValue(this.authors[0]);
       this.filteredAuthors.next(this.authors.slice());
@@ -183,7 +183,7 @@ export class BookAddComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.categoryService.getCategories().subscribe(categories => {
+    this.categoryService.getAll().subscribe(categories => {
       this.categories = categories;
       this.filteredCategories.next(this.categories.slice());
       this.categoryFilterCtrl.valueChanges

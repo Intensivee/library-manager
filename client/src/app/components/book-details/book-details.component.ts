@@ -35,8 +35,8 @@ export class BookDetailsComponent implements OnInit {
   getBookDetails(): void {
     if (this.route.snapshot.paramMap.has('id')) {
       const id = +this.route.snapshot.paramMap.get('id');
-      this.bookService.getBook(id).subscribe(data => this.book = data);
-      this.copyService.getCopiesByBookId(id)
+      this.bookService.getById(id).subscribe(data => this.book = data);
+      this.copyService.getAllByBookId(id)
         .subscribe(data => this.copies = data, () => {});
     }
   }
@@ -52,12 +52,12 @@ export class BookDetailsComponent implements OnInit {
   }
 
   deleteCopy(copy: Copy): void {
-    this.copyService.deleteCopy(copy.id).subscribe(() => this.ngOnInit());
+    this.copyService.deleteById(copy.id).subscribe(() => this.ngOnInit());
     this.copies = [];
   }
 
   deleteBook(book: Book): void {
-    this.bookService.deleteBook(book.id).subscribe(
+    this.bookService.deleteById(book.id).subscribe(
       () => {
         this.router.navigate(['/books']);
       },

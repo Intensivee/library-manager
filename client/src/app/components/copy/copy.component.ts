@@ -33,7 +33,7 @@ export class CopyComponent implements OnInit {
       copy.returnDate = null;
       copy.userId = null;
       copy.bookId = this.data.book.id;
-      this.copyService.createCopies(copy, this.quantity).subscribe();
+      this.copyService.createMultiple(copy, this.quantity).subscribe();
       this.dialogRef.close();
     }
   }
@@ -42,11 +42,8 @@ export class CopyComponent implements OnInit {
     if (this.pages === null || this.pages < 1){
       this.isValid = false;
     }
-    else if ( this.quantity == null || this.quantity < 1 || this.quantity > 5){
-      this.isValid = false;
-    }
     else {
-      this.isValid = true;
+      this.isValid = !(this.quantity == null || this.quantity < 1 || this.quantity > 5);
     }
     return this.isValid;
   }

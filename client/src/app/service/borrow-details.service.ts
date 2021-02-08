@@ -19,11 +19,10 @@ export class BorrowDetailsService {
     }
   }
 
-
-  getBorrowDetailsByCopies(copies: Copy[]): BorrowDetails[] {
+  getByCopies(copies: Copy[]): BorrowDetails[] {
     this.clear();
     copies.forEach(copy => {
-      this.bookService.getBook(copy.bookId).subscribe(book => {
+      this.bookService.getById(copy.bookId).subscribe(book => {
         this.borrowDetails.push(this.create(copy, book));
         this.borrowDetails.sort((n1, n2) => new Date(n1.returnDate).getTime() - new Date(n2.returnDate).getTime());
         // TODO: ^ find more efficient way than sorting with each subscribe (.pipe(finallize(..)), .add(..) - doesnt work)
@@ -40,5 +39,4 @@ export class BorrowDetailsService {
                              copy.borrowDate,
                              copy.returnDate);
   }
-
 }

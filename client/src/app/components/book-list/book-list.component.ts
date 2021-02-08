@@ -31,17 +31,17 @@ export class BookListComponent implements OnInit {
         this.pageNumber = 1;
       }
       this.currentCategoryId = categoryId;
-      this.bookService.getBooksByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
-      .subscribe(this.processResoult());
+      this.bookService.getAllByCategoryId(this.pageNumber - 1, this.pageSize, this.currentCategoryId)
+      .subscribe(this.processResult());
     } else {
 
     // Spring enumerate pages from 0, while angular from 1
-      this.bookService.getBooksPaginated(this.pageNumber - 1, this.pageSize)
-        .subscribe(this.processResoult());
+      this.bookService.getAllPaginated(this.pageNumber - 1, this.pageSize)
+        .subscribe(this.processResult());
     }
   }
 
-  processResoult() {
+  processResult(): any {
     return data => {
       this.books = data._embedded.bookDtoes;
       this.pageNumber = data.page.number + 1;

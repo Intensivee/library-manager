@@ -45,7 +45,7 @@ export class AuthenticationService {
 
     sessionStorage.setItem(AUTHENTICATED_USER_ID, token.sub);
     sessionStorage.setItem(JWT_TOKEN, response.token);
-    this.userService.getUser(token.sub).subscribe(( user => {
+    this.userService.getById(token.sub).subscribe((user => {
         sessionStorage.setItem(CURRENT_ROLE, String(user.role));
       })
     );

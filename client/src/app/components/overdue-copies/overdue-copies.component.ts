@@ -32,9 +32,9 @@ export class OverdueCopiesComponent implements OnInit {
   }
 
   getDataSource(): void {
-    this.copyService.getBorrowedCopies().subscribe(copies => {
+    this.copyService.getAllBorrowed().subscribe(copies => {
       copies.forEach(copy => {
-        this.bookService.getBook(copy.bookId).subscribe(book => {
+        this.bookService.getById(copy.bookId).subscribe(book => {
           this.copies.push(this.borrowDetailsService.create(copy, book));
           this.copies.sort((n1, n2) => new Date(n1.returnDate).getTime() - new Date(n2.returnDate).getTime());
           this.dataSource = new MatTableDataSource(this.copies);
@@ -57,7 +57,7 @@ export class OverdueCopiesComponent implements OnInit {
   }
 
   findUser(copyId: number): void {
-    this.userService.getUserByCopyId(copyId).subscribe(user => {
+    this.userService.getByCopyId(copyId).subscribe(user => {
       this.route.navigate(['/users', user.id]);
     });
   }

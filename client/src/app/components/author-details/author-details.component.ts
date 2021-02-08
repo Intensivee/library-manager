@@ -33,7 +33,7 @@ export class AuthorDetailsComponent implements OnInit {
   }
 
   getAuthor(authorId: number): void {
-      this.authorService.getAuthorById(authorId)
+      this.authorService.getById(authorId)
       .subscribe(author => {
         this.author = author;
       }, () => {}
@@ -41,7 +41,7 @@ export class AuthorDetailsComponent implements OnInit {
   }
 
   getBooksByAuthorId(authorId: number): void {
-    this.bookService.getBooksByAuthorId(authorId)
+    this.bookService.getAllByAuthorId(authorId)
     .subscribe(books => {
       this.books = books;
     }, () => {}
@@ -49,7 +49,7 @@ export class AuthorDetailsComponent implements OnInit {
   }
 
   deleteAuthor(): void {
-    this.authorService.deleteAuthor(this.author.id).subscribe(
+    this.authorService.deleteById(this.author.id).subscribe(
       () => {
         this.router.navigate(['/books']);
       },

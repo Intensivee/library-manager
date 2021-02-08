@@ -12,53 +12,44 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBooks(): Observable<Book[]> {
-    return this.httpClient.get<UnwrapResponse>(`${API_URL}/books`).pipe(
-      map(response => response._embedded.bookDtoes)
-    );
-  }
-
-  getBook(id: number): Observable<Book> {
+  getById(id: number): Observable<Book> {
     return this.httpClient.get<Book>(`${API_URL}/books/${id}`);
   }
 
-  getBookByCopyId(id: number): Observable<Book> {
-    return this.httpClient.get<Book>(`${API_URL}/books/${id}`);
-  }
-  getBooksPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
+  getAllPaginated(page: number, pageSize: number): Observable<UnwrapPagedResponse> {
     const url = `${API_URL}/books/paged?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getBooksByCategoryId(page: number,
-                       pageSize: number,
-                       categoryId: number): Observable<UnwrapPagedResponse> {
+  getAllByCategoryId(page: number,
+                     pageSize: number,
+                     categoryId: number): Observable<UnwrapPagedResponse> {
     const url = `${API_URL}/books/search/findByCategoryId/${categoryId}?page=${page}&size=${pageSize}`;
     return this.httpClient.get<UnwrapPagedResponse>(url);
   }
 
-  getBooksByTitle(title: string): Observable<Book[]> {
+  getAllByTitle(title: string): Observable<Book[]> {
     const url = `${API_URL}/books/search/findByTitle/${title}`;
     return this.httpClient.get<UnwrapResponse>(url).pipe(
       map(response => response._embedded.bookDtoes)
     );
   }
 
-  getBooksByAuthorId(id: number): Observable<Book[]> {
+  getAllByAuthorId(id: number): Observable<Book[]> {
     const url = `${API_URL}/books/search/findByAuthorId/${id}`;
     return this.httpClient.get<UnwrapResponse>(url).pipe(
       map(response => response._embedded.bookDtoes)
     );
   }
 
-  addBook(book: Book): Observable<number> {
+  create(book: Book): Observable<number> {
     const url = `${API_URL}/books`;
     return this.httpClient.post<any>(url, book).pipe(
       map(response => response.id)
     );
   }
 
-  deleteBook(bookId: number): Observable<any> {
+  deleteById(bookId: number): Observable<any> {
     return this.httpClient.delete(`${API_URL}/books/${bookId}`);
   }
 }
@@ -80,5 +71,3 @@ interface UnwrapPagedResponse {
     number: number;
   };
 }
-
-

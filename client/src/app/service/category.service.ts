@@ -12,12 +12,12 @@ export class CategoryService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCategories(): Observable<Category[]> {
+  getAll(): Observable<Category[]> {
     return this.httpClient.get<ResponseUnwrap>(`${API_URL}/categories`).pipe(
       map(response => response._embedded.categoryDtoes));
   }
 
-  getCategoriesByBookId(id: number): Observable<Category[]> {
+  getByBookId(id: number): Observable<Category[]> {
     const url = `${API_URL}/categories/search/findByBookId?id=${id}`;
     return this.httpClient.get<ResponseUnwrap>(url).pipe(
       map(response => response._embedded.categoryDtoes));
@@ -29,11 +29,11 @@ export class CategoryService {
     );
   }
 
-  addCategory(category: Category): Observable<any> {
+  create(category: Category): Observable<any> {
     return this.httpClient.post(`${API_URL}/categories`, category);
   }
 
-  deleteCategory(id: number): Observable<any> {
+  deleteById(id: number): Observable<any> {
     return this.httpClient.delete(`${API_URL}/categories/${id}`);
   }
 }

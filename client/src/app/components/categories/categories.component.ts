@@ -27,7 +27,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.categories.length = 0;
-    this.categoryService.getCategories().subscribe(categories => {
+    this.categoryService.getAll().subscribe(categories => {
       categories.forEach(cat => {
         this.categoryService.isEmpty(cat.id).subscribe(isEmpty => {
           this.categories.push(new CategoryObject(cat, isEmpty));
@@ -43,7 +43,7 @@ export class CategoriesComponent implements OnInit {
       const cat = new Category();
       cat.id = null;
       cat.name = this.name;
-      this.categoryService.addCategory(cat).subscribe(() => {
+      this.categoryService.create(cat).subscribe(() => {
         this.ngOnInit();
       });
     }
@@ -55,7 +55,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(id: number): void {
-    this.categoryService.deleteCategory(id).subscribe(() => this.ngOnInit());
+    this.categoryService.deleteById(id).subscribe(() => this.ngOnInit());
   }
 
 }
