@@ -24,17 +24,20 @@ export class CategoryService {
   }
 
   isEmpty(id: number): Observable<any> {
-    return this.httpClient.get(`${API_URL}/categories/search/isEmpty/${id}`).pipe(
+    const url = `${API_URL}/categories/search/isEmpty/${id}`;
+    return this.httpClient.get(url).pipe(
       map(response => response as boolean)
     );
   }
 
   create(category: Category): Observable<any> {
-    return this.httpClient.post(`${API_URL}/categories`, category);
+    const url = `${API_URL}/categories`;
+    return this.httpClient.post(url, category);
   }
 
   deleteById(id: number): Observable<any> {
-    return this.httpClient.delete(`${API_URL}/categories/${id}`);
+    const url = `${API_URL}/categories/${id}`;
+    return this.httpClient.delete(url);
   }
 }
 

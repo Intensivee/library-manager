@@ -50,7 +50,8 @@ export class BookService {
   }
 
   deleteById(bookId: number): Observable<any> {
-    return this.httpClient.delete(`${API_URL}/books/${bookId}`);
+    const url = `${API_URL}/books/${bookId}`;
+    return this.httpClient.delete(url);
   }
 }
 
