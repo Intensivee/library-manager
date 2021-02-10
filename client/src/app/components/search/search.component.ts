@@ -1,9 +1,9 @@
-import { AuthorService } from '../../service/author.service';
-import { ActivatedRoute } from '@angular/router';
-import { BookService } from '../../service/book.service';
-import { Component, OnInit } from '@angular/core';
-import { Book } from 'src/app/models/book';
-import { Author } from 'src/app/models/author';
+import {AuthorService} from '../../service/author.service';
+import {ActivatedRoute} from '@angular/router';
+import {BookService} from '../../service/book.service';
+import {Component, OnInit} from '@angular/core';
+import {Book} from 'src/app/models/book';
+import {Author} from 'src/app/models/author';
 
 @Component({
   selector: 'app-search',
@@ -12,41 +12,45 @@ import { Author } from 'src/app/models/author';
 })
 export class SearchComponent implements OnInit {
 
-  searchForBooks = true;
+  isSearchingForBooks = true;
   books: Book[];
   authors: Author[];
-  currentKey: string;
 
 
   constructor(private bookService: BookService,
               private authorService: AuthorService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.search());
   }
 
-  buttonPress(searchForBooks: boolean): void {
-    this.searchForBooks = searchForBooks;
+  handleButtonClick(searchForBooks: boolean): void {
+    this.isSearchingForBooks = searchForBooks;
     this.search();
   }
 
   search(): void {
-    if (this.route.snapshot.paramMap.has('key')) {
-      this.currentKey = this.route.snapshot.paramMap.get('key');
-      if (this.searchForBooks) {
-        this.bookService.getAllByTitle(this.currentKey)
-          .subscribe(data => {
-            this.books = data;
-            console.log(data);
-          }, () => {});
-      } else {
-        this.authorService.getByName(this.currentKey)
-          .subscribe(data => {
-            this.authors = data;
-          }, () => {});
-      }
+    const searchKey = this.route.snapshot.paramMap.get('key');
+    if (this.isSearchingForBooks) {
+      this.getBookByTitle(searchKey);
+    } else {
+      this.getAuthorByName(searchKey);
     }
   }
 
+  private getBookByTitle(title: string): void {
+    this.bookService.getAllByTitle(title).subscribe(data => {
+      this.books = data;
+    }, () => {
+    });
+  }
+
+  private getAuthorByName(name: string): void {
+    this.authorService.getByName(name).subscribe(data => {
+      this.authors = data;
+    }, () => {
+    });
+  }
 }

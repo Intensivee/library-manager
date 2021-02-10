@@ -1,69 +1,69 @@
-  <div *ngIf="searchForBooks" class="search-container">
-    
-    <div class="search-buttons">
-      <button (click)="buttonPress(true)" type="button" class="btn btn-secondary active btn-lg">Książki</button>
-      <button (click)="buttonPress(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
-    </div>
-    
-    <div class="book-list" *ngFor="let book of books">
-      <div class="book-container">
-        <img src="{{book.imageUrl}}" alt="book picture" class="book-img img-responsive">
-        
-        <div class="book-details">
+<div *ngIf="isSearchingForBooks" class="search-container">
 
-          <a routerLink="/books/{{book.id}}">
-            <h3>{{book.title}}</h3>
-          </a>
-          
-          <a routerLink="/authors/{{book.authorId}}" class="author">{{book.authorName}}</a>
-          
-          <div class="categories">
-            <ul *ngFor="let category of book.categories">
-              <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
-            </ul>
-          </div>
-        </div>
-          
-        <p class="description">
-          {{book.description | slice:0:200}}..
-          <a routerLink="/books/{{book.id}}">Czytaj dalej</a>
-        </p>
-        
-      </div>
-      <hr class="solid">
-    </div>
-    
+  <div class="search-buttons">
+    <button (click)="handleButtonClick(true)" type="button" class="btn btn-secondary active btn-lg">Książki</button>
+    <button (click)="handleButtonClick(false)" type="button" class="btn btn-secondary btn-lg">Autorzy</button>
   </div>
-  
-  <div *ngIf="!searchForBooks" class="search-container">
-    
-    <div class="search-buttons">
-      <button (click)="buttonPress(true)" type="button" class="btn btn-secondary  btn-lg">Książki</button>
-      <button (click)="buttonPress(false)" type="button" class="btn btn-secondary active btn-lg">Autorzy</button>
-    </div>
-    
-    <div class="author-list" *ngFor="let author of authors">
-      <div class="author-container">
 
-        <img src="{{author.imageUrl}}" alt="zdjęcie {{author.firstName}}" class="author-img img-responsive">
-        
-        <div class="author-details">
-          <a routerLink="/authors/{{author.id}}">
-            <h3>{{author.firstName}} {{author.lastName}}</h3>
-          </a>
-          
-          <p class="date">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
+  <div class="book-list" *ngFor="let book of books">
+    <div class="book-container">
+      <img src="{{book.imageUrl}}" alt="book picture" class="book-img img-responsive">
+
+      <div class="book-details">
+
+        <a routerLink="/books/{{book.id}}">
+          <h3>{{book.title}}</h3>
+        </a>
+
+        <a routerLink="/authors/{{book.authorId}}" class="author">{{book.authorName}}</a>
+
+        <div class="categories">
+          <ul *ngFor="let category of book.categories">
+            <li><a routerLink="/books/category/{{category.id}}">{{category.name}}</a></li>
+          </ul>
         </div>
-
-        <p class="memoir">
-          {{author.memoir | slice:0:200}}..
-          <a routerLink="/authors/{{author.id}}">Sprawdź</a>
-        </p>
-        
-        
       </div>
-        <hr class="solid">
+
+      <p class="description">
+        {{book.description | slice:0:200}}..
+        <a routerLink="/books/{{book.id}}">Czytaj dalej</a>
+      </p>
+
     </div>
-    
+    <hr class="solid">
   </div>
-  
+
+</div>
+
+<div *ngIf="!isSearchingForBooks" class="search-container">
+
+  <div class="search-buttons">
+    <button (click)="handleButtonClick(true)" type="button" class="btn btn-secondary  btn-lg">Książki</button>
+    <button (click)="handleButtonClick(false)" type="button" class="btn btn-secondary active btn-lg">Autorzy</button>
+  </div>
+
+  <div class="author-list" *ngFor="let author of authors">
+    <div class="author-container">
+
+      <img src="{{author.imageUrl}}" alt="zdjęcie {{author.firstName}}" class="author-img img-responsive">
+
+      <div class="author-details">
+        <a routerLink="/authors/{{author.id}}">
+          <h3>{{author.firstName}} {{author.lastName}}</h3>
+        </a>
+
+        <p class="date">Urodziny: {{author.birthDate | date:'dd-MM-yyyy'}}</p>
+      </div>
+
+      <p class="memoir">
+        {{author.memoir | slice:0:200}}..
+        <a routerLink="/authors/{{author.id}}">Sprawdź</a>
+      </p>
+
+
+    </div>
+    <hr class="solid">
+  </div>
+
+</div>
+

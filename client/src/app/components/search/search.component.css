@@ -1,5 +1,5 @@
 
-.search-container{
+.search-container {
   display: flex;
   flex-direction: column;
 }
@@ -36,7 +36,7 @@
 }
 
 .author-img {
-  width:6vw;
+  width: 6vw;
   height: auto;
   border: 1px solid #333;
   border-radius: .2em;
