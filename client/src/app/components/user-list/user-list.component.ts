@@ -1,10 +1,10 @@
-import { UNTRUSTED_USER_ROLE_ID } from '../../app.constants';
-import { UserService } from '../../service/user.service';
-import { User } from 'src/app/models/user';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { TRUSTED_USER_ROLE_ID } from 'src/app/app.constants';
+import {UNTRUSTED_USER_ROLE_ID} from '../../app.constants';
+import {UserService} from '../../service/user.service';
+import {User} from 'src/app/models/user';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {TRUSTED_USER_ROLE_ID} from 'src/app/app.constants';
 
 @Component({
   selector: 'app-user-list',
@@ -24,7 +24,8 @@ export class UserListComponent implements OnInit {
   popoverTitle = 'Dialog usunięcia';
   popoverMessage = 'Czy jesteś pewien że chcesz usunąć tego użytkownika?';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.getDataSource();
@@ -54,6 +55,6 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
-    this.userService.deleteById(user).subscribe( () => this.getDataSource());
+    this.userService.deleteById(user).subscribe(() => this.getDataSource());
   }
 }

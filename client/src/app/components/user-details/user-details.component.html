@@ -1,13 +1,14 @@
-
 <div class="user-details-container">
 
   <div class="return">
-    <button routerLink="/users" type="button" class="btn btn-outline-secondary return-btn"><i class="fas fa-caret-left"></i> Do listy użytkowników</button>
+    <button routerLink="/users" type="button" class="btn btn-outline-secondary return-btn"><i
+      class="fas fa-caret-left"></i> Do listy użytkowników
+    </button>
   </div>
-  
-  
+
+
   <div class="user-details">
-    
+
     <p class="user-name">{{user.firstName}} {{user.lastName}}</p>
     <div class="user-info">
       <p><strong>Email: </strong> {{user.email}}</p>
@@ -20,48 +21,52 @@
   </div>
 
   <hr class="solid">
-  
+
   <p class="table-title">Wypożyczone książki:</p>
 
   <div *ngIf="user.copies.length>0" class="user-copies">
-  <div class="table-responsive">
-    <table class="table table-sm table-bordered">
-      <thead class="thead-dark">
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="thead-dark">
         <tr>
-          <th  scope="col">Nr. Kopii</th>
-          <th  scope="col">Tytuł książki</th>
-          <th  scope="col">Status</th>
-          <th  scope="col">Stron</th>
-          <th  scope="col">Data wypożyczenia</th>
-          <th  scope="col">Data zwrotu</th>
-          <th  scope="col">Akcja</th>
+          <th scope="col">Nr. Kopii</th>
+          <th scope="col">Tytuł książki</th>
+          <th scope="col">Status</th>
+          <th scope="col">Stron</th>
+          <th scope="col">Data wypożyczenia</th>
+          <th scope="col">Data zwrotu</th>
+          <th scope="col">Akcja</th>
         </tr>
-      </thead>
-      <tbody  class="tbody-dark">
+        </thead>
+        <tbody class="tbody-dark">
         <tr *ngFor="let details of borrowDetails">
           <td>{{details.copyId}}</td>
           <td><a class="book-title" routerLink="/books/{{details.bookId}}">{{details.bookTitle}}</a></td>
-          <td class="text-success" *ngIf="dayDifference(details.returnDate)>0">
-            {{dayDifference(details.returnDate)}} dni do terminu</td>
-            <td class="text-warning" *ngIf="dayDifference(details.returnDate)==0">Zwrot dziś</td>
-            <td class="text-danger" *ngIf="dayDifference(details.returnDate)<0">{{dayDifference(details.returnDate) | absoluteValue}} dni po terminie</td>
-            
-            <td>{{details.pages}}</td>
-            
-            <td *ngIf="details.borrowDate">{{details.borrowDate | date:'dd-MM-yyyy'}}</td>
-            <td *ngIf="!details.borrowDate">----------------------</td>
-            
-            <td *ngIf="details.returnDate">{{details.returnDate | date:'dd-MM-yyyy'}}</td>
-            <td *ngIf="!details.returnDate">----------------------</td>
-            
-            <td class="center">-------</td>
-          </tr>
+          <td class="text-success" *ngIf="countDaysToReturn(details.returnDate)>0">
+            {{countDaysToReturn(details.returnDate)}} dni do terminu
+          </td>
+          <td class="text-warning" *ngIf="countDaysToReturn(details.returnDate)==0">Zwrot dziś</td>
+          <td class="text-danger"
+              *ngIf="countDaysToReturn(details.returnDate)<0">{{countDaysToReturn(details.returnDate) | absoluteValue}}
+            dni po terminie
+          </td>
+
+          <td>{{details.pages}}</td>
+
+          <td *ngIf="details.borrowDate">{{details.borrowDate | date:'dd-MM-yyyy'}}</td>
+          <td *ngIf="!details.borrowDate">----------------------</td>
+
+          <td *ngIf="details.returnDate">{{details.returnDate | date:'dd-MM-yyyy'}}</td>
+          <td *ngIf="!details.returnDate">----------------------</td>
+
+          <td class="center">-------</td>
+        </tr>
         </tbody>
       </table>
     </div>
-  </div> 
-    
-    
+  </div>
+
+
   <div *ngIf="user.copies.length==0" class="user-copies">
     <h5 class="copies-not-found">Ten użytkownik obecnie nie posiada żadnych wypożyczonych książek.</h5>
   </div>
