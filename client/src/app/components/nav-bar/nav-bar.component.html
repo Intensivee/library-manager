@@ -1,23 +1,22 @@
+<div class="nav-bar-container">
 
+  <a href="#">Nasza Biblioteka</a>
 
-  <div class="nav-bar-container">
+  <a *ngIf="!authService.isAuthenticated()" (click)="openLoginDialog()" class="dialog">Login</a>
+  <a *ngIf="!authService.isAuthenticated()" (click)="openRegisterDialog()" class="dialog">Register</a>
+  <a *ngIf="authService.isAuthenticated()" class="dialog">Settings</a>
+  <a *ngIf="authService.isAuthenticated()" (click)="logoutUser()" class="dialog">Logout</a>
 
-    <a  href="#">Nasza Biblioteka</a>
-    
-    <a *ngIf="!authService.isAuthenticated()" (click)="openLoginDialog()" class="dialog">Login</a>
-    <a *ngIf="!authService.isAuthenticated()" (click)="openRegisterDialog()" class="dialog">Register</a>
-    <a *ngIf="authService.isAuthenticated()" class="dialog">Settings</a>
-    <a *ngIf="authService.isAuthenticated()" (click)="logoutUser()" class="dialog">Logout</a>
-      
-      <form>
-        
-        <input #searchInput (keyup.enter)="searchFor(searchInput.value)"
-         type="search" placeholder="Search" aria-label="Search">
-        
-        <button (click)="searchFor(searchInput.value)" 
-        class="btn btn-outline-success my-2 my-sm-0" 
-        type="submit">Search</button>
-      </form>
-      
-    </div>
+  <form>
+
+    <input #searchInput (keyup.enter)="searchFor(searchInput.value)"
+           type="search" placeholder="Search" aria-label="Search">
+
+    <button (click)="searchFor(searchInput.value)"
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit">Search
+    </button>
+  </form>
+
+</div>
 

@@ -1,9 +1,9 @@
-import { AuthenticationService } from '../../service/security/authentication.service';
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { LoginComponent } from '../login/login.component';
-import { RegisterComponent } from '../register/register.component';
+import {AuthenticationService} from '../../service/security/authentication.service';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {LoginComponent} from '../login/login.component';
+import {RegisterComponent} from '../register/register.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,7 +14,8 @@ export class NavBarComponent implements OnInit {
 
   constructor(public authService: AuthenticationService,
               private route: Router,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
   }
@@ -24,15 +25,17 @@ export class NavBarComponent implements OnInit {
   }
 
   openLoginDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(LoginComponent, dialogConfig);
+    this.dialog.open(LoginComponent, this.getDialogConfiguration());
   }
 
   openRegisterDialog(): void {
+    this.dialog.open(RegisterComponent, this.getDialogConfiguration());
+  }
+
+  private getDialogConfiguration(): MatDialogConfig {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    this.dialog.open(RegisterComponent, dialogConfig);
+    return dialogConfig;
   }
 
   logoutUser(): void {
