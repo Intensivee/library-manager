@@ -7,6 +7,7 @@ import { BorrowDetails } from '../../models/borrow-details';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { Copy } from 'src/app/models/copy';
 
 @Component({
   selector: 'app-overdue-copies',
@@ -17,15 +18,17 @@ export class OverdueCopiesComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  copies: BorrowDetails[] = [];
-  dataSource = new MatTableDataSource(this.copies);
+  borrowDetails: BorrowDetails[] = [];
+
+  dataSource = new MatTableDataSource(this.borrowDetails);
   displayedColumns = ['copyId', 'bookTitle', 'status', 'pages', 'borrowDate', 'returnDate', 'actions'];
 
   constructor(private copyService: CopyService,
               private bookService: BookService,
               private userService: UserService,
               private borrowDetailsService: BorrowDetailsService,
-              private route: Router) { }
+              private route: Router) {
+  }
 
   ngOnInit(): void {
     this.getDataSource();
@@ -34,14 +37,22 @@ export class OverdueCopiesComponent implements OnInit {
   getDataSource(): void {
     this.copyService.getAllBorrowed().subscribe(copies => {
       copies.forEach(copy => {
-        this.bookService.getById(copy.bookId).subscribe(book => {
-          this.copies.push(this.borrowDetailsService.create(copy, book));
-          this.copies.sort((n1, n2) => new Date(n1.returnDate).getTime() - new Date(n2.returnDate).getTime());
-          this.dataSource = new MatTableDataSource(this.copies);
-          this.dataSource.sort = this.sort;
-        });
+        this.getBorrowDetailsByCopy(copy);
       });
     });
+  }
+
+  getBorrowDetailsByCopy(copy: Copy): void {
+    this.bookService.getById(copy.bookId).subscribe(book => {
+      this.borrowDetails.push(this.borrowDetailsService.create(copy, book));
+      this.borrowDetails.sort((n1, n2) => new Date(n1.returnDate).getTime() - new Date(n2.returnDate).getTime());
+      this.updateMatTable();
+    });
+  }
+
+  updateMatTable(): void {
+    this.dataSource = new MatTableDataSource(this.borrowDetails);
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event): void {
