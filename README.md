@@ -1,8 +1,5 @@
 # library-manager
-The project is REST-API built using Spring Boot and Angular.
-Application allows to search for books/authors and order copies.
-There is also an admin panel that can be accessed only by authorized users.
-> Project is not finished yet
+Web application designed to be used in facilities that are dealing with books renting. It's a system that simplifies management of users and books collection. The project is directed not only to employees, but also for the customers.
 
 ## technologies
 - Spring Boot
